@@ -7,6 +7,13 @@
     </hgroup>
 
     <article>
+        <div class="container">
+            <div class="well">
+                <div class="well-body">
+                    hello world.
+                </div>
+            </div>
+        </div>
         <p>        
             Use this area to provide additional information.
         </p>
