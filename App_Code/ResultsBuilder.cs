@@ -27,7 +27,7 @@ public class ResultsBuilder
 
 
 
-    SqlConnection con = new SqlConnection("Data Source=c-lomain\\cssqlserver;Initial Catalog=test1;Integrated Security=True");
+    SqlConnection con = new SqlConnection("Data Source=C-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True");
 
     List<int> allCourses = new List<int>();       //\ list of all courses
     List<int> takenCourses = new List<int>();  //\ list of complete courses
@@ -155,31 +155,35 @@ public class ResultsBuilder
 
 
         //\ opens connection to sql server
-        using (SqlConnection sqlconn = new SqlConnection("Data Source=c-lomain\\cssqlserver;Initial Catalog=courseHunter540;Integrated Security=True"))
+        using (SqlConnection sqlconn = new SqlConnection("Data Source=C-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True"))
         {
             //\ This will check each course you need and see if you meet prereqs
             //  foreach(String s in neededCourses)
             //  {
 
-            SqlCommand cmdCount = new SqlCommand(";WITH CTE AS ( " +
-                                                    "SELECT DISTINCT M1.course_id group_id, M1.course_id FROM " +
-                                                    "Prerequisites M1 LEFT JOIN Prerequisites M2 ON M1.course_id = M2.prereq_id " +
-                                                    " UNION ALL SELECT C.group_id, M.prereq_id " +
-                                                    "FROM CTE C JOIN Prerequisites M ON C.course_id = M.course_id) " +
-                                                    "SELECT COUNT(course_id) FROM CTE WHERE group_id != course_id", sqlconn);
+            SqlCommand cmdCount = new SqlCommand();
+            cmdCount.CommandText = "getPrereqCount";
+            cmdCount.CommandType = CommandType.StoredProcedure;
+            cmdCount.Connection = sqlconn;
 
-
-            //\ This cmd will give a list of all prereq for current course
-            SqlCommand cmd = new SqlCommand(";WITH CTE AS ( " +
-                                                    "SELECT DISTINCT M1.course_id group_id, M1.course_id FROM " +
-                                                    "Prerequisites M1 LEFT JOIN Prerequisites M2 ON M1.course_id = M2.prereq_id " +
-                                                    " UNION ALL SELECT C.group_id, M.prereq_id " +
-                                                    "FROM CTE C JOIN Prerequisites M ON C.course_id = M.course_id) " +
-                                                    "SELECT * FROM CTE WHERE group_id != course_id ORDER BY group_id", sqlconn);
 
             sqlconn.Open();
 
             int prereqSize = cmdCount.ExecuteNonQuery();
+
+
+
+
+
+            //\ This cmd will give a list of all prereq for current course
+            
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "getPrereqs";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = sqlconn;
+
+
 
             int prereqCounter = 0;
             //\ adds all prereqs for current couses to list
