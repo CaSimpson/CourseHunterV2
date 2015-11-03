@@ -8,10 +8,14 @@ using System.Data.SqlClient;
 using System.Data;
 using System.IO;
 using System.Configuration;
+using Microsoft.AspNet.Membership;
+using Microsoft.AspNet.Membership.OpenAuth;
+using System.Web.Security;
 
 public partial class AddRemoveCourse : System.Web.UI.Page
 {
-    int id = 1;
+    private String userId;
+
     char[][] transferArray = new char[99][];
     String[] checkedArray;
     List<String> checkedList = new List<String>();
@@ -25,21 +29,41 @@ public partial class AddRemoveCourse : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
 
+        //\ gets userName and UserID
+        String currentUserName = HttpContext.Current.User.Identity.Name;
+        userId = Membership.GetUser(currentUserName).ProviderUserKey.ToString();
+
+
+
         //create connection to database
 
-        using (SqlConnection sqlconn = new SqlConnection("Data Source=c-lomain\\cssqlserver;Initial Catalog=courseHunter540;Integrated Security=True"))
+        using (SqlConnection sqlconn = new SqlConnection("Data Source=C-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True"))
         {
             //create adapter
-            SqlDataAdapter sqlda = new SqlDataAdapter("select course_id from Course ", sqlconn);
+            SqlDataAdapter sqlda = new SqlDataAdapter();
             DataSet ds = new DataSet();
-            sqlda.Fill(ds, "Course");
+
+            SqlCommand cmdGetAll = new SqlCommand();
+            cmdGetAll.CommandType = CommandType.StoredProcedure;
+            cmdGetAll.CommandText = "getAllCourses";
+            cmdGetAll.Connection = sqlconn;
+
+            sqlda.SelectCommand = cmdGetAll;
+            sqlda.Fill(ds, "course");
 
             //fill course List
-            foreach (DataRow row in ds.Tables["Course"].Rows)
+            foreach (DataRow row in ds.Tables["course"].Rows)
             {
                 courseList.Add(row["course_id"].ToString());
                 //listboxComplete.Items.Add(row["course_id"].ToString());
             }
+
+            sqlconn.Close();
+
+
+           
+
+
 
 
 
@@ -168,7 +192,7 @@ public partial class AddRemoveCourse : System.Web.UI.Page
 
         //conC.Open();
 
-        SqlConnection conGetID = new SqlConnection("Data Source=c-lomain\\cssqlserver;Initial Catalog=courseHunter540;Integrated Security=True");
+        SqlConnection conGetID = new SqlConnection("Data Source=C-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True");
         SqlCommand cmdGetID = new SqlCommand();
 
         int idValue;
@@ -178,7 +202,7 @@ public partial class AddRemoveCourse : System.Web.UI.Page
             cmdGetID.CommandText = "getID";
             cmdGetID.CommandType = CommandType.StoredProcedure;
             cmdGetID.Connection = conGetID;
-            cmdGetID.Parameters.AddWithValue("@course_number", s);
+            cmdGetID.Parameters.AddWithValue("@courseNumber", s);
             conGetID.Open();
             idValue = (int)cmdGetID.ExecuteScalar();
             cmdGetID.Parameters.Clear();
@@ -220,7 +244,7 @@ public partial class AddRemoveCourse : System.Web.UI.Page
 
         //\ This creates connection to database and stores completed courses for the user.
         //\ by using stored procedure that takes student id and course id as parameters
-        SqlConnection conC = new SqlConnection("Data Source=c-lomain\\cssqlserver;Initial Catalog=courseHunter540;Integrated Security=True");
+        SqlConnection conC = new SqlConnection("Data Source=C-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True");
         //conC.Open();
 
         foreach (int i in intChecked)
@@ -228,7 +252,7 @@ public partial class AddRemoveCourse : System.Web.UI.Page
             using (SqlCommand cmd = new SqlCommand("addTaken", conC))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@studentid", id);
+                cmd.Parameters.AddWithValue("@studentid", userId);
                 cmd.Parameters.AddWithValue("@courseid", i);
                 conC.Open();
                 try
@@ -366,6 +390,59 @@ public partial class AddRemoveCourse : System.Web.UI.Page
         //\\\\\\\\\\\\\\\ END TESTING CODE
     }
 
+
+
+    //\ Remove selected courses
+
+    protected void btnRemove_Click(object sender, EventArgs e)
+    {
+
+        List<String> removeChecked = new List<String>();
+
+        removeChecked = getChecked();
+
+        List<int> removeInt = new List<int>();
+
+        removeInt = getCourseId(removeChecked);
+
+
+
+
+        SqlConnection conR = new SqlConnection("Data Source=c-lomain\\cssqlserver;Initial Catalog=courseHunter540;Integrated Security=True");
+        //conC.Open();
+
+        foreach (int i in removeInt)
+        {
+            using (SqlCommand cmd = new SqlCommand("removeTaken", conR))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@studentid", userId);
+                cmd.Parameters.AddWithValue("@courseid", i);
+                conR.Open();
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (SqlException)
+                {
+
+                }
+            }
+
+            conR.Close();
+        }
+
+    }
+
+
+
+
+
+    /********************************************************************************************************************
+    **************************************************************************************   METHODS   ******************
+    ********************************************************************************************************************/
+
+
     //\ private method that gets selected value from a droplistbox 
     //\ parameters: curID is the id of the checkbox
     private String getID(String curID)
@@ -391,9 +468,71 @@ public partial class AddRemoveCourse : System.Web.UI.Page
                 break;
         }
         return curID;
+    }//\ END getID
+
+
+
+
+    //\ Returns a formatted List<String> of all courses checked
+    private List<String> getChecked()
+    {
+        List<String> returnList = new List<String>();
+
+        foreach (Control c in uiPlaceholder.Controls.OfType<CheckBox>())
+        {
+            if (c is CheckBox && ((CheckBox)c).Checked)
+            {
+                String formattedID = c.ID; //holds value of formatted ID
+                //\ if id < 7 than it is in dropbox and is formatted, so we call getID method to return it
+                if (c.ID.Length < 7)
+                {
+                    formattedID = getID(c.ID); //\ calls getID method
+                }
+                //\ if not grab the id of the checkbox and add a space(because of id formatting)
+                else
+                {
+                    formattedID = formattedID.Insert(4, " ");
+                }
+                //\ this adds each courseID (formatted properly) that was "checked" to a list
+                returnList.Add(formattedID);
+            }//end if
+        }//end foreach
+
+        return returnList;
+    }
+
+
+   
+
+
+
+private List<int> getCourseId(List<String> inputList)
+    {
+        List<int> intChecked = new List<int>();
+
+        SqlConnection conGetID = new SqlConnection("Data Source=C-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True");
+        SqlCommand cmdGetID = new SqlCommand();
+
+        int idValue;
+
+        foreach (String s in inputList)
+        {
+            cmdGetID.CommandText = "getID";
+            cmdGetID.CommandType = CommandType.StoredProcedure;
+            cmdGetID.Connection = conGetID;
+            cmdGetID.Parameters.AddWithValue("@courseNumber", s);
+            conGetID.Open();
+            idValue = (int)cmdGetID.ExecuteScalar();
+            cmdGetID.Parameters.Clear();
+            intChecked.Add(idValue);
+            conGetID.Close();
+        }
+
+
+        return intChecked;
     }
 
 
 
 
-}
+    }

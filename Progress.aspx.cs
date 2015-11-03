@@ -6,6 +6,10 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Data;
+using Microsoft.AspNet.Membership;
+using Microsoft.AspNet.Membership.OpenAuth;
+using System.Web.Security;
+
 
 public partial class Progress : System.Web.UI.Page
 {
@@ -21,91 +25,103 @@ public partial class Progress : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        // ******************* This gets student's name from database and adds to lblStudentName *********************************
-
-        //\ gets student name from student id
-        SqlConnection con = new SqlConnection("Data Source=c-lomain\\cssqlserver;Initial Catalog=courseHunter540;Integrated Security=True");
-        SqlCommand cmdGetName = new SqlCommand("getStudentName", con);
-        cmdGetName.CommandType = CommandType.StoredProcedure;
-        cmdGetName.Parameters.AddWithValue("@studentID", id);
-
-        con.Open();
-        studentName = Convert.ToString(cmdGetName.ExecuteScalar());
-        con.Close();
-
-        lblStudentName.Text = studentName;
-        //*************** END set Student Name ******************************************************
-
-        // ******************* This gets a list of all completed courses and adds to listbox *********************************
-
-        //\ adds all courses_taken for user to completeCoursesInt array
-        using (SqlConnection sqlconn = new SqlConnection("Data Source=c-lomain\\cssqlserver;Initial Catalog=courseHunter540;Integrated Security=True"))
+        if (HttpContext.Current.User.Identity.IsAuthenticated)
         {
-            SqlCommand cmd = new SqlCommand("getCoursesTaken", sqlconn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@studentID", id);
-            sqlconn.Open();
-            using (IDataReader dataReader = cmd.ExecuteReader())
+
+
+
+
+
+            //\ gets userName and UserID
+            String userName = HttpContext.Current.User.Identity.Name;
+            String userId = Membership.GetUser(userName).ProviderUserKey.ToString();
+            String actualName;
+
+
+            // ******************* This gets student's name from database and adds to lblStudentName *********************************
+
+            //\ gets student name from student id
+            SqlConnection con = new SqlConnection("Data Source=C-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True");
+            SqlCommand cmdGetName = new SqlCommand("getStudentName", con);
+            cmdGetName.CommandType = CommandType.StoredProcedure;
+            cmdGetName.Parameters.AddWithValue("@studentId", userId);
+
+            con.Open();
+            studentName = Convert.ToString(cmdGetName.ExecuteScalar());
+            con.Close();
+
+            lblStudentName.Text = studentName;
+            //*************** END set Student Name ******************************************************
+
+
+
+
+            // ******************* This gets a list of all completed courses and adds to listbox *********************************
+
+            //\ adds all courses_taken for user to completeCoursesInt array
+            using (SqlConnection sqlconn = new SqlConnection("Data Source=C-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True"))
             {
-                while (dataReader.Read())
+                SqlCommand cmd = new SqlCommand("getCourseTaken", sqlconn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@studentid", userId);
+                sqlconn.Open();
+                using (IDataReader dataReader = cmd.ExecuteReader())
                 {
-                    int item = Convert.ToInt32(dataReader["course_id"]);
-                    completeCoursesInt.Add(item);
+                    while (dataReader.Read())
+                    {
+                        int item = Convert.ToInt32(dataReader["course_id"]);
+                        completeCoursesInt.Add(item);
+                    }
                 }
+                sqlconn.Close();
             }
-            sqlconn.Close();
+
+            //\ called getCourseName Method, which converts course_id to course_name
+            completeCourses = getCourseName(completeCoursesInt);
+
+            //\ adds all complete courses to Compete Courses List Box
+            foreach (String s in completeCourses)
+            {
+                completeListBox.Items.Add(s);
+            }
+            //*************** END get complete courses list ******************************************************
+
+
+
+            //************** This calculates percent of courses complete  ********************************************
+
+            //\ This calls store procedure to return a count for all courses
+            SqlConnection conCountAll = new SqlConnection("Data Source=C-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True");
+            SqlCommand cmdGetCountAll = new SqlCommand("countAll", conCountAll);
+            cmdGetCountAll.CommandType = CommandType.StoredProcedure;
+
+            conCountAll.Open();
+            totalCourses = Convert.ToInt32(cmdGetCountAll.ExecuteScalar());
+            conCountAll.Close();
+
+            //\ This calls store procedure to return a count for complete courses
+            SqlConnection conCountComplete = new SqlConnection("Data Source=C-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True");
+
+            SqlCommand cmdGetCountComplete = new SqlCommand("countComplete", conCountComplete);
+            cmdGetCountComplete.CommandType = CommandType.StoredProcedure;
+            cmdGetCountComplete.Parameters.AddWithValue("@studentID", userId);
+
+            conCountComplete.Open();
+            compCourses = Convert.ToInt32(cmdGetCountComplete.ExecuteScalar());
+            conCountComplete.Close();
+
+            myProg = (compCourses * 100) / totalCourses;
+
+            //************* END Calculate Percent Complete ***************************************************
+
+
+
+
         }
-
-        //\ called getCourseName Method, which converts course_id to course_name
-        completeCourses = getCourseName(completeCoursesInt);
-
-        //\ adds all complete courses to Compete Courses List Box
-        foreach (String s in completeCourses)
+        else
         {
-            completeListBox.Items.Add(s);
+            // then user is not logged in   redirect maybe???
         }
-        //*************** END get complete courses list ******************************************************
-
-
-
-        //************** This calculates percent of courses complete  ********************************************
-
-        //\ This calls store procedure to return a count for all courses
-        SqlConnection conCountAll = new SqlConnection("Data Source=c-lomain\\cssqlserver;Initial Catalog=courseHunter540;Integrated Security=True");
-
-        SqlCommand cmdGetCountAll = new SqlCommand("countAll", conCountAll);
-        cmdGetCountAll.CommandType = CommandType.StoredProcedure;
-
-        conCountAll.Open();
-        totalCourses = Convert.ToInt32(cmdGetCountAll.ExecuteScalar());
-        conCountAll.Close();
-
-        //\ This calls store procedure to return a count for complete courses
-        SqlConnection conCountComplete = new SqlConnection("Data Source=c-lomain\\cssqlserver;Initial Catalog=courseHunter540;Integrated Security=True");
-
-        SqlCommand cmdGetCountComplete = new SqlCommand("countComplete", conCountComplete);
-        cmdGetCountComplete.CommandType = CommandType.StoredProcedure;
-        cmdGetCountComplete.Parameters.AddWithValue("@studentID", id);
-
-        conCountComplete.Open();
-        compCourses = Convert.ToInt32(cmdGetCountComplete.ExecuteScalar());
-        conCountComplete.Close();
-
-        myProg = (compCourses * 100) / totalCourses;
-
-        //************* END Calculate Percent Complete ***************************************************
-
-
-
-
-
-
-
-
-
-
-
-
 
     } // END PAGE LOAD
 
@@ -120,7 +136,7 @@ public partial class Progress : System.Web.UI.Page
         String currentCourseName;
 
         //\ gets course name for possible courses
-        SqlConnection conGetName = new SqlConnection("Data Source=c-lomain\\cssqlserver;Initial Catalog=courseHunter540;Integrated Security=True");
+        SqlConnection conGetName = new SqlConnection("Data Source=C-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True");
 
         SqlCommand cmdGetName = new SqlCommand("getCourseName", conGetName);
         cmdGetName.CommandType = CommandType.StoredProcedure;

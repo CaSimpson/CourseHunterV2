@@ -388,7 +388,7 @@
     
 
     <asp:Button ID="btnSubmit" runat="server" Text="Add" OnClick="btnSubmit_Click" />
-    <asp:Button ID="btnRemove" runat="server" Text="Remove"/>
+    <asp:Button ID="btnRemove" runat="server" Text="Remove" OnClick="btnRemove_Click"/>
 
   
         

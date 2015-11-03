@@ -13,6 +13,8 @@ public partial class _Default : Page
         MembershipUser u;
         if (HttpContext.Current.User.Identity.IsAuthenticated)
         {
+
+
             lblVerify.Visible = true;
             u = Membership.GetUser(User.Identity.Name);
             Label1.Text = u.ToString();

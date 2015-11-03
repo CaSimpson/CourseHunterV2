@@ -38,9 +38,9 @@
                                     CssClass="field-validation-error" ErrorMessage="The email address field is required." />
                             </li>
                             <li>
-                                <asp:Label runat="server" AssociatedControlID="Name">Name</asp:Label>
-                                <asp:TextBox runat="server" ID="Name"/>
-                                <asp:RequiredFieldValidator runat="server" ControlToValidate="Name" CssClass="field-validation-error" ErrorMessage="The name field is required." />
+                                <asp:Label runat="server" AssociatedControlID="iName">Name</asp:Label>
+                                <asp:TextBox runat="server" ID="iName"/>
+                                <asp:RequiredFieldValidator runat="server" ControlToValidate="iName" CssClass="field-validation-error" ErrorMessage="The name field is required." />
                             </li>
                             <li>
                                 <asp:Label runat="server" AssociatedControlID="Password">Password</asp:Label>
