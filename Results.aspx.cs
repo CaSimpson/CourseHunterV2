@@ -12,6 +12,11 @@ using System.Web.Security;
 
 public partial class Results : System.Web.UI.Page
 {
+    /**********************************************************************
+   * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
+   **********************************************************************/
+    String myDatabase = "Data Source=C-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True";
+
     int id = 2;
     List<int> takenList = new List<int>();
     List<int> allList = new List<int>();
@@ -34,7 +39,7 @@ public partial class Results : System.Web.UI.Page
             String userId = Membership.GetUser(userName).ProviderUserKey.ToString();
 
             //\ adds all courses_taken for user to takeList
-            using (SqlConnection sqlconn = new SqlConnection("Data Source=C-lomain\\cssqlserver; Initial Catalog = courseHunter540NEW; Integrated Security = True"))
+            using (SqlConnection sqlconn = new SqlConnection(myDatabase))
             {
                 SqlCommand cmd = new SqlCommand("getCourseTaken", sqlconn);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -70,7 +75,7 @@ public partial class Results : System.Web.UI.Page
             }
             */
             //\ adds all courses to allList
-            using (SqlConnection sqlconn = new SqlConnection("Data Source=C-lomain\\cssqlserver; Initial Catalog = courseHunter540NEW; Integrated Security = True"))
+            using (SqlConnection sqlconn = new SqlConnection(myDatabase))
             {
                 SqlCommand cmd = new SqlCommand("getAllCourses", sqlconn);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -99,7 +104,7 @@ public partial class Results : System.Web.UI.Page
             String currentCourseName;
 
             //\ gets course name for possible courses
-            SqlConnection conGetName = new SqlConnection("Data Source=C-lomain\\cssqlserver; Initial Catalog = courseHunter540NEW; Integrated Security = True");
+            SqlConnection conGetName = new SqlConnection(myDatabase);
 
             SqlCommand cmdGetName = new SqlCommand("getCourseName", conGetName);
             cmdGetName.CommandType = CommandType.StoredProcedure;
@@ -117,7 +122,7 @@ public partial class Results : System.Web.UI.Page
 
 
             //\ gets course name for recommended courses
-            SqlConnection conGetRec = new SqlConnection("Data Source=C-lomain\\cssqlserver; Initial Catalog = courseHunter540NEW; Integrated Security = True");
+            SqlConnection conGetRec = new SqlConnection(myDatabase);
 
             SqlCommand cmdGetRec = new SqlCommand("getCourseName", conGetRec);
             cmdGetRec.CommandType = CommandType.StoredProcedure;

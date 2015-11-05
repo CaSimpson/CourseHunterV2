@@ -16,6 +16,12 @@ using Microsoft.AspNet.Membership;
 
 public partial class Account_Register : Page
 {
+
+    /**********************************************************************
+   * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
+   **********************************************************************/
+    String myDatabase = "Data Source=C-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True";
+
     protected void Page_Load(object sender, EventArgs e)
     {
         RegisterUser.ContinueDestinationPageUrl = Request.QueryString["ReturnUrl"];
@@ -26,7 +32,7 @@ public partial class Account_Register : Page
     {
         FormsAuthentication.SetAuthCookie(RegisterUser.UserName, createPersistentCookie: false);      
 
-        /*  // This saves name to student table, need db finished
+          // This saves name to student table, need db finished
 
         //\ gets the value of the Name box
         TextBox nameText = RegisterUser.CreateUserStep.ContentTemplateContainer.FindControl("iName") as TextBox;
@@ -39,7 +45,7 @@ public partial class Account_Register : Page
         System.Diagnostics.Debug.WriteLine("name = " + curName + "  userName = " + userId);
 
         //\ adds user to studentTable
-        SqlConnection con = new SqlConnection("Data Source=c-lomain\\cssqlserver;Initial Catalog=courseHunter540;Integrated Security=True");
+        SqlConnection con = new SqlConnection("myDatabase);
         con.Open();
 
        {
@@ -61,7 +67,7 @@ public partial class Account_Register : Page
             con.Close();
         }
 
-    */
+    
 
 
 

@@ -13,6 +13,11 @@ using System.Web.Security;
 
 public partial class Progress : System.Web.UI.Page
 {
+    /**********************************************************************
+   * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
+   **********************************************************************/
+    String myDatabase = "Data Source=C-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True";
+
     List<int> completeCoursesInt = new List<int>();
     List<String> completeCourses = new List<String>();
     List<String> formattedList = new List<String>();
@@ -41,7 +46,7 @@ public partial class Progress : System.Web.UI.Page
             // ******************* This gets student's name from database and adds to lblStudentName *********************************
 
             //\ gets student name from student id
-            SqlConnection con = new SqlConnection("Data Source=C-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True");
+            SqlConnection con = new SqlConnection(myDatabase);
             SqlCommand cmdGetName = new SqlCommand("getStudentName", con);
             cmdGetName.CommandType = CommandType.StoredProcedure;
             cmdGetName.Parameters.AddWithValue("@studentId", userId);
@@ -59,7 +64,7 @@ public partial class Progress : System.Web.UI.Page
             // ******************* This gets a list of all completed courses and adds to listbox *********************************
 
             //\ adds all courses_taken for user to completeCoursesInt array
-            using (SqlConnection sqlconn = new SqlConnection("Data Source=C-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True"))
+            using (SqlConnection sqlconn = new SqlConnection(myDatabase))
             {
                 SqlCommand cmd = new SqlCommand("getCourseTaken", sqlconn);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -91,7 +96,7 @@ public partial class Progress : System.Web.UI.Page
             //************** This calculates percent of courses complete  ********************************************
 
             //\ This calls store procedure to return a count for all courses
-            SqlConnection conCountAll = new SqlConnection("Data Source=C-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True");
+            SqlConnection conCountAll = new SqlConnection(myDatabase);
             SqlCommand cmdGetCountAll = new SqlCommand("countAll", conCountAll);
             cmdGetCountAll.CommandType = CommandType.StoredProcedure;
 
@@ -100,7 +105,7 @@ public partial class Progress : System.Web.UI.Page
             conCountAll.Close();
 
             //\ This calls store procedure to return a count for complete courses
-            SqlConnection conCountComplete = new SqlConnection("Data Source=C-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True");
+            SqlConnection conCountComplete = new SqlConnection(myDatabase);
 
             SqlCommand cmdGetCountComplete = new SqlCommand("countComplete", conCountComplete);
             cmdGetCountComplete.CommandType = CommandType.StoredProcedure;
@@ -136,7 +141,7 @@ public partial class Progress : System.Web.UI.Page
         String currentCourseName;
 
         //\ gets course name for possible courses
-        SqlConnection conGetName = new SqlConnection("Data Source=C-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True");
+        SqlConnection conGetName = new SqlConnection(myDatabase);
 
         SqlCommand cmdGetName = new SqlCommand("getCourseName", conGetName);
         cmdGetName.CommandType = CommandType.StoredProcedure;
