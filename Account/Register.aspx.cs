@@ -45,7 +45,7 @@ public partial class Account_Register : Page
         System.Diagnostics.Debug.WriteLine("name = " + curName + "  userName = " + userId);
 
         //\ adds user to studentTable
-        SqlConnection con = new SqlConnection("myDatabase);
+        SqlConnection con = new SqlConnection(myDatabase);
         con.Open();
 
        {
