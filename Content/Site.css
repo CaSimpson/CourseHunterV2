@@ -119,9 +119,11 @@ header .content-wrapper {
     
 footer {
     clear: both;
-    background-color: #e2e2e2;
+    background-color: #999;
     font-size: .8em;
-    height: 100px;
+    height: 30px;
+
+    
 }
 
 
@@ -211,14 +213,18 @@ ul#menu {
 }
 
     .featured .content-wrapper {
-        background-color: #7ac0da;
+        background-color: #999;
+        /* 
+
         background-image: -ms-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
         background-image: -o-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
         background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #7ac0da), color-stop(1, #a4d4e6));
         background-image: -webkit-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
         background-image: linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
         color: #3e5667;
-        padding: 20px 40px 30px 40px;
+
+        */
+        padding-left: 40px;
     }
 
         .featured hgroup.title h1, .featured hgroup.title h2 {
@@ -435,8 +441,7 @@ fieldset {
         font-weight: 600;
         padding: 7px;
         margin-right: 8px;
-        width: auto;
-    }
+        }
 
     td input[type="submit"],
     td input[type="button"],
