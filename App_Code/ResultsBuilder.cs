@@ -24,7 +24,10 @@ using System.IO;
 /// </summary>
 public class ResultsBuilder
 {
-
+    /**********************************************************************
+    * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
+    **********************************************************************/
+    String myDatabase = "Data Source=C-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True";
 
 
     SqlConnection con = new SqlConnection("Data Source=C-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True");
@@ -42,8 +45,8 @@ public class ResultsBuilder
     List<String[]> priorityList = new List<String[]>();       //\ list used to hold "priority values"
     public static int[] recommendedCourses = new int[5]; //\ array used to hold the top 5 recommended courses
     String id; //\ <--- testing var
-
-    int[][] prereqArray = new int[106][];
+    int[][] sortedRecArray;
+    int[][] prereqArray = new int[162][];
 
     List<String> testList = new List<String>();
 
@@ -52,6 +55,11 @@ public class ResultsBuilder
     List<int> testPos = new List<int>();
 
     List<int> testPre = new List<int>();
+
+
+    
+
+
 
     //[][] priorityList = new String[5][];
 
@@ -62,7 +70,7 @@ public class ResultsBuilder
         //\ init variables
         takenCourses = taken;
         neededCourses = need;
-        posTest = need;
+        //posTest = need;
         //\ initializes a hashset will all classes needed
         foreach (int i in neededCourses)
         {
@@ -75,19 +83,81 @@ public class ResultsBuilder
 
     int[] testPrereq = new int[5];
 
-    public int[] getRecommended()
+    public int[][] getRecommended()
     {
+
+
         //for(int p = 0; p < 5; p++)
         // {
         //     testPrereq[p] = testPos[p];
         //  }
 
         //return recommendedCourses;
-        return recommendedCourses;
+        //return recommendedCourses;
+        return sortedRecArray;
     }
+
+    public int[][] getP()
+    {
+        return prereqArray;
+    }
+
+
 
     public void findRecommended()
     {
+
+
+        List<int> electivesList = new List<int>();
+        List<int> nonElectives = new List<int>();
+
+        //\ Gets a list of all electives
+        using (SqlConnection sqlconn = new SqlConnection(myDatabase))
+        {
+            SqlCommand cmd = new SqlCommand("getElectives", sqlconn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            sqlconn.Open();
+            using (IDataReader dataReader = cmd.ExecuteReader())
+            {
+                while (dataReader.Read())
+                {
+                    int item = Convert.ToInt32(dataReader["course_id"]);
+                    electivesList.Add(item);
+                }
+            }
+            sqlconn.Close();
+        }
+
+        nonElectives = possibleCourses.Except(electivesList).ToList();
+
+
+        //\ makes an array of form [courseid][numOfPrereqs]
+        int[][] recommendedArray = new int[possibleCourses.Count()][];
+        int iCounter = 0;
+        foreach (int p in possibleCourses)
+        {
+            int recCount = 0;
+            for (int i = 0; i < prereqArray.Length; i++)
+            {
+                if(prereqArray[i][0] == p)
+                {
+                    recCount++;
+                }
+
+                
+            }
+
+            recommendedArray[iCounter] = new int[] { p, recCount };
+            iCounter++;
+
+        }
+
+        sortedRecArray = new int[possibleCourses.Count()][];
+        sortedRecArray = InsertionSort(recommendedArray);
+
+
+
+
         int prioritySize = possibleCourses.Count();
         //String[][] priorityArray = new String[prioritySize][];
         Dictionary<int, int> priBook = new Dictionary<int, int>();
@@ -95,7 +165,7 @@ public class ResultsBuilder
         int pri = 0;
 
 
-        foreach (int s in possibleCourses)
+        foreach (int s in nonElectives)
         {
 
             foreach (int[] p in prereqList)
@@ -129,10 +199,34 @@ public class ResultsBuilder
 
 
 
+    } //\ END FIND RECOMMENDED
+
+
+    public int[][] InsertionSort(int[][] intArray)
+    {
+        //for (int i = 0; i < intArray.Length; i++)
+        // {
+        // Console.WriteLine(intArray[i]);
+        //  }
+
+        int[] temp;
+        int j;
+        for (int i = 1; i < intArray.Length; i++)
+        {
+            temp = intArray[i];
+            j = i - 1;
+
+            while (j >= 0 && intArray[j][1] < temp[1])
+            {
+                intArray[j + 1] = intArray[j];
+                j--;
+            }
+
+            intArray[j + 1] = temp;
+        }
+
+        return intArray;
     }
-
-
-
 
 
 
@@ -140,22 +234,28 @@ public class ResultsBuilder
     public List<int> getPossible()
     {
 
-        for (int p = 0; p < 5; p++)
-        {
-            testPos.Add(prereqList[p][0]);
-        }
+        //for (int p = 0; p < 5; p++)
+       // {
+           // testPos.Add(prereqList[p][0]);
+       // }
         //return neededCourses;
         //return testList;
         return possibleCourses;
         // return testPre;
     }
 
+
+
+    //\ *****************************************************************************************************
+    //\ *****        findPossible Method          ***********************************************************
+    //\ *****************************************************************************************************
+
     public void findPossible()
     {
 
 
         //\ opens connection to sql server
-        using (SqlConnection sqlconn = new SqlConnection("Data Source=C-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True"))
+        using (SqlConnection sqlconn = new SqlConnection(myDatabase))
         {
             //\ This will check each course you need and see if you meet prereqs
             //  foreach(String s in neededCourses)
@@ -183,7 +283,7 @@ public class ResultsBuilder
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = sqlconn;
 
-
+            //possibleCourses = neededCourses;
 
             int prereqCounter = 0;
             //\ adds all prereqs for current couses to list
@@ -199,16 +299,19 @@ public class ResultsBuilder
                     prereqTemp[1] = courseID;
                     if (!takenCourses.Contains(courseID))
                     {
-                        if (posTest.Contains(groupID))
+                        if (neededCourses.Contains(groupID))
                         {
-                            posTest.Remove(groupID);
+                            posTest.Add(groupID);
                         }
                     }
 
 
                     //possibleCourses.Add(groupID);
-                    testPre.Add(prereqTemp[0]);
-                    prereqArray[prereqCounter] = new int[] { groupID, courseID };
+                    //testPre.Add(prereqTemp[0]);
+                    
+                     
+                        prereqArray[prereqCounter] = new int[] { groupID, courseID };
+                    
                     prereqCounter++;
                     prereqList.Add(prereqTemp); //\ a list of current prereqs for current course 's'
                 }
@@ -222,6 +325,9 @@ public class ResultsBuilder
 
             sqlconn.Close(); //\ closes current sql connection
 
+
+
+            possibleCourses = neededCourses.Except(posTest).ToList();
 
             // foreach(String s in removeHash)
             //{
@@ -271,10 +377,10 @@ public class ResultsBuilder
 
         }
 
-        foreach (int s in posTest)
-        {
-            possibleCourses.Add(s);
-        }
+        //foreach (int s in possibleCourses)
+       // {
+       //     possibleCourses.Add(s);
+       // }
 
 
     }//\ end findPossible
