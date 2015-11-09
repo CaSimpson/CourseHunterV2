@@ -98,7 +98,8 @@ public partial class Results : System.Web.UI.Page
             rs.findPossible();
             possibleList = rs.getPossible();
             rs.findRecommended();
-            recIntList = rs.getRecommended();
+            //recIntList = rs.getRecommended();
+            int[][] recArray =   rs.getRecommended();
 
 
             String currentCourseName;
@@ -130,7 +131,7 @@ public partial class Results : System.Web.UI.Page
             for (int i = 0; i < 5; i++)
             {
 
-                cmdGetRec.Parameters.AddWithValue("@courseID", recIntList[i]);
+                cmdGetRec.Parameters.AddWithValue("@courseID", recArray[i][0]);
                 conGetRec.Open();
                 currentCourseName = Convert.ToString(cmdGetRec.ExecuteScalar());
                 recList[i] = currentCourseName;
@@ -151,10 +152,19 @@ public partial class Results : System.Web.UI.Page
             //rec4.Text = recIntList[3].ToString();
             // rec5.Text = recIntList[4].ToString();
 
+           // int alength = prereqList.Length;
 
+           // for (int i = 0; i < alength; i++)
+          //  {
+               
+         //       allPosListBox.Items.Add(prereqList[i][0].ToString());
+         //       testList.Items.Add(prereqList[i][1].ToString());
+         ////       
+         //   }
+            
             foreach (String i in formattedList)
             {
-                allPosListBox.Items.Add(i.ToString());
+               allPosListBox.Items.Add(i.ToString());
             }
 
             foreach (String i in formattedList)
