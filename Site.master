@@ -66,6 +66,8 @@
                         <li><a id="A4" runat="server" href="~/About">About</a></li>
                         <li><a id="A5" runat="server" href="~/Contact">Contact</a></li>
                         <li><a id="A6" runat="server" href="~/UserAccount">User Account</a></li>
+                        <li><a id="A7" runat="server" href="~/Admin privleges/databaseChanges.aspx">Database</a></li>
+
                     </ul>
                 </nav>
             </div>
