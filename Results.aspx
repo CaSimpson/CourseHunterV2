@@ -32,7 +32,7 @@
         <asp:Label ID="rec1" runat="server" Text="Label"></asp:Label>
         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-        <asp:ListBox ID="allPosListBox" runat="server"></asp:ListBox>
+        <asp:ListBox ID="allPosListBox" runat="server"></asp:ListBox><asp:ListBox ID="testList" runat="server"></asp:ListBox>
     </p>
     <p>
         <asp:Label ID="rec2" runat="server" Text="Label1"></asp:Label>

@@ -39,7 +39,7 @@
         <div class="content-wrapper">
             <div class="float-left">
                 <p class="site-title">
-                    <a id="A1" runat="server" href="~/">your logo here</a></p>
+                    <a id="A1" runat="server" href="~/"> <img src="Images/CH_Logo_Howle.png" /></a></p>
             </div>
             <div class="float-right">
                 <section id="login">
@@ -66,6 +66,8 @@
                         <li><a id="A4" runat="server" href="~/About">About</a></li>
                         <li><a id="A5" runat="server" href="~/Contact">Contact</a></li>
                         <li><a id="A6" runat="server" href="~/UserAccount">User Account</a></li>
+                        <li><a id="A7" runat="server" href="~/Admin privleges/databaseChanges.aspx">Database</a></li>
+
                     </ul>
                 </nav>
             </div>
@@ -79,11 +81,7 @@
     </div>
     <footer>
         <div class="content-wrapper">
-            <div class="float-left">
-                <p>
-                    &copy; <%: DateTime.Now.Year %> - My ASP.NET Application
-                </p>
-            </div>
+            Course Hunter website(V0.2)
         </div>
     </footer>
     </form>
