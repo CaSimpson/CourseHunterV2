@@ -39,7 +39,7 @@
         <div class="content-wrapper">
             <div class="float-left">
                 <p class="site-title">
-                    <a id="A1" runat="server" href="~/"> <img src="Images/CH_Logo_Howle.png" /></a></p>
+                    <a id="A1" runat="server" href="~/"> <img src="../Images/CH_Logo_Howle.png" /></a></p>
             </div>
             <div class="float-right">
                 <section id="login">
