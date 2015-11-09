@@ -40,7 +40,7 @@ public partial class Progress : System.Web.UI.Page
             //\ gets userName and UserID
             String userName = HttpContext.Current.User.Identity.Name;
             String userId = Membership.GetUser(userName).ProviderUserKey.ToString();
-            String actualName;
+            //String actualName;
 
 
             // ******************* This gets student's name from database and adds to lblStudentName *********************************

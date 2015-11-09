@@ -30,9 +30,10 @@ public partial class Account_Register : Page
 
     protected void RegisterUser_CreatedUser(object sender, EventArgs e)
     {
-        FormsAuthentication.SetAuthCookie(RegisterUser.UserName, createPersistentCookie: false);      
+        FormsAuthentication.SetAuthCookie(RegisterUser.UserName, createPersistentCookie: false);
 
-          // This saves name to student table, need db finished
+        // This saves name to student table, need db finished
+
 
         //\ gets the value of the Name box
         TextBox nameText = RegisterUser.CreateUserStep.ContentTemplateContainer.FindControl("iName") as TextBox;
@@ -48,7 +49,7 @@ public partial class Account_Register : Page
         SqlConnection con = new SqlConnection(myDatabase);
         con.Open();
 
-       {
+        
             using (SqlCommand cmd = new SqlCommand("addUser", con))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -65,9 +66,10 @@ public partial class Account_Register : Page
             }
 
             con.Close();
-        }
+        
 
-    
+
+
 
 
 
@@ -79,6 +81,8 @@ public partial class Account_Register : Page
         Response.Redirect(continueUrl);
     }
 
-    
+
+
+   
 }
 

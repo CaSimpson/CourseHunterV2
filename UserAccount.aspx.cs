@@ -26,4 +26,14 @@ public partial class UserAccount : System.Web.UI.Page
     {
         Response.Redirect("Progress.aspx");
     }
+
+    protected void btnRateCourse_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("RateMyCourse.aspx");
+    }
+
+    protected void btnProfile_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("profile.aspx");
+    }
 }
