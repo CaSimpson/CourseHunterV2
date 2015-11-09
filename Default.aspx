@@ -3,27 +3,46 @@
 
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <h3>We suggest the following:</h3>
-    <ol class="round">
+
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+
+
+
+    <div class="col-md-6">
+
+        <h1 class="bg-success text-center">"Good planning is good for Graduation"</h1>
+        <p class="text-right"> --Daniel Dingana(co-founder)</p>
+        
+
+    <ul class="lg-round">
         <li class="one">
             <asp:Label ID="lblVerify" runat="server" Text="Label" Visible="False">User Verified</asp:Label>
             <asp:Label ID="Label1" runat="server" Text="Label" Visible="False"></asp:Label>
             <asp:Label ID="Label2" runat="server" Text="Label" Visible="False"></asp:Label>
             <asp:Label ID="Label3" runat="server" Text="Label" Visible="False"></asp:Label>
-            <h5>Getting Started</h5>
-            ASP.NET Web Forms lets you build dynamic websites using a familiar drag-and-drop, event-driven model.
-            A design surface and hundreds of controls and components let you rapidly build sophisticated, powerful UI-driven sites with data access.
-            <a href="http://go.microsoft.com/fwlink/?LinkId=245146">Learn more…</a>
+            <h4>What our web application is trying to accomplish</h4>
+            This project will be a web application that helps a student keep track of their academic progress  
+            and creates a list of classes a student can choose from and register for that current semester.
         </li>
         <li class="two">
-            <h5>Add NuGet packages and jump-start your coding</h5>
-            NuGet makes it easy to install and update free libraries and tools.
-            <a href="http://go.microsoft.com/fwlink/?LinkId=245147">Learn more…</a>
+            <h4>Benefits this application</h4>
+            The benefits of our application will make it easier for a both faculty(advisors specificly) 
+            and students to see what classes are needed to continue toward a particular major.
+             <mark>THIS SOFTWARE SHOULD ONLY BE A GUIDELINE.</mark> This software is just a tool to help. Please speak with
+            your advisor before makeing any final decisions. 
         </li>
         <li class="three">
-            <h5>Find Web Hosting</h5>
-            You can easily find a web hosting company that offers the right mix of features and price for your applications.
-            <a href="http://go.microsoft.com/fwlink/?LinkId=245143">Learn more…</a>
+            <h4>Keep track of your progress</h4>
+            Very often students try to sign up for classes that require prerequisites that the student does not meet.  
+            The software will inform the student and not show the student those classes. 
+             As a result the software will also help you avoid taking unnecessary classes and increase chance of graduating on-time.
         </li>
-    </ol>
+    </ul>
+
+    </div>
+
+    <div class="col-md-6">
+        <img src="Images/Front_Catalog_Howle.png" alt="Course Catalog" class="img-rounded" style="width: 90%; height: 90%">
+    </div>
+        
 </asp:Content>
