@@ -9,17 +9,27 @@ using System.Data;
 using Microsoft.AspNet.Membership;
 using Microsoft.AspNet.Membership.OpenAuth;
 using System.Web.Security;
+using System.Web.Configuration;
+
 
 
 public partial class profile : System.Web.UI.Page
 {
+    /**********************************************************************
+    *                   CREATE YOUR CONNECTION STRINGS BELOW               *
+    **********************************************************************/
+    private static String coreysDB = WebConfigurationManager.ConnectionStrings["coreydb"].ConnectionString;
+
+
+
+
 
     /**********************************************************************
    * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
    **********************************************************************/
 
     //store connection string for my Database in a string variable
-    String myDatabase = "Data Source=.\\SQLEXPRESS;Initial Catalog=courseHunter540NEW;Integrated Security=True";
+    String myDatabase = coreysDB;
     String userId;
     String username;
     String studentName;

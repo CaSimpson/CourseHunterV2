@@ -11,6 +11,7 @@ using System.Configuration;
 using Microsoft.AspNet.Membership;
 using Microsoft.AspNet.Membership.OpenAuth;
 using System.Web.Security;
+using System.Web.Configuration;
 
 public partial class AddRemoveCourse : System.Web.UI.Page
 {
@@ -26,9 +27,16 @@ public partial class AddRemoveCourse : System.Web.UI.Page
     public static ResultsBuilder rb;
 
     /**********************************************************************
+   *                   CREATE YOUR CONNECTION STRINGS BELOW               *
+   **********************************************************************/
+    private static String coreysDB = WebConfigurationManager.ConnectionStrings["coreydb"].ConnectionString;
+
+
+
+    /**********************************************************************
     * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
     **********************************************************************/
-    String myDatabase = "Data Source=.\\SQLEXPRESS;Initial Catalog=courseHunter540NEW;Integrated Security=True";
+    String myDatabase = coreysDB;
 
 
     protected void Page_Load(object sender, EventArgs e)

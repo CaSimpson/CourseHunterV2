@@ -8,7 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 using System.IO;
-
+using System.Web.Configuration;
 /// <summary>
 /// ResultsBuilder 
 /// param: 1. List of completed courses, 2. List of all courses
@@ -25,12 +25,20 @@ using System.IO;
 public class ResultsBuilder
 {
     /**********************************************************************
+   *                   CREATE YOUR CONNECTION STRINGS BELOW               *
+   **********************************************************************/
+    private static String coreysDB = WebConfigurationManager.ConnectionStrings["coreydb"].ConnectionString;
+
+
+
+
+    /**********************************************************************
     * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
     **********************************************************************/
-    String myDatabase = "Data Source=.\\SQLEXPRESS;Initial Catalog=courseHunter540NEW;Integrated Security=True";
+    static String myDatabase = coreysDB;
 
 
-    SqlConnection con = new SqlConnection("Data Source=C-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True");
+    SqlConnection con = new SqlConnection(myDatabase);
 
     List<int> allCourses = new List<int>();       //\ list of all courses
     List<int> takenCourses = new List<int>();  //\ list of complete courses

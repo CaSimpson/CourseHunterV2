@@ -13,9 +13,16 @@ using Microsoft.AspNet.Membership.OpenAuth;
 using System.Data.SqlClient;
 using System.Data;
 using Microsoft.AspNet.Membership;
+using System.Web.Configuration;
 
 public partial class Account_Register : Page
 {
+    /**********************************************************************
+   *                   CREATE YOUR CONNECTION STRINGS BELOW               *
+   **********************************************************************/
+    private static String coreysDB = WebConfigurationManager.ConnectionStrings["coreydb"].ConnectionString;
+
+
 
     /**********************************************************************
    * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
