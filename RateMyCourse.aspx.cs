@@ -20,7 +20,7 @@ public partial class RateMyCourse : System.Web.UI.Page
     /**********************************************************************
     * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
     **********************************************************************/
-    String myDatabase = "Data Source=C-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True";
+    String myDatabase = "Data Source=.\\SQLEXPRESS;Initial Catalog=courseHunter540NEW;Integrated Security=True";
     String userId;
     int currentRating = 0;
     List<int> allList = new List<int>();

@@ -12,7 +12,7 @@ public partial class Admin_privleges_AddCourse : System.Web.UI.Page
     /**********************************************************************
    * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
    **********************************************************************/
-    String myDatabase = "Data Source=USER-VAIO\\SQLEXPRESS;Initial Catalog=courseHunter540NEW;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+    String myDatabase = "Data Source=.\\SQLEXPRESS;Initial Catalog=courseHunter540NEW;Integrated Security=True";
 
    
     protected void Page_Load(object sender, EventArgs e)
