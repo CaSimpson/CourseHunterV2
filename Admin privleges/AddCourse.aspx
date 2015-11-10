@@ -6,6 +6,7 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" Runat="Server">
 
+    <link href="../Content/bootstrap.css" rel="stylesheet" />
 
     <table>
         <tr>
@@ -29,7 +30,7 @@
 
         <tr>
             <td colspan="2">
-                <asp:Button ID="Button1" runat="server" Text="Save Course" OnClick="Button1_Click" />
+                <asp:Button ID="Button1" runat="server" Text="Save Course" OnClick="Button1_Click" cssClass="btn btn-success" />
             </td>
         </tr>
     </table>
