@@ -19,7 +19,7 @@ public partial class profile : System.Web.UI.Page
    **********************************************************************/
 
     //store connection string for my Database in a string variable
-    String myDatabase = "Data Source=C-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True";
+    String myDatabase = "Data Source=.\\SQLEXPRESS;Initial Catalog=courseHunter540NEW;Integrated Security=True";
     String userId;
     String username;
     String studentName;

@@ -39,8 +39,8 @@
             </LayoutTemplate>
         </asp:Login>
         <p>
-            <asp:HyperLink runat="server" ID="RegisterHyperLink" ViewStateMode="Disabled">Register</asp:HyperLink>
-            if you don't have an account.
+            * Don't have an account?  
+            <asp:HyperLink runat="server" ID="RegisterHyperLink" ViewStateMode="Disabled">Register today!</asp:HyperLink>
         </p>
     </section>
 

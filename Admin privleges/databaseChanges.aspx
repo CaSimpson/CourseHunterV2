@@ -5,9 +5,12 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="FeaturedContent" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" Runat="Server">
+
+    <link href="../Content/bootstrap.css" rel="stylesheet" />
+
     <h2>Edit Courses
         Here or add a course(s) by clicking &#39;Add Course&#39;</h2>
-    <h5>&nbsp;<asp:Button ID="Button1" runat="server" Height="41px" Text="Add Course" Width="120px" PostBackUrl="~/Admin privleges/AddCourse.aspx" />
+    <h5>&nbsp;<asp:Button ID="Button1" runat="server" Height="41px" Text="Add Course(s)" Width="120px" PostBackUrl="~/Admin privleges/AddCourse.aspx" CssClass="btn btn-success" />
     </h5>
 
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CellPadding="4" DataKeyNames="course_id" DataSourceID="coursesTable" ForeColor="#333333" GridLines="None" Width="761px">

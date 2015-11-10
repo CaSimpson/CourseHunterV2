@@ -60,11 +60,9 @@
                                      CssClass="field-validation-error" Display="Dynamic" ErrorMessage="The password and confirmation password do not match." />
                             </li>
                         </ol>
-<<<<<<< HEAD
-                        <asp:Button runat="server" CommandName="MoveNext" Text="Register"/>
-=======
+
                         <asp:Button runat="server" CommandName="MoveNext" Text="Register" CssClass="btn btn-success"  />
->>>>>>> origin/master
+
                     </fieldset>
                 </ContentTemplate>
                 <CustomNavigationTemplate />
