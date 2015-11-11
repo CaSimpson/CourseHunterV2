@@ -9,14 +9,27 @@ using System.Data;
 using Microsoft.AspNet.Membership;
 using Microsoft.AspNet.Membership.OpenAuth;
 using System.Web.Security;
+using System.Web.Configuration;
 
 
 public partial class Progress : System.Web.UI.Page
 {
     /**********************************************************************
+   *                   CREATE YOUR CONNECTION STRINGS BELOW               *
+   **********************************************************************/
+    private static String coreysDB = WebConfigurationManager.ConnectionStrings["coreydb"].ConnectionString;
+
+
+
+
+
+
+
+
+    /**********************************************************************
    * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
    **********************************************************************/
-    String myDatabase = "Data Source=C-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True";
+    String myDatabase = coreysDB;
 
     List<int> completeCoursesInt = new List<int>();
     List<String> completeCourses = new List<String>();
@@ -40,13 +53,13 @@ public partial class Progress : System.Web.UI.Page
             //\ gets userName and UserID
             String userName = HttpContext.Current.User.Identity.Name;
             String userId = Membership.GetUser(userName).ProviderUserKey.ToString();
-            String actualName;
+            //String actualName;
 
 
             // ******************* This gets student's name from database and adds to lblStudentName *********************************
 
             //\ gets student name from student id
-            SqlConnection con = new SqlConnection(myDatabase);
+            SqlConnection con = new SqlConnection(coreysDB);
             SqlCommand cmdGetName = new SqlCommand("getStudentName", con);
             cmdGetName.CommandType = CommandType.StoredProcedure;
             cmdGetName.Parameters.AddWithValue("@studentId", userId);
@@ -64,7 +77,7 @@ public partial class Progress : System.Web.UI.Page
             // ******************* This gets a list of all completed courses and adds to listbox *********************************
 
             //\ adds all courses_taken for user to completeCoursesInt array
-            using (SqlConnection sqlconn = new SqlConnection(myDatabase))
+            using (SqlConnection sqlconn = new SqlConnection(coreysDB))
             {
                 SqlCommand cmd = new SqlCommand("getCourseTaken", sqlconn);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -96,7 +109,7 @@ public partial class Progress : System.Web.UI.Page
             //************** This calculates percent of courses complete  ********************************************
 
             //\ This calls store procedure to return a count for all courses
-            SqlConnection conCountAll = new SqlConnection(myDatabase);
+            SqlConnection conCountAll = new SqlConnection(coreysDB);
             SqlCommand cmdGetCountAll = new SqlCommand("countAll", conCountAll);
             cmdGetCountAll.CommandType = CommandType.StoredProcedure;
 
@@ -105,7 +118,7 @@ public partial class Progress : System.Web.UI.Page
             conCountAll.Close();
 
             //\ This calls store procedure to return a count for complete courses
-            SqlConnection conCountComplete = new SqlConnection(myDatabase);
+            SqlConnection conCountComplete = new SqlConnection(coreysDB);
 
             SqlCommand cmdGetCountComplete = new SqlCommand("countComplete", conCountComplete);
             cmdGetCountComplete.CommandType = CommandType.StoredProcedure;
@@ -141,7 +154,7 @@ public partial class Progress : System.Web.UI.Page
         String currentCourseName;
 
         //\ gets course name for possible courses
-        SqlConnection conGetName = new SqlConnection(myDatabase);
+        SqlConnection conGetName = new SqlConnection(coreysDB);
 
         SqlCommand cmdGetName = new SqlCommand("getCourseName", conGetName);
         cmdGetName.CommandType = CommandType.StoredProcedure;

@@ -1,6 +1,19 @@
 ﻿<%@ Page Title="Contact" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeFile="Contact.aspx.cs" Inherits="Contact" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+    
+    <link href="Content/bootstrap-social.css" rel="stylesheet" />
+
+    <link href="Content/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<a class="btn-social">
+    <span class="fa fa-facebook-square"></span> Check us out on facebook!
+  </a>
+
+
+
+
+    
     <hgroup class="title">
         <h1><%: Title %>.</h1>
         <h2>Your contact page.</h2>
@@ -47,4 +60,5 @@
             Redmond, WA 98052-6399
         </p>
     </section>
+
 </asp:Content>

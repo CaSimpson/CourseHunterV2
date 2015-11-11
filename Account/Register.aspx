@@ -1,6 +1,9 @@
 ﻿<%@ Page Title="Register" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeFile="Register.aspx.cs" Inherits="Account_Register" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+
+    <link href="../Content/bootstrap.css" rel="stylesheet" />
+
     <hgroup class="title">
         
         <h2>Use the form below to create a new account.</h2>
@@ -27,37 +30,39 @@
                         <ol>
                             <li>
                                 <asp:Label runat="server" AssociatedControlID="UserName">User name</asp:Label>
-                                <asp:TextBox runat="server" ID="UserName" />
+                                <asp:TextBox runat="server" ID="UserName" Cssclass ="form-control"/>
                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="UserName"
                                     CssClass="field-validation-error" ErrorMessage="The user name field is required." />
                             </li>
                             <li>
                                 <asp:Label runat="server" AssociatedControlID="Email">Email address</asp:Label>
-                                <asp:TextBox runat="server" ID="Email" TextMode="Email" />
+                                <asp:TextBox runat="server" ID="Email" TextMode="Email" Cssclass ="form-control" />
                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="Email"
                                     CssClass="field-validation-error" ErrorMessage="The email address field is required." />
                             </li>
                             <li>
                                 <asp:Label runat="server" AssociatedControlID="iName">Name</asp:Label>
-                                <asp:TextBox runat="server" ID="iName"/>
+                                <asp:TextBox runat="server" ID="iName" Cssclass ="form-control"/>
                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="iName" CssClass="field-validation-error" ErrorMessage="The name field is required." />
                             </li>
                             <li>
                                 <asp:Label runat="server" AssociatedControlID="Password">Password</asp:Label>
-                                <asp:TextBox runat="server" ID="Password" TextMode="Password" />
+                                <asp:TextBox runat="server" ID="Password" TextMode="Password" Cssclass ="form-control"/>
                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="Password"
                                     CssClass="field-validation-error" ErrorMessage="The password field is required." />
                             </li>
                             <li>
                                 <asp:Label runat="server" AssociatedControlID="ConfirmPassword">Confirm password</asp:Label>
-                                <asp:TextBox runat="server" ID="ConfirmPassword" TextMode="Password" />
+                                <asp:TextBox runat="server" ID="ConfirmPassword" TextMode="Password" Cssclass ="form-control"/>
                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="ConfirmPassword"
                                      CssClass="field-validation-error" Display="Dynamic" ErrorMessage="The confirm password field is required." />
                                 <asp:CompareValidator runat="server" ControlToCompare="Password" ControlToValidate="ConfirmPassword"
                                      CssClass="field-validation-error" Display="Dynamic" ErrorMessage="The password and confirmation password do not match." />
                             </li>
                         </ol>
-                        <asp:Button runat="server" CommandName="MoveNext" Text="Register" />
+
+                        <asp:Button runat="server" CommandName="MoveNext" Text="Register" CssClass="btn btn-success"  />
+
                     </fieldset>
                 </ContentTemplate>
                 <CustomNavigationTemplate />

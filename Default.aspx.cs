@@ -14,11 +14,8 @@ public partial class _Default : Page
         if (HttpContext.Current.User.Identity.IsAuthenticated)
         {
 
-
-            lblVerify.Visible = true;
-            u = Membership.GetUser(User.Identity.Name);
-            Label1.Text = u.ToString();
-            Label1.Visible = true;
+            // REMOVED TEST CODE
+          
             
         }
     }

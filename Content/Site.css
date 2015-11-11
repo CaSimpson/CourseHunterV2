@@ -94,7 +94,7 @@ h5, h6 {
 ----------------------------------------------------------*/
 .content-wrapper {
     margin: 0 auto;
-    max-width: 960px;
+    max-width: 1000px;
 }
 
 #body {
@@ -210,6 +210,7 @@ ul#menu {
 /* featured */
 .featured {
     background-color: #fff;
+    margin-top: 100px;
 }
 
     .featured .content-wrapper {
