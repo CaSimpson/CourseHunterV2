@@ -1,64 +1,76 @@
 ﻿<%@ Page Title="Contact" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeFile="Contact.aspx.cs" Inherits="Contact" %>
 
-<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    
-    <link href="Content/bootstrap-social.css" rel="stylesheet" />
-
-    <link href="Content/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet" />
-
-<a class="btn-social">
-    <span class="fa fa-facebook-square"></span> Check us out on facebook!
-  </a>
-
-
-
-
-    
-    <hgroup class="title">
-        <h1><%: Title %>.</h1>
-        <h2>Your contact page.</h2>
-    </hgroup>
-
-    <section class="contact">
-        <header>
-            <h3>Phone:</h3>
-        </header>
-        <p>
-            <span class="label">Main:</span>
-            <span>425.555.0100</span>
-        </p>
-        <p>
-            <span class="label">After Hours:</span>
-            <span>425.555.0199</span>
-        </p>
-    </section>
-
-    <section class="contact">
-        <header>
-            <h3>Email:</h3>
-        </header>
-        <p>
-            <span class="label">Support:</span>
-            <span><a href="mailto:Support@example.com">Support@example.com</a></span>
-        </p>
-        <p>
-            <span class="label">Marketing:</span>
-            <span><a href="mailto:Marketing@example.com">Marketing@example.com</a></span>
-        </p>
-        <p>
-            <span class="label">General:</span>
-            <span><a href="mailto:General@example.com">General@example.com</a></span>
-        </p>
-    </section>
-
-    <section class="contact">
-        <header>
-            <h3>Address:</h3>
-        </header>
-        <p>
-            One Microsoft Way<br />
-            Redmond, WA 98052-6399
-        </p>
-    </section>
-
+<asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">    
+    <div class="container" role="main">
+        <div class="jumbotron">
+            <div class="container">
+                <h1><%: Title %>.</h1>
+                <h2>If you are having toruble with our site please feel free to contact any of the developers.</h2>
+                <p>You can see the contact information and bio for each developer below.</p>
+            </div>
+        </div>
+    </div>
 </asp:Content>
+
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="well">
+                <img class="img-circle center-block" src="Images/Reid.jpg" width="140" height="140">
+                <h2 class="text-center">Reid Mewborne</h2>
+                <h4 class="text-center">Placeholder text: Bio</h4>
+                <p class="text-center"><a href="mailto:mewborne@email.uscupstate.edu">mewborne@email.uscupstate.edu</a></p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="well">
+                <img class="img-circle center-block" src="Images/Reid.jpg" alt="Generic placeholder image" width="140" height="140">
+                <h2 class="text-center">John Evans</h2>
+                <h4 class="text-center">Placeholder text: Bio</h4>
+                <p class="text-center"><a href="mailto:mewborne@email.uscupstate.edu">mewborne@email.uscupstate.edu</a></p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="well">
+                <img class="img-circle center-block" src="Images/Reid.jpg" alt="Generic placeholder image" width="140" height="140">
+                <h2 class="text-center">Daniel Dingana</h2>
+                <h4 class="text-center">Placeholder text: Bio</h4>
+                <p class="text-center"><a href="mailto:mewborne@email.uscupstate.edu">mewborne@email.uscupstate.edu</a></p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="well">
+                <img class="img-circle center-block" src="Images/Reid.jpg" alt="Generic placeholder image" width="140" height="140">
+                <h2 class="text-center">Trey Howel</h2>
+                <h4 class="text-center">Placeholder text: Bio</h4>
+                <p class="text-center"><a href="mailto:mewborne@email.uscupstate.edu">mewborne@email.uscupstate.edu</a></p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="well">
+                <img class="img-circle center-block" src="Images/Reid.jpg" alt="Generic placeholder image" width="140" height="140">
+                <h2 class="text-center">Corey Simpson</h2>
+                <h4 class="text-center">Placeholder text: Bio</h4>
+                <p class="text-center"><a href="mailto:mewborne@email.uscupstate.edu">mewborne@email.uscupstate.edu</a></p>
+            </div>
+        </div>
+        <div class="hidden">
+        <p>
+            <span class="label">Game if your bored</span>
+            <span>A spelling/animal identification game!</span>
+
+            
+            <object width="550" height="500">
+                <param name="movie" value="hiddenpicture2.swf">
+                <embed src="hiddenpicture2.swf" width="550" height="500">
+                </embed>
+            </object
+        </p>
+        </div>
+    </div>
+</asp:Content>
+
