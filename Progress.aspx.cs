@@ -53,58 +53,22 @@ public partial class Progress : System.Web.UI.Page
             //\ gets userName and UserID
             String userName = HttpContext.Current.User.Identity.Name;
             String userId = Membership.GetUser(userName).ProviderUserKey.ToString();
-            //String actualName;
+            
+            //\ Create student object
+            Student student = new Student(userId);
+            studentName = student.getName(); //\ returns student's name
+            lblStudentName.Text = studentName; //\ sets student's name to label
+            completeCourses = student.getTakenCourses(); //\ returns a list of completed courses
 
-
-            // ******************* This gets student's name from database and adds to lblStudentName *********************************
-
-            //\ gets student name from student id
-            SqlConnection con = new SqlConnection(coreysDB);
-            SqlCommand cmdGetName = new SqlCommand("getStudentName", con);
-            cmdGetName.CommandType = CommandType.StoredProcedure;
-            cmdGetName.Parameters.AddWithValue("@studentId", userId);
-
-            con.Open();
-            studentName = Convert.ToString(cmdGetName.ExecuteScalar());
-            con.Close();
-
-            lblStudentName.Text = studentName;
-            //*************** END set Student Name ******************************************************
-
-
-
-
-            // ******************* This gets a list of all completed courses and adds to listbox *********************************
-
-            //\ adds all courses_taken for user to completeCoursesInt array
-            using (SqlConnection sqlconn = new SqlConnection(coreysDB))
-            {
-                SqlCommand cmd = new SqlCommand("getCourseTaken", sqlconn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@studentid", userId);
-                sqlconn.Open();
-                using (IDataReader dataReader = cmd.ExecuteReader())
-                {
-                    while (dataReader.Read())
-                    {
-                        int item = Convert.ToInt32(dataReader["course_id"]);
-                        completeCoursesInt.Add(item);
-                    }
-                }
-                sqlconn.Close();
-            }
-
-            //\ called getCourseName Method, which converts course_id to course_name
-            completeCourses = getCourseName(completeCoursesInt);
-
-            //\ adds all complete courses to Compete Courses List Box
+            //\ adds taken courses to listbox
             foreach (String s in completeCourses)
             {
                 completeListBox.Items.Add(s);
             }
-            //*************** END get complete courses list ******************************************************
 
 
+
+            
 
             //************** This calculates percent of courses complete  ********************************************
 
@@ -132,8 +96,20 @@ public partial class Progress : System.Web.UI.Page
 
             //************* END Calculate Percent Complete ***************************************************
 
-
-
+            lblCourseComplete.Text = compCourses.ToString();
+            lblCourseRemaining.Text = (totalCourses - compCourses).ToString();
+            int allCredits = 120;
+            int takenCredits = 0;
+            
+            foreach(String s in completeCourses)
+            {
+                System.Diagnostics.Debug.Write("course = " + s);
+                Course course = new Course(s);
+                takenCredits += course.getCreditValue();
+                System.Diagnostics.Debug.Write("takenCredits = " + takenCredits.ToString());
+            }
+            lblCreditComplete.Text = takenCredits.ToString();
+            lblCreditRemaining.Text = (allCredits - takenCredits).ToString();
 
         }
         else
@@ -182,3 +158,56 @@ public partial class Progress : System.Web.UI.Page
 
 
 }
+
+
+
+/////////// CODE REPLACED BY STUDENT OBJECT
+/*
+            // ******************* This gets student's name from database and adds to lblStudentName *********************************
+
+            //\ gets student name from student id
+            SqlConnection con = new SqlConnection(coreysDB);
+            SqlCommand cmdGetName = new SqlCommand("getStudentName", con);
+            cmdGetName.CommandType = CommandType.StoredProcedure;
+            cmdGetName.Parameters.AddWithValue("@studentId", userId);
+
+            con.Open();
+            studentName = Convert.ToString(cmdGetName.ExecuteScalar());
+            con.Close();
+
+            lblStudentName.Text = studentName;
+            //*************** END set Student Name ******************************************************
+            */
+
+/*
+                    // ******************* This gets a list of all completed courses and adds to listbox *********************************
+
+                    //\ adds all courses_taken for user to completeCoursesInt array
+                    using (SqlConnection sqlconn = new SqlConnection(coreysDB))
+                    {
+                        SqlCommand cmd = new SqlCommand("getCourseTaken", sqlconn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@studentid", userId);
+                        sqlconn.Open();
+                        using (IDataReader dataReader = cmd.ExecuteReader())
+                        {
+                            while (dataReader.Read())
+                            {
+                                int item = Convert.ToInt32(dataReader["course_id"]);
+                                completeCoursesInt.Add(item);
+                            }
+                        }
+                        sqlconn.Close();
+                    }
+
+                    //\ called getCourseName Method, which converts course_id to course_name
+                    completeCourses = getCourseName(completeCoursesInt);
+
+                    //\ adds all complete courses to Compete Courses List Box
+                    foreach (String s in completeCourses)
+                    {
+                        completeListBox.Items.Add(s);
+                    }
+                    //*************** END get complete courses list ******************************************************
+
+            */

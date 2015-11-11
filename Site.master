@@ -63,12 +63,11 @@
                 <nav>
                     <ul id="menu">
                         <li><a id="A3" runat="server" href="~/">Home</a></li>
-<<<<<<< HEAD
+
                         <li><a id ="A8" runat="server" href="http://publications.uscupstate.edu/Admissions/1415_Academic_Catalog/">Catalog</a></li>
                        
-=======
+
                         <li><a id ="A4" runat="server" href="http://publications.uscupstate.edu/Admissions/1415_Academic_Catalog/">Catalog</a></li>
->>>>>>> da838903aee806f00f2008d92f344390e2ff4813
                         <li><a id="A5" runat="server" href="~/Contact">Contact</a></li>
                         <li><a id="A6" runat="server" href="~/UserAccount">User Account</a></li>
                         <li><a id="A7" runat="server" href="~/Admin privleges/databaseChanges.aspx">Database</a></li>

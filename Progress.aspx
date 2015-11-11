@@ -43,16 +43,54 @@
             <br />
             <br />
 
-            <h3 style="margin-left:auto; margin-right:auto; text-align: center;">
-                Courses Complete
-                
-            </h3>
+            
             <p style="margin-left:auto; margin-right:auto; text-align: center;">
-                                <asp:ListBox ID="completeListBox" runat="server"></asp:ListBox>
+                                
                 
            
 
             </p>
+            
+            <table style="width: 75%;">
+                <tr>
+                    <td rowspan="6" align="center">&nbsp;
+                        <h3 style="margin-left:auto; margin-right:auto; text-align: center;">
+                Courses Complete
+                
+            </h3>
+                        <asp:ListBox ID="completeListBox" runat="server"></asp:ListBox>
+                    </td>
+                    <td>&nbsp;Courses</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>Complete:</td>
+                    <td>&nbsp;<asp:Label ID="lblCourseComplete" runat="server" Text=""></asp:Label></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>Remaining:</td>
+                    <td>&nbsp;<asp:Label ID="lblCourseRemaining" runat="server" Text=""></asp:Label></td>
+                </tr>
+                <tr>
+                    <td>Credits</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>Complete:</td>
+                    <td>&nbsp;<asp:Label ID="lblCreditComplete" runat="server" Text=""></asp:Label></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>Remaining</td>
+                    <td>&nbsp;<asp:Label ID="lblCreditRemaining" runat="server" Text=""></asp:Label></td>
+                </tr>
+                </table>
+
         </div>
     </section>
     

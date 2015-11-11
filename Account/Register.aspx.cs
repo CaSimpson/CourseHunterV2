@@ -20,7 +20,7 @@ public partial class Account_Register : Page
     /**********************************************************************
    * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
    **********************************************************************/
-    String myDatabase = "Data Source=ELNINODB;Initial Catalog=courseHunter540NEW;Integrated Security=True";
+    String myDatabase = "Data Source=c-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
     protected void Page_Load(object sender, EventArgs e)
     {

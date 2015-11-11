@@ -10,20 +10,21 @@
                 
                 <h1>User Account Page : Click a button to manage account</h1>
             </hgroup>
-<<<<<<< HEAD
-            <p> <!--  COREY S, REMOVED DUPLICATE BUTTONS -->
-<<<<<<< HEAD
+
+            <p> <!--  COREY S, REMOVED DUPLICATE BUTTONS 
+
                 
-=======
       
->>>>>>> origin/master
-            </p>
-=======
- 
-            <div class="col-md-6 ">
+                -->
+
                 <asp:Button ID="btnProfile" runat="server" Text="Profile" OnClick="btnProfile_Click" CssClass = "btn btn-success col-centered"   />
                 <asp:Button ID="btnAddCourse" runat="server" Text="Add / Remove Courses" OnClick="btnAddCourse_Click" CssClass = "btn btn-success" />
                 <asp:Button ID="btnShowRecommended" runat="server" Text="Recommended / Possible courses" OnClick="btnShowRecommended_Click" CssClass =" btn btn-success " />
+            </p>
+
+ 
+            <div class="col-md-6 ">
+                
             </div>
 
             <div class="col-md-6">
@@ -33,7 +34,7 @@
 
 
 
->>>>>>> da838903aee806f00f2008d92f344390e2ff4813
+
         </div>
     </section>
 
