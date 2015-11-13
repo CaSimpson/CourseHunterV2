@@ -13,14 +13,20 @@ using Microsoft.AspNet.Membership.OpenAuth;
 using System.Data.SqlClient;
 using System.Data;
 using Microsoft.AspNet.Membership;
+using System.Web.Configuration;
 
 public partial class Account_Register : Page
 {
+    /**********************************************************************
+   *                   CREATE YOUR CONNECTION STRINGS BELOW               *
+   **********************************************************************/
+    private static String coreysDB = WebConfigurationManager.ConnectionStrings["coreydb"].ConnectionString;
+
 
     /**********************************************************************
    * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
    **********************************************************************/
-    String myDatabase = "Data Source=c-lomain\\cssqlserver;Initial Catalog=courseHunter540NEW;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+    String myDatabase = coreysDB;
 
     protected void Page_Load(object sender, EventArgs e)
     {
