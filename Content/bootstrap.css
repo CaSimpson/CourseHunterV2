@@ -98,6 +98,12 @@ hr {
      -moz-box-sizing: content-box;
           box-sizing: content-box;
 }
+.lblNot {
+    background: #a94442;
+}
+.lblIs {
+    background: #3c763d;
+}
 pre {
   overflow: auto;
 }

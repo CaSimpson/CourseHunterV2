@@ -61,7 +61,7 @@ public class Student
     *****************************************************************************************
     ****************************************************************************************/
 
-
+    // sets current user's name
     private void setStudentName()
     {
         SqlCommand cmdName = new SqlCommand("getStudentName", con);
@@ -73,6 +73,7 @@ public class Student
         con.Close();
     }
 
+    // sets current user's major
     private void setStudentMajor()
     {
         SqlCommand cmdMajor = new SqlCommand("getMajor", con);
@@ -84,6 +85,7 @@ public class Student
         con.Close();
     }
 
+    // sets current user's about me 
     private void setAboutMe()
     {
         SqlCommand cmdAboutMe = new SqlCommand("getAboutMe", con);
@@ -95,6 +97,7 @@ public class Student
         con.Close();
     }
 
+    // sets current user's userName
     private void setUserName()
     {
         SqlCommand cmdUserName = new SqlCommand("getUserName", con);
@@ -106,6 +109,7 @@ public class Student
         con.Close();
     }
 
+    // fills coursesAll, coursesTaken, and coursesNeeded Lists as Strings
     private void setCourseLists()
     {
         //\ adds all courses_taken for user to takeList
@@ -153,9 +157,12 @@ public class Student
 
 
 
-    }
+    }//\ get set courses
 
-    private List<String> getCourseName(List<int> intList)
+
+
+    //\ private method that converts course_id to course_number
+    public List<String> getCourseName(List<int> intList)
     {
         List<String> convertedList = new List<String>();
         String currentCourseName;
@@ -180,32 +187,97 @@ public class Student
         return convertedList;
     } // end getCourseName
 
+
+    //\ returns current user's name
     public String getName()
     {
         return name;
     }
 
+    //\ returns current user's userName
     public String getUserName()
     {
         return userName;
     }
 
+    //\ returns current user's About Me
     public String getAboutMe()
     {
         return aboutMe;
     }
 
+    //\ returns list of all courses for computer science
     public List<String> getAllCourses()
     {
         return coursesAll;
     }
+
+    //\ returns current user's courses needed to graduate
     public List<String> getNeededCourses()
     {
         return coursesNeeded;
     }
+
+    //\ returns current user's list of courses completed
     public List<String> getTakenCourses()
     {
         return coursesTaken;
+    }
+
+    /****************************************************************************************
+    *****************************************************************************************
+    **************************  ADD  METHODS   **********************************************
+    *****************************************************************************************
+    ****************************************************************************************/
+
+    //\ adds a list of courses to course_taken table for current user
+    public void addCoursesTaken(List<int> addList)
+    {
+        con = new SqlConnection(myDatabase);
+        foreach (int i in addList)
+        {
+            using (SqlCommand cmdAddTaken = new SqlCommand("addTaken", con))
+            {
+                cmdAddTaken.CommandType = CommandType.StoredProcedure;
+                cmdAddTaken.Parameters.AddWithValue("@studentid", userId);
+                cmdAddTaken.Parameters.AddWithValue("@courseid", i);
+                con.Open();
+                try
+                {
+                    cmdAddTaken.ExecuteNonQuery();
+                }
+                catch (SqlException)
+                {
+
+                }
+            }
+            con.Close();
+        }
+    }//\ END addCOurses
+
+    //\ removes a list of courses from course_taken table for current user
+    public void removeCoursesTaken(List<int> removeList)
+    {
+        con = new SqlConnection(myDatabase);
+        foreach (int i in removeList)
+        {
+            using (SqlCommand cmdRemoveTaken = new SqlCommand("removeTaken", con))
+            {
+                cmdRemoveTaken.CommandType = CommandType.StoredProcedure;
+                cmdRemoveTaken.Parameters.AddWithValue("@studentid", userId);
+                cmdRemoveTaken.Parameters.AddWithValue("@courseid", i);
+                con.Open();
+                try
+                {
+                    cmdRemoveTaken.ExecuteNonQuery();
+                }
+                catch (SqlException)
+                {
+
+                }
+            }
+            con.Close();
+        }
     }
 
 }

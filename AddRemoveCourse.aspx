@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.master" CodeFile="AddRemoveCourse.aspx.cs" Inherits="AddRemoveCourse" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.master" CodeFile="AddRemoveCourse.aspx.cs" Inherits="AddRemoveCourse"%>
 
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
@@ -18,34 +18,37 @@
 <asp:Content runat="server" ID="appBody" ContentPlaceHolderID="MainContent">
     <h3>We suggest the following:</h3>
 
-    <asp:PlaceHolder ID="uiPlaceholder" runat="server">
     
+   <asp:Panel runat="server" ID="addPanel" cssClass="lblIs">
 
 
     <table class="mytable" width="719" height="510" border="1" style="visibility: visible">
       <tbody class="mytable">
           
         <tr class="tableheader">
-          <td class="auto-style1">Requirement Area</td>
-          <td class="auto-style1">Sub Area / Topic</td>
-          <td class="auto-style1"># credit hours</td>
-          <td class="auto-style1">Courses</td>
-          <td colspan="2" align="center" class="auto-style1" >Completed</td>
+          <td>Requirement Area</td>
+          <td>Sub Area / Topic</td>
+          <td># credit hours</td>
+          <td>Courses</td>
+          <td colspan="2" align="center" >Completed</td>
           
         </tr>
         <tr>
           <td rowspan="2">I. Communication</td>
           <td>English</td>
           <td>6</td>
-          <td>ENGL U101, ENGL U102</td>
-          <td ><asp:CheckBox ID="ENGLU101" runat="server" /></td>
+          <td>
+              
+              <asp:Label runat="server" Text="ENGL U102"></asp:Label>
+             </td>
+          <td><asp:CheckBox ID="ENGLU101" runat="server"/></td>
           <td><asp:CheckBox ID="ENGLU102" runat="server" /></td>
         </tr>
         <tr>
           <td class="auto-style2">Speech</td>
           <td class="auto-style2">3</td>
           <td class="auto-style2">SPCH 201</td>
-          <td colspan="2" align="center" class="auto-style2"><asp:CheckBox ID="SPCH201" runat="server" /></td>
+          <td colspan="2" align="center" class="auto-style2"><asp:CheckBox ID="SPCHU201" runat="server" /></td>
           
           
         </tr>
@@ -64,7 +67,7 @@
         <tr>
           <td rowspan="2">Natural Science (w/lab)</td>
           <td>8</td>
-          <td><asp:DropDownList ID="ns101DropBox" runat="server"></asp:DropDownList>
+          <td><asp:DropDownList ID="ns101DropBox" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ns101DropBox_SelectedIndexChanged"></asp:DropDownList>
               
           </td>
           <td colspan="2"><asp:CheckBox ID="ns101" runat="server" /></td>
@@ -73,7 +76,7 @@
         </tr>
         <tr>
           <td>4</td>
-          <td><asp:DropDownList ID="ns102DropBox" runat="server"></asp:DropDownList></td>
+          <td><asp:DropDownList ID="ns102DropBox" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ns102DropBox_SelectedIndexChanged"></asp:DropDownList></td>
           <td colspan="2"><asp:CheckBox ID="ns102" runat="server" /></td>
           
         </tr>
@@ -95,20 +98,20 @@
           <td rowspan="3">IV. Fine Arts, Humanities & History</td>
           <td>Fine Arts</td>
           <td>3</td>
-          <td><asp:DropDownList ID="art101DropBox" runat="server"></asp:DropDownList></td>
+          <td><asp:DropDownList ID="art101DropBox" runat="server" AutoPostBack="true" OnSelectedIndexChanged="art101DropBox_SelectedIndexChanged"></asp:DropDownList></td>
           <td colspan="2"><asp:CheckBox ID="art101" runat="server" /></td>
           
         </tr>
         <tr>
           <td>History</td>
           <td>3</td>
-          <td><asp:DropDownList ID="his101DropBox" runat="server"></asp:DropDownList></td>
+          <td><asp:DropDownList ID="his101DropBox" runat="server" OnSelectedIndexChanged="his101DropBox_SelectedIndexChanged" AutoPostBack="true" ></asp:DropDownList></td>
           <td colspan="2"><asp:CheckBox ID="his101" runat="server" /></td>
         </tr>
         <tr>
           <td>Humanities</td>
           <td>3</td>
-          <td><asp:DropDownList ID="hum101DropBox" runat="server"></asp:DropDownList></td>
+          <td><asp:DropDownList ID="hum101DropBox" runat="server" AutoPostBack="true" OnSelectedIndexChanged="hum101DropBox_SelectedIndexChanged"></asp:DropDownList></td>
           <td colspan="2"><asp:CheckBox ID="hum101" runat="server" /></td>
         </tr>
         <tr>
@@ -118,7 +121,7 @@
           <td>V. Foreign Language & Culture</td>
           <td>Foreign Language</td>
           <td>3</td>
-          <td><asp:DropDownList ID="for101DropBox" runat="server"></asp:DropDownList></td>
+          <td><asp:DropDownList ID="for101DropBox" runat="server" AutoPostBack="true" OnSelectedIndexChanged="for101DropBox_SelectedIndexChanged"></asp:DropDownList></td>
           <td colspan="2"><asp:CheckBox ID="for101" runat="server" /></td>
         </tr>
         <tr>
@@ -128,12 +131,12 @@
           <td rowspan="2">VI. Social & Behavioral Sciences</td>
           <td rowspan="2">Social & Behavioral Sciences</td>
           <td>3</td>
-          <td><asp:DropDownList ID="soc101DropBox" runat="server"></asp:DropDownList></td>
+          <td><asp:DropDownList ID="soc101DropBox" runat="server" AutoPostBack="true" OnSelectedIndexChanged="soc101DropBox_SelectedIndexChanged"></asp:DropDownList></td>
           <td colspan="2"><asp:CheckBox ID="soc101" runat="server" /></td>
         </tr>
           <tr>
           <td>3</td>
-           <td><asp:DropDownList ID="soc102DropBox" runat="server"></asp:DropDownList></td>
+           <td><asp:DropDownList ID="soc102DropBox" runat="server" AutoPostBack="true" OnSelectedIndexChanged="soc102DropBox_SelectedIndexChanged"></asp:DropDownList></td>
           <td colspan="2"><asp:CheckBox ID="soc102" runat="server" /></td>
         </tr>
         <tr>
@@ -376,7 +379,7 @@
             <tr>
           <td>Natural Science (w/lab)</td>
           <td>4</td>
-          <td><asp:DropDownList ID="ns103DropBox" runat="server"></asp:DropDownList>
+          <td><asp:DropDownList ID="ns103DropBox" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ns103DropBox_SelectedIndexChanged"></asp:DropDownList>
           <td><asp:CheckBox ID="ns103" runat="server" />    
           </td>
           
@@ -389,12 +392,22 @@
 
     <asp:Button ID="btnSubmit" runat="server" Text="Add" OnClick="btnSubmit_Click" />
     <asp:Button ID="btnRemove" runat="server" Text="Remove" OnClick="btnRemove_Click"/>
-
-  
-        
-</asp:PlaceHolder>
-
+       <asp:ListBox ID="ListBox1" runat="server"></asp:ListBox>
+   </asp:Panel>
 </asp:Content>
+
+
+
+
+
+<asp:Content ID="Content1" runat="server" contentplaceholderid="HeadContent">
+    <style type="text/css">
+        .auto-style1 {
+            height: 41px;
+        }
+    </style>
+</asp:Content>
+
 
 
 
