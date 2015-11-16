@@ -63,6 +63,7 @@ public partial class RateMyCourse : System.Web.UI.Page
                     {
                         int item = Convert.ToInt32(dataReader["course_id"]);
                         allList.Add(item);
+                        //System.Diagnostics.Debug.Print("course id = " + item);
                     }
                 }
                 sqlconn.Close();
@@ -103,7 +104,7 @@ public partial class RateMyCourse : System.Web.UI.Page
 
 
 
-
+            checkComment();
 
         }
 
@@ -128,7 +129,15 @@ public partial class RateMyCourse : System.Web.UI.Page
 
             //string connection = System.Configuration.ConfigurationManager.ConnectionStrings["con"].ToString();
             SqlConnection con = new SqlConnection(myDatabase);
-            SqlDataAdapter da = new SqlDataAdapter("Insert into CommentSystem(UserId,Name,Rating,Comment,course_id) values('" + userId + "','" + txtName.Text + "','" + currentRating + "','" + txtComment.Text + "','" + currentCourse + "')", con);
+            SqlCommand cmdAddComment = new SqlCommand("addComment", con);
+            SqlDataAdapter da = new SqlDataAdapter(cmdAddComment);
+            cmdAddComment.CommandType = CommandType.StoredProcedure;
+            cmdAddComment.Parameters.AddWithValue("@userid", userId);
+            cmdAddComment.Parameters.AddWithValue("@name", txtName.Text);
+            cmdAddComment.Parameters.AddWithValue("@rating", currentRating);
+            cmdAddComment.Parameters.AddWithValue("@comment", txtComment.Text);
+            cmdAddComment.Parameters.AddWithValue("@courseid", currentCourse);
+
             con.Open();
             da.SelectCommand.ExecuteNonQuery();
             con.Close();
@@ -139,6 +148,8 @@ public partial class RateMyCourse : System.Web.UI.Page
         {
             lblmessage.Text = "sorry Error while posting comment.";
         }
+        clearLabels();
+
     }
 
 
@@ -149,41 +160,64 @@ public partial class RateMyCourse : System.Web.UI.Page
 
     private void BindComment()
     {
-        //string connection = System.Configuration.ConfigurationManager.ConnectionStrings["con"].ToString();
 
 
         SqlConnection con = new SqlConnection(myDatabase);
-        SqlDataAdapter da = new SqlDataAdapter("Select * from CommentSystem WHERE course_id = " + currentCourse, con);
+        SqlCommand cmdBindComment = new SqlCommand("bindComment", con);
+        cmdBindComment.CommandType = CommandType.StoredProcedure;
+        cmdBindComment.Parameters.AddWithValue("@courseid", currentCourse);
+        SqlDataAdapter da = new SqlDataAdapter(cmdBindComment);
 
         DataTable dt = new DataTable();
         da.Fill(dt);
         if (dt.Rows.Count > 0)
         {
+            gdvUserComment.Visible = true;
             gdvUserComment.DataSource = dt;
             gdvUserComment.DataBind();
+
+
+            
+
         }
-
-
+        else
+        {
+            gdvUserComment.Visible = false;
+        }
+        checkComment();
+        
     }
 
 
 
 
+    private void checkComment()
+    {
+        SqlConnection con = new SqlConnection(myDatabase);
+        SqlCommand cmdCheckComment = new SqlCommand("checkComment", con);
+        cmdCheckComment.CommandType = CommandType.StoredProcedure;
+        cmdCheckComment.Parameters.AddWithValue("@userid", userId);
+        cmdCheckComment.Parameters.AddWithValue("@courseid", currentCourse);
+        con.Open();
+        int hasComment = Convert.ToInt32(cmdCheckComment.ExecuteScalar());
+        con.Close();
+        if(hasComment > 0)
+        {
+            btnRemove.Visible = true;
+        }
+        else
+        {
+            btnRemove.Visible = false;
+        }
 
+    }
 
 
 
     protected void courseDropBox_SelectedIndexChanged(object sender, EventArgs e)
     {
 
-       
 
-
-
-    }
-
-    protected void Button2_Click(object sender, EventArgs e)
-    {
         //\sets currentcourse to whats selected in dropbox on load
 
         strCurrentCourse = courseDropBox.SelectedItem.Text;
@@ -199,8 +233,47 @@ public partial class RateMyCourse : System.Web.UI.Page
         //System.Diagnostics.Debug.WriteLine("course id = " + currentCourse.ToString());
 
         BindComment();
-        
+        clearLabels();
+
+
     }
 
     
+
+
+
+
+
+    protected void btnRemove_Click(object sender, EventArgs e)
+    {
+        SqlConnection con = new SqlConnection(myDatabase);
+        
+            using (SqlCommand cmdRemoveTaken = new SqlCommand("removeComment", con))
+            {
+                cmdRemoveTaken.CommandType = CommandType.StoredProcedure;
+                cmdRemoveTaken.Parameters.AddWithValue("@userid", userId);
+                cmdRemoveTaken.Parameters.AddWithValue("@courseid", currentCourse);
+                con.Open();
+                try
+                {
+                    cmdRemoveTaken.ExecuteNonQuery();
+                }
+                catch (SqlException)
+                {
+
+                }
+            }
+            con.Close();
+        BindComment();
+        clearLabels();
+        
+    }
+
+    private void clearLabels()
+    {
+        txtName.Text = "";
+        txtComment.Text = "";
+        Rating1.CurrentRating = 0;
+    }
+
 }

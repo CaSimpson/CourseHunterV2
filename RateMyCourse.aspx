@@ -8,58 +8,77 @@
     <style type="text/css">
         .emptypng {
             background-image: url(/Images/ratingStarEmpty.png);
-            width: 13px;
-            height: 12px;
+            width: 32px;
+            height: 32px;
         }
         .smileypng {
             background-image: url(/Images/ratingStarFilled.png);
-            width: 13px;
-            height: 12px;
+            width: 32px;
+            height: 32px;
         }
         .donesmileypng {
             background-image: url(/Images/ratingStarSaved.png);
-            width: 13px;
-            height: 12px;
+            width: 32px;
+            height: 32px;
         }
 </style>
 
 <html>
 
 <body>
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+
     
-    <table width="100%">
+
+    
+    <table width="100%" style="padding: 20px">
+        <tr>
+            <td colspan="2" align="center"><asp:Image ID="rateCourseTitlePic" runat="server" ImageUrl="~/Images/rateCourseTitle.png" /></td>
+            
+        </tr>
         <tr>
             <td align="right"> </td>
             <td align="left">
                 <asp:Label ID="lblmessage" runat="server" style="color: #3366FF" Text=""></asp:Label>
             </td>
         </tr>
-
         <tr>
+            <td></td>
+            <td></td>
+        </tr>
+  
+        <tr>
+            <td align="right">Select Course: </td>
             <td>
-                <asp:Label ID="lblCourseDropBox" runat="server" AutoPostBack="True" Text="Please Select Course: "></asp:Label>
-                <asp:DropDownList ID="courseDropBox" runat="server" OnSelectedIndexChanged="courseDropBox_SelectedIndexChanged" ></asp:DropDownList>
+             
+                <asp:DropDownList ID="courseDropBox" runat="server" autopostback="true" OnSelectedIndexChanged="courseDropBox_SelectedIndexChanged" ></asp:DropDownList>
 
             </td>
 
         </tr>
-
-
+        
+       
         <tr>
-            <td align="right">Rating
+            <td align="right" style="padding: 20px">Rating: 
             </td>
-            <td align="left">
+            <td align="left" style="padding: 20px">
                 <ajaxToolkit:Rating ID="Rating1" runat="server" CurrentRating="0" MaxRating="5" 
                 EmptyStarCssClass="emptypng" FilledStarCssClass="smileypng"
                  StarCssClass="smileypng" WaitingStarCssClass="donesmileypng"></ajaxToolkit:Rating>
                 
             </td>
         </tr>
-
+        
         <tr>
-            <td align="right">Name
+            <td align="right" style="padding: 20px">Name: 
             </td>
-            <td align="left">
+            <td align="left" style="padding: 20px">
                 <asp:TextBox ID="txtName" runat="server" Width="300px"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server"
                     ControlToValidate="txtName" ErrorMessage="Please enter name"
@@ -69,12 +88,12 @@
             
         </tr>
         
-
-
+        
+       
         <tr>
-            <td align="right">Comment
+            <td align="right" style="padding: 20px">Comment: 
             </td>
-            <td align="left">
+            <td align="left" style="padding: 20px">
                 <asp:TextBox ID="txtComment" runat="server" Height="87px" TextMode="MultiLine"
                     Width="300px"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
@@ -83,11 +102,12 @@
             </td>
         </tr>
         <tr>
-            <td align="center" colspan="1">
+            <td></td>
+            <td align="left" colspan="1" style="padding: 20px">
                 <asp:Button ID="btnSubmit" runat="server" Text="Submit"
                     onclick="btnSubmit_Click" />
-                <asp:Button ID="Button2" CausesValidation="false" runat="server" Text="Update"
-                    onClick="Button2_Click" />
+                <asp:Button ID="btnRemove" runat="server" Text="Remove Comment" visible="false" OnClick="btnRemove_Click" CausesValidation="false" autopostback="true"/>
+
                 
             </td>
         </tr>
@@ -96,16 +116,17 @@
 
 
 
-                     <td align="left" colspan="2">
+                     <td align="left" colspan="2" style="padding: 20px">
                 
                 <asp:GridView ID="gdvUserComment" runat="server" AutoGenerateColumns="False"
-                    ShowHeader="False" Width="100%">
+                    ShowHeader="False" Width="100%" >
                     <Columns>
                         <asp:TemplateField>
                             <ItemTemplate>
                                 <table width="100%">
                                 <tr>
                                 <td align="left" style="width:20%"><b>Name :</b> <%#Eval("Name")%></td>
+                                    <td>
                                 </tr>
                                 <tr>
                                 <td>
@@ -126,6 +147,10 @@
                                 <tr>
                                 <td colspan="2"><%#Eval("Comment")%></td>
                                 </tr>
+                                    <tr>
+                                        <td>
+                                        </td>
+                                    </tr>
                                 </table>
                             </ItemTemplate>
                         </asp:TemplateField>
