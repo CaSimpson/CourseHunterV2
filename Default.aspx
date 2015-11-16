@@ -3,9 +3,6 @@
 
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div class="well">
-
-    </div>
     <div>
     <div class="row">
         <div class="col-md-6">
