@@ -24,11 +24,17 @@ public class Course
 
     int courseId, credit;
     String  courseName, courseTitle;
+    List<int> electivesList = new List<int>();
 
 
     public Course(String cName)
     {
         courseName = cName;
+    }
+
+    public Course()
+    {
+
     }
 
     public int getCreditValue()
@@ -43,8 +49,29 @@ public class Course
         return credit;
     }
 
+    public List<int> getElectives()
+    {
 
+        //\ adds all courses to allList
+        SqlConnection eCon = new SqlConnection(myDatabase);
+        using (eCon)
+        {
+            SqlCommand cmd = new SqlCommand("getElectives", eCon);
+            cmd.CommandType = CommandType.StoredProcedure;
+            eCon.Open();
+            using (IDataReader dataReader = cmd.ExecuteReader())
+            {
+                while (dataReader.Read())
+                {
+                    int item = Convert.ToInt32(dataReader["course_id"]);
+                    electivesList.Add(item);
+                }
+            }
+            eCon.Close();
 
+            return electivesList;
+        }
 
+    }
 
 }

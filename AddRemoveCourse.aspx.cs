@@ -81,7 +81,7 @@ public partial class AddRemoveCourse : System.Web.UI.Page
                  sqlconn.Close();
 
         */
-            setTakenCourses();
+            
 
 
 
@@ -167,9 +167,23 @@ public partial class AddRemoveCourse : System.Web.UI.Page
             soc102DropBox.Items.Add("SOCY U101");
             soc102DropBox.Items.Add("WGST U101");
 
+            Course c = new Course();
+            List<int> intElectives = new List<int>();
+            List<String> strElectives = new List<String>();
+            intElectives = c.getElectives();
+            strElectives = student.getCourseName(intElectives);
+
+            foreach (String s in strElectives)
+            {
+                e1DropBox.Items.Add(s);
+                e2DropBox.Items.Add(s);
+                e3DropBox.Items.Add(s);
+                e4DropBox.Items.Add(s);
+            }
 
 
 
+            setTakenCourses();
 
 
 
@@ -292,10 +306,23 @@ public partial class AddRemoveCourse : System.Web.UI.Page
                 break;
             case "soc102": curID = soc102DropBox.SelectedValue.ToString();
                 break;
+            case "e1":
+                curID = e1DropBox.SelectedValue.ToString();
+                break;
+            case "e2":
+                curID = e2DropBox.SelectedValue.ToString();
+                break;
+            case "e3":
+                curID = e3DropBox.SelectedValue.ToString();
+                break;
+            case "e4":
+                curID = e4DropBox.SelectedValue.ToString();
+                break;
         }
         return curID;
     }//\ END getID
 
+   
 
 
 
@@ -410,23 +437,38 @@ public partial class AddRemoveCourse : System.Web.UI.Page
 
             String formattedID = s;
             formattedID = formattedID.Remove(4, 1);
-
-            strCoursesTaken.Add(formattedID);
+            
+                strCoursesTaken.Add(formattedID);
         }
-
 
 
         foreach (WebControl c in addPanel.Controls.OfType<CheckBox>())
         {
-            if (strCoursesTaken.Contains(c.ID))
+            String tempID;
+            if(c.ID.Length < 6)
             {
+                tempID = getID(c.ID);
+            }
+            else
+            {
+                tempID = c.ID;
+            }           
+              
+            
 
-                ((CheckBox)c).BackColor = System.Drawing.Color.Red;
+
+            if (strCoursesTaken.Contains(c.ID) || strCoursesTakenRAW.Contains(tempID))
+            {
+               
+                    ((CheckBox)c).BackColor = System.Drawing.Color.Red;
+                
 
             }//end if
             else
             {
-                ((CheckBox)c).BackColor = System.Drawing.Color.Green;
+               
+                    ((CheckBox)c).BackColor = System.Drawing.Color.Green;
+                
             }
         }//end foreach
 
@@ -625,7 +667,6 @@ public partial class AddRemoveCourse : System.Web.UI.Page
         foreach (WebControl d in addPanel.Controls.OfType<DropDownList>())
         {
             String curVal = ((DropDownList)d).SelectedValue.ToString();
-            ListBox1.Items.Add(curVal);
 
             if (strCoursesTakenRAW.Contains(curVal))
             {
@@ -650,6 +691,15 @@ public partial class AddRemoveCourse : System.Web.UI.Page
                         soc101.BackColor = System.Drawing.Color.Red; break;
                     case "soc102DropBox":
                         soc102.BackColor = System.Drawing.Color.Red; break;
+                    case "e1DropBox":
+                        e1.BackColor = System.Drawing.Color.Red; break;
+                    case "e2DropBox":
+                        e2.BackColor = System.Drawing.Color.Red; break;
+                    case "e3DropBox":
+                        e3.BackColor = System.Drawing.Color.Red; break;
+                    case "e4DropBox":
+                        e4.BackColor = System.Drawing.Color.Red; break;
+
                 }
 
 
@@ -677,9 +727,44 @@ public partial class AddRemoveCourse : System.Web.UI.Page
                         soc101.BackColor = System.Drawing.Color.Green; break;
                     case "soc102DropBox":
                         soc102.BackColor = System.Drawing.Color.Green; break;
+                    case "e1DropBox":
+                        e1.BackColor = System.Drawing.Color.Green; break;
+                    case "e2DropBox":
+                        e2.BackColor = System.Drawing.Color.Green; break;
+                    case "e3DropBox":
+                        e3.BackColor = System.Drawing.Color.Green; break;
+                    case "e4DropBox":
+                        e4.BackColor = System.Drawing.Color.Green; break;
                 }
             }
         }//end foreach
+    }
+
+
+
+
+
+    protected void e1DropBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        dropBoxAltered();
+
+    }
+
+    protected void e2DropBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        dropBoxAltered();
+    }
+
+    protected void e3DropBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        dropBoxAltered();
+
+    }
+
+    protected void e4DropBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        dropBoxAltered();
+
     }
 
 

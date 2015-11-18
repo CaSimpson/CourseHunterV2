@@ -19,13 +19,13 @@
     <h3>We suggest the following:</h3>
 
     
-   <asp:Panel runat="server" ID="addPanel" cssClass="lblIs">
+   <asp:Panel runat="server" ID="addPanel">
 
 
-    <table class="mytable" width="719" height="510" border="1" style="visibility: visible">
-      <tbody class="mytable">
+    <table class="table" width="719" height="510" border="1" style="background-color: #333333; font-family: Leelawadee; border-style: solid; border-color: #CCCCCC; color: #C0C0C0">
+      <tbody>
           
-        <tr class="tableheader">
+        <tr style="border-style: solid; border-color: #333333; background-color: #C0C0C0; font-weight: bold; color: #333333">
           <td>Requirement Area</td>
           <td>Sub Area / Topic</td>
           <td># credit hours</td>
@@ -146,9 +146,9 @@
       </tbody>
     </table>
 
-    <table class="mytable" width="719" height="510" border="1" style="visibility: visible">
+    <table class="table" width="719" height="510" border="1" style="background-color: #333333; font-family: Leelawadee; border-style: solid; border-color: #CCCCCC; color: #C0C0C0">
         <tbody class="mytable">
-        <tr class="tableheader">
+        <tr style="border-style: solid; border-color: #333333; background-color: #C0C0C0; font-weight: bold; color: #333333">
             <td colspan="2">Core Major Requirements</td>
             <td>33</td>
             
@@ -219,9 +219,9 @@
             </tbody>
     </table>
 
-        <table class="mytable" width="719" height="510" border="1" style="visibility: visible">
-        <tbody class="mytable">
-        <tr class="tableheader">
+        <table class="table" width="719" height="510" border="1" style="background-color: #333333; font-family: Leelawadee; border-style: solid; border-color: #CCCCCC; color: #C0C0C0">
+        <tbody>
+        <tr style="border-style: solid; border-color: #333333; background-color: #C0C0C0; font-weight: bold; color: #333333">
             <td colspan="2">General</td>
             <td>9</td>
             
@@ -354,9 +354,9 @@
     </table>
 
 
-        <table class="mytable" width="719" border="1" style="visibility: visible">
-        <tbody class="mytable">
-        <tr class="tableheader">
+        <table class="table" width="719" height="510" border="1" style="background-color: #333333; font-family: Leelawadee; border-style: solid; border-color: #CCCCCC; color: #C0C0C0">
+        <tbody>
+        <tr style="border-style: solid; border-color: #333333; background-color: #C0C0C0; font-weight: bold; color: #333333">
             <td colspan="2">Supporting Courses</td>
             <td colspan="2">13-14</td>
             
@@ -382,17 +382,71 @@
           <td><asp:DropDownList ID="ns103DropBox" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ns103DropBox_SelectedIndexChanged"></asp:DropDownList>
           <td><asp:CheckBox ID="ns103" runat="server" />    
           </td>
-          
-          
+          </tr>
+            <tr>
+                <td>
+                    Elective #1
+                </td>
+                <td>
+                    3
+                </td>
+                <td>
+                    <asp:DropDownList ID="e1DropBox" runat="server" AutoPostBack="true" OnSelectedIndexChanged="e1DropBox_SelectedIndexChanged"></asp:DropDownList>
+                </td>
+                <td>
+                    <asp:CheckBox ID="e1" runat="server" />
+                </td>
+            </tr>
+          <tr>
+                <td>
+                    Elective #2
+                </td>
+                <td>
+                    3
+                </td>
+                <td>
+                    <asp:DropDownList ID="e2DropBox" runat="server" AutoPostBack="true" OnSelectedIndexChanged="e2DropBox_SelectedIndexChanged"></asp:DropDownList>
+                </td>
+                <td>
+                    <asp:CheckBox ID="e2" runat="server" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Elective #3
+                </td>
+                <td>
+                    3
+                </td>
+                <td>
+                    <asp:DropDownList ID="e3DropBox" runat="server" AutoPostBack="true" OnSelectedIndexChanged="e3DropBox_SelectedIndexChanged"></asp:DropDownList>
+                </td>
+                <td>
+                    <asp:CheckBox ID="e3" runat="server" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Elective #4
+                </td>
+                <td>
+                    3
+                </td>
+                <td>
+                    <asp:DropDownList ID="e4DropBox" runat="server" AutoPostBack="true" OnSelectedIndexChanged="e4DropBox_SelectedIndexChanged"></asp:DropDownList>
+                </td>
+                <td>
+                    <asp:CheckBox ID="e4" runat="server" />
+                </td>
+            </tr>
           
         
             </tbody>
     </table>
     
 
-    <asp:Button ID="btnSubmit" runat="server" Text="Add" OnClick="btnSubmit_Click" />
-    <asp:Button ID="btnRemove" runat="server" Text="Remove" OnClick="btnRemove_Click"/>
-       <asp:ListBox ID="ListBox1" runat="server"></asp:ListBox>
+    <asp:Button ID="btnSubmit" runat="server" Text="Add" OnClick="btnSubmit_Click" BorderColor="#003300" BackColor="#333333" ForeColor="#999999" BorderStyle="Solid" CssClass="btn" Font-Size="Large" style="margin:10%;"/>
+    <asp:Button ID="btnRemove" runat="server" Text="Remove" OnClick="btnRemove_Click" BackColor="#333333" BorderColor="#003300" BorderStyle="Solid" CssClass="btn" Font-Size="Large" ForeColor="#999999"/>
    </asp:Panel>
 </asp:Content>
 
