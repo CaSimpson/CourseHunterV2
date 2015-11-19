@@ -16,13 +16,14 @@ public partial class Results : System.Web.UI.Page
     /**********************************************************************
    *                   CREATE YOUR CONNECTION STRINGS BELOW               *
    **********************************************************************/
-    private static String coreysDB = WebConfigurationManager.ConnectionStrings["coreydb"].ConnectionString;
+    //private static String coreysDB = WebConfigurationManager.ConnectionStrings["coreydb"].ConnectionString;
+    private static String treysDB = WebConfigurationManager.ConnectionStrings["treydb"].ConnectionString;
 
 
     /**********************************************************************
    * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
    **********************************************************************/
-    String myDatabase = coreysDB;
+    String myDatabase = treysDB;
 
     int id = 2;
     List<int> takenList = new List<int>();

@@ -14,12 +14,13 @@ public class Course
     /**********************************************************************
   *                   CREATE YOUR CONNECTION STRINGS BELOW               *
   **********************************************************************/
-    private static String coreysDB = WebConfigurationManager.ConnectionStrings["coreydb"].ConnectionString;
+   // private static String coreysDB = WebConfigurationManager.ConnectionStrings["coreydb"].ConnectionString;
+    private static String treysDB = WebConfigurationManager.ConnectionStrings["treydb"].ConnectionString;
 
     /**********************************************************************
     * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
     **********************************************************************/
-    private static String myDatabase = coreysDB;
+    private static String myDatabase = treysDB;
     SqlConnection con = new SqlConnection(myDatabase);
 
     int courseId, credit;

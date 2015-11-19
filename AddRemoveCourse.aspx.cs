@@ -30,14 +30,15 @@ public partial class AddRemoveCourse : System.Web.UI.Page
     /**********************************************************************
    *                   CREATE YOUR CONNECTION STRINGS BELOW               *
    **********************************************************************/
-    private static String coreysDB = WebConfigurationManager.ConnectionStrings["coreydb"].ConnectionString;
+   // private static String coreysDB = WebConfigurationManager.ConnectionStrings["coreydb"].ConnectionString;
+    private static String treysDB = WebConfigurationManager.ConnectionStrings["treydb"].ConnectionString;
 
 
 
     /**********************************************************************
     * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
     **********************************************************************/
-    String myDatabase = coreysDB;
+    String myDatabase = treysDB;
 
 
     protected void Page_Load(object sender, EventArgs e)

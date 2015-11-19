@@ -18,7 +18,8 @@ public partial class profile : System.Web.UI.Page
     /**********************************************************************
     *                   CREATE YOUR CONNECTION STRINGS BELOW               *
     **********************************************************************/
-    private static String coreysDB = WebConfigurationManager.ConnectionStrings["coreydb"].ConnectionString;
+    //private static String coreysDB = WebConfigurationManager.ConnectionStrings["coreydb"].ConnectionString;
+    private static String treysDB = WebConfigurationManager.ConnectionStrings["treydb"].ConnectionString;
 
 
 
@@ -29,7 +30,7 @@ public partial class profile : System.Web.UI.Page
    **********************************************************************/
 
     //store connection string for my Database in a string variable
-    String myDatabase = coreysDB;
+    String myDatabase = treysDB;
     String userId;
     String username;
     String studentName;

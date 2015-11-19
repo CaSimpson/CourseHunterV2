@@ -17,7 +17,8 @@ public partial class Progress : System.Web.UI.Page
     /**********************************************************************
    *                   CREATE YOUR CONNECTION STRINGS BELOW               *
    **********************************************************************/
-    private static String coreysDB = WebConfigurationManager.ConnectionStrings["coreydb"].ConnectionString;
+    //private static String coreysDB = WebConfigurationManager.ConnectionStrings["coreydb"].ConnectionString;
+    private static String treysDB = WebConfigurationManager.ConnectionStrings["treydb"].ConnectionString;
 
 
 
@@ -29,7 +30,7 @@ public partial class Progress : System.Web.UI.Page
     /**********************************************************************
    * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
    **********************************************************************/
-    String myDatabase = coreysDB;
+    String myDatabase = treysDB;
 
     List<int> completeCoursesInt = new List<int>();
     List<String> completeCourses = new List<String>();
@@ -73,7 +74,7 @@ public partial class Progress : System.Web.UI.Page
             //************** This calculates percent of courses complete  ********************************************
 
             //\ This calls store procedure to return a count for all courses
-            SqlConnection conCountAll = new SqlConnection(coreysDB);
+            SqlConnection conCountAll = new SqlConnection(treysDB);
             SqlCommand cmdGetCountAll = new SqlCommand("countAll", conCountAll);
             cmdGetCountAll.CommandType = CommandType.StoredProcedure;
 
@@ -82,7 +83,7 @@ public partial class Progress : System.Web.UI.Page
             conCountAll.Close();
 
             //\ This calls store procedure to return a count for complete courses
-            SqlConnection conCountComplete = new SqlConnection(coreysDB);
+            SqlConnection conCountComplete = new SqlConnection(treysDB);
 
             SqlCommand cmdGetCountComplete = new SqlCommand("countComplete", conCountComplete);
             cmdGetCountComplete.CommandType = CommandType.StoredProcedure;
@@ -130,7 +131,7 @@ public partial class Progress : System.Web.UI.Page
         String currentCourseName;
 
         //\ gets course name for possible courses
-        SqlConnection conGetName = new SqlConnection(coreysDB);
+        SqlConnection conGetName = new SqlConnection(treysDB);
 
         SqlCommand cmdGetName = new SqlCommand("getCourseName", conGetName);
         cmdGetName.CommandType = CommandType.StoredProcedure;
