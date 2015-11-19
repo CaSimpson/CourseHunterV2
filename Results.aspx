@@ -6,8 +6,6 @@
             <hgroup class="title">
                 <h1><%: Title %></h1>
             </hgroup>
-            <p>
-            </p>
         </div>
     </section>
 </asp:Content>
