@@ -20,14 +20,13 @@ public partial class Account_Register : Page
     /**********************************************************************
    *                   CREATE YOUR CONNECTION STRINGS BELOW               *
    **********************************************************************/
-    //private static String coreysDB = WebConfigurationManager.ConnectionStrings["coreydb"].ConnectionString;
-    private static String treysDB = WebConfigurationManager.ConnectionStrings["treydb"].ConnectionString;
+    private static String reidsDB = WebConfigurationManager.ConnectionStrings["rmConnection"].ConnectionString;
 
 
     /**********************************************************************
    * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
    **********************************************************************/
-    String myDatabase = treysDB;
+    String myDatabase = reidsDB;
 
     protected void Page_Load(object sender, EventArgs e)
     {

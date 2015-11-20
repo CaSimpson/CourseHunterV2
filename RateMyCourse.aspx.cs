@@ -18,18 +18,19 @@ using System.Web.Configuration;
 public partial class RateMyCourse : System.Web.UI.Page
 {
     /**********************************************************************
-   *                   CREATE YOUR CONNECTION STRINGS BELOW               *
-   **********************************************************************/
-   // private static String coreysDB = WebConfigurationManager.ConnectionStrings["coreydb"].ConnectionString;
-    private static String treysDB = WebConfigurationManager.ConnectionStrings["treydb"].ConnectionString;
-
-
+    *                   CREATE YOUR CONNECTION STRINGS BELOW               *
+    **********************************************************************/
+    private static String reidsDB = WebConfigurationManager.ConnectionStrings["rmConnection"].ConnectionString;
 
 
     /**********************************************************************
-    * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
-    **********************************************************************/
-    String myDatabase = treysDB;
+   * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
+   **********************************************************************/
+
+
+
+    //store connection string for my Database in a string 
+    String myDatabase = reidsDB;
     String userId;
     int currentRating = 0;
     List<int> allList = new List<int>();
