@@ -98,12 +98,6 @@ hr {
      -moz-box-sizing: content-box;
           box-sizing: content-box;
 }
-.lblNot {
-    background: #a94442;
-}
-.lblIs {
-    background: #3c763d;
-}
 pre {
   overflow: auto;
 }
@@ -198,7 +192,7 @@ th {
   *,
   *:before,
   *:after {
-    color: #fff !important;
+    color: #000 !important;
     text-shadow: none !important;
     background: transparent !important;
     -webkit-box-shadow: none !important;
@@ -259,19 +253,13 @@ th {
   }
   .table td,
   .table th {
-    background-color: #000 !important;
+    background-color: #fff !important;
   }
   .table-bordered th,
   .table-bordered td {
     border: 1px solid #ddd !important;
   }
 }
-
-.addTable {
-    width: 100%; max-width:100%; border-style: solid; visibility: visible; background-color: #000000; color: #FFFFFF;
-}
-
-
 @font-face {
   font-family: 'Glyphicons Halflings';
 
@@ -2262,13 +2250,12 @@ pre code {
   }
 }
 table {
-  background-color: #000;
-  color: #fff;
+  background-color: transparent;
 }
 caption {
   padding-top: 8px;
   padding-bottom: 8px;
-  color: #fff;
+  color: #777;
   text-align: left;
 }
 th {
@@ -2278,7 +2265,6 @@ th {
   width: 100%;
   max-width: 100%;
   margin-bottom: 20px;
-  background-color: #000;
 }
 .table > thead > tr > th,
 .table > tbody > tr > th,
@@ -2307,7 +2293,7 @@ th {
   border-top: 2px solid #ddd;
 }
 .table .table {
-  background-color: #000;
+  background-color: #fff;
 }
 .table-condensed > thead > tr > th,
 .table-condensed > tbody > tr > th,
@@ -2333,10 +2319,10 @@ th {
   border-bottom-width: 2px;
 }
 .table-striped > tbody > tr:nth-of-type(odd) {
-  background-color: #000;
+  background-color: #f9f9f9;
 }
 .table-hover > tbody > tr:hover {
-  background-color: #000;
+  background-color: #f5f5f5;
 }
 table col[class*="col-"] {
   position: static;
@@ -2361,14 +2347,14 @@ table th[class*="col-"] {
 .table > thead > tr.active > th,
 .table > tbody > tr.active > th,
 .table > tfoot > tr.active > th {
-  background-color: #000;
+  background-color: #f5f5f5;
 }
 .table-hover > tbody > tr > td.active:hover,
 .table-hover > tbody > tr > th.active:hover,
 .table-hover > tbody > tr.active:hover > td,
 .table-hover > tbody > tr:hover > .active,
 .table-hover > tbody > tr.active:hover > th {
-  background-color: #000;
+  background-color: #e8e8e8;
 }
 .table > thead > tr > td.success,
 .table > tbody > tr > td.success,
@@ -2382,14 +2368,14 @@ table th[class*="col-"] {
 .table > thead > tr.success > th,
 .table > tbody > tr.success > th,
 .table > tfoot > tr.success > th {
-  background-color: #000;
+  background-color: #dff0d8;
 }
 .table-hover > tbody > tr > td.success:hover,
 .table-hover > tbody > tr > th.success:hover,
 .table-hover > tbody > tr.success:hover > td,
 .table-hover > tbody > tr:hover > .success,
 .table-hover > tbody > tr.success:hover > th {
-  background-color: #000;
+  background-color: #d0e9c6;
 }
 .table > thead > tr > td.info,
 .table > tbody > tr > td.info,
@@ -2403,14 +2389,14 @@ table th[class*="col-"] {
 .table > thead > tr.info > th,
 .table > tbody > tr.info > th,
 .table > tfoot > tr.info > th {
-  background-color: #000;
+  background-color: #d9edf7;
 }
 .table-hover > tbody > tr > td.info:hover,
 .table-hover > tbody > tr > th.info:hover,
 .table-hover > tbody > tr.info:hover > td,
 .table-hover > tbody > tr:hover > .info,
 .table-hover > tbody > tr.info:hover > th {
-  background-color: #000;
+  background-color: #c4e3f3;
 }
 .table > thead > tr > td.warning,
 .table > tbody > tr > td.warning,
@@ -2424,14 +2410,14 @@ table th[class*="col-"] {
 .table > thead > tr.warning > th,
 .table > tbody > tr.warning > th,
 .table > tfoot > tr.warning > th {
-  background-color: #000;
+  background-color: #fcf8e3;
 }
 .table-hover > tbody > tr > td.warning:hover,
 .table-hover > tbody > tr > th.warning:hover,
 .table-hover > tbody > tr.warning:hover > td,
 .table-hover > tbody > tr:hover > .warning,
 .table-hover > tbody > tr.warning:hover > th {
-  background-color: #000;
+  background-color: #faf2cc;
 }
 .table > thead > tr > td.danger,
 .table > tbody > tr > td.danger,
@@ -2445,14 +2431,14 @@ table th[class*="col-"] {
 .table > thead > tr.danger > th,
 .table > tbody > tr.danger > th,
 .table > tfoot > tr.danger > th {
-  background-color: #000;
+  background-color: #f2dede;
 }
 .table-hover > tbody > tr > td.danger:hover,
 .table-hover > tbody > tr > th.danger:hover,
 .table-hover > tbody > tr.danger:hover > td,
 .table-hover > tbody > tr:hover > .danger,
 .table-hover > tbody > tr.danger:hover > th {
-  background-color: #000;
+  background-color: #ebcccc;
 }
 .table-responsive {
   min-height: .01%;

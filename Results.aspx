@@ -14,7 +14,7 @@
 
 
     <div class="col-md-4">
-            <div class="panel panel-default">
+            <div class="panel panel-info">
                 <div class="panel-heading"><asp:Label ID="reclbl" runat="server" Text="Label">Recommended Courses</asp:Label></div>
                 <div class="panel-body"><ul>
           <li><asp:Label ID="rec1" runat="server" Text="Label"></asp:Label></li>
@@ -28,7 +28,7 @@
 
 
     <div class="col-md-4">
-            <div class="panel panel-default">
+            <div class="panel panel-info">
                 <div class="panel-heading"><asp:Label ID="poslbl" runat="server" Text="Label">All Possible Courses</asp:Label></div>
                 <div class="panel-body"><asp:ListBox ID="allPosListBox" runat="server"></asp:ListBox></div>
             </div>
