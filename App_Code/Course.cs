@@ -14,7 +14,7 @@ public class Course
     /**********************************************************************
   *                   CREATE YOUR CONNECTION STRINGS BELOW               *
   **********************************************************************/
-    private static String reidsDB = WebConfigurationManager.ConnectionStrings["coreydb"].ConnectionString;
+    private static String reidsDB = WebConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
     /**********************************************************************
     * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
