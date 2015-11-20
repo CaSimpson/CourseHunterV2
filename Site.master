@@ -4,7 +4,7 @@
 <html lang="en">
 <head id="Head1" runat="server">
     <meta charset="utf-8" />
-    <title><%: Page.Title %> - My ASP.NET Application</title>
+    <title><%: Page.Title %>- My ASP.NET Application</title>
     <asp:PlaceHolder ID="PlaceHolder1" runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
@@ -109,7 +109,10 @@
         </div>
         <footer class="footer">
             <div class="container">
-                <%: DateTime.Now.Month + "/" + DateTime.Now.Day + "/" + DateTime.Now.Year   %> - Course Hunter V2
+                <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=272931&clcid=0x409 --%>
+                <asp:TextBox ID="AdminPassword" runat="server" BackColor="White" BorderStyle="None" MaxLength="9" Width="16px"></asp:TextBox>
+                - Course Hunter
+                <asp:Button ID="Button1" runat="server" BackColor="White" BorderStyle="None" Font-Size="Small" Height="18px" OnClick="Button1_Click"  Text="V2" Width="26px" />
             </div>
         </footer>
     </form>
