@@ -3,7 +3,7 @@
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
         <div class="jumbotron">
                 <h1><%: Title %>.</h1>
-                <h2>Course Hunter helps you determin which classes you can take.</h2>
+                <h2>Course Hunter helps you determine which classes you can take.</h2>
                 <p>We know signing up for classes can be a pill. Let us help.</p>
         </div>
 </asp:Content>

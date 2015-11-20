@@ -25,20 +25,6 @@ public partial class AddRemoveCourse : System.Web.UI.Page
     List<String> preReqList = new List<String>();
     Student student;
 
-    public static ResultsBuilder rb;
-
-    /**********************************************************************
-  *                   CREATE YOUR CONNECTION STRINGS BELOW               *
-  **********************************************************************/
-    private static String reidsDB = WebConfigurationManager.ConnectionStrings["rmConnection"].ConnectionString;
-
-
-    /**********************************************************************
-   * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
-   **********************************************************************/
-    String myDatabase = reidsDB;
-
-
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -53,33 +39,7 @@ public partial class AddRemoveCourse : System.Web.UI.Page
 
             student = new Student(userId);
 
-            /*          LEAVE THIS FOR NOW
-            //create connection to database
-
-            using (SqlConnection sqlconn = new SqlConnection(myDatabase))
-            {
-                //create adapter
-                SqlDataAdapter sqlda = new SqlDataAdapter();
-                DataSet ds = new DataSet();
-
-                SqlCommand cmdGetAll = new SqlCommand();
-                cmdGetAll.CommandType = CommandType.StoredProcedure;
-                cmdGetAll.CommandText = "getAllCourses";
-                cmdGetAll.Connection = sqlconn;
-
-                sqlda.SelectCommand = cmdGetAll;
-                sqlda.Fill(ds, "course");
-
-                //fill course List
-                foreach (DataRow row in ds.Tables["course"].Rows)
-                {
-                    courseList.Add(row["course_id"].ToString());
-                    //listboxComplete.Items.Add(row["course_id"].ToString());
-                }
-
-                 sqlconn.Close();
-
-        */
+           
             
 
 
@@ -187,7 +147,11 @@ public partial class AddRemoveCourse : System.Web.UI.Page
 
 
         }
-        else { }
+        else
+        {
+            Response.Redirect("NotLoggedIn.aspx");
+            Server.Transfer("NotLoggedIn.aspx");
+        }
 
     }
 
@@ -196,56 +160,22 @@ public partial class AddRemoveCourse : System.Web.UI.Page
     //\ add button
     protected void btnSubmit_Click(object sender, EventArgs e)
     {
-        if (HttpContext.Current.User.Identity.IsAuthenticated)
-        {
-
-
+        
             //\ gets a string list of checked items
             List<String> strChecked = new List<String>();
             strChecked = getChecked();
             //\ gets a int list of checked items
             List<int> intChecked = new List<int>();
-            intChecked = getCourseId(strChecked);
+            intChecked = student.getCourseName(strChecked);
             //\ adds all selected to courses_taken table
             student.addCoursesTaken(intChecked);
 
 
-            // I think i can delete this, testing 
-            //gets the difference of completed courses and all courses
-            IEnumerable<String> allNeeded = courseList.Except(strChecked);
-            // This uses build in method Exept to find the differece of all courses and completed
-            // This list will be the courses needed to complete degree
-            List<String> needcourses = courseList.Except(strChecked).ToList();
-
-
-
-            foreach (String s in needcourses)
-            {
-                // listboxRecommend.Items.Add(s);
-            }
-
-
-
-            //|||||||| TESTING PURPOSES ONLY
-            foreach (String s in checkedList)
-            {
-            }
-            foreach (int s in intChecked)
-            {
-            }
-            foreach (String s in courseList)
-            {
-            }
-
-
+            //\ redirects user to progress page
             Response.Redirect("Progress.aspx");
             Server.Transfer("Progress.aspx");
 
-
-
-            //\\\\\\\\\\\\\\\ END TESTING CODE
-        }
-
+        //\ call setTakenCourses
         setTakenCourses();
     }
 
@@ -255,20 +185,19 @@ public partial class AddRemoveCourse : System.Web.UI.Page
 
     protected void btnRemove_Click(object sender, EventArgs e)
     {
-        if (HttpContext.Current.User.Identity.IsAuthenticated)
-        {
+        
             //\ gets list of checked checkboxes
             List<String> removeChecked = new List<String>();
             removeChecked = getChecked();
             //\ converts strings to int
             List<int> removeInt = new List<int>();
-            removeInt = getCourseId(removeChecked);
+            removeInt = student.getCourseName(removeChecked);
 
             //\ call removeCourseTaken from student object
             student.removeCoursesTaken(removeInt);
             Response.Redirect("Progress.aspx");
             Server.Transfer("Progress.aspx");
-        }
+        
     }
 
 
@@ -329,28 +258,8 @@ public partial class AddRemoveCourse : System.Web.UI.Page
     private List<String> getChecked()
     {
         List<String> returnList = new List<String>();
-        /*
-                foreach (Control c in uiPlaceholder.Controls.OfType<CheckBox>())
-                {
-                    if (c is CheckBox && ((CheckBox)c).Checked)
-                    {
-                        String formattedID = c.ID; //holds value of formatted ID
-                        //\ if id < 7 than it is in dropbox and is formatted, so we call getID method to return it
-                        if (c.ID.Length < 7)
-                        {
-                            formattedID = getID(c.ID); //\ calls getID method
-                        }
-                        //\ if not grab the id of the checkbox and add a space(because of id formatting)
-                        else
-                        {
-                            formattedID = formattedID.Insert(4, " ");
-                        }
-                        //\ this adds each courseID (formatted properly) that was "checked" to a list
-                        returnList.Add(formattedID);
-                    }//end if
-                }//end foreach
-                */
-
+        
+   
         foreach (Control c in addPanel.Controls)
         {
             if (c is CheckBox && ((CheckBox)c).Checked)
@@ -372,9 +281,6 @@ public partial class AddRemoveCourse : System.Web.UI.Page
         }
 
 
-
-
-
         return returnList;
     }
 
@@ -383,42 +289,7 @@ public partial class AddRemoveCourse : System.Web.UI.Page
 
 
 
-    private List<int> getCourseId(List<String> inputList)
-    {
-
-        if (HttpContext.Current.User.Identity.IsAuthenticated)
-        {
-
-
-            List<int> intChecked = new List<int>();
-
-            SqlConnection conGetID = new SqlConnection(myDatabase);
-            SqlCommand cmdGetID = new SqlCommand();
-
-            int idValue;
-
-            foreach (String s in inputList)
-            {
-                cmdGetID.CommandText = "getID";
-                cmdGetID.CommandType = CommandType.StoredProcedure;
-                cmdGetID.Connection = conGetID;
-                cmdGetID.Parameters.AddWithValue("@courseNumber", s);
-                conGetID.Open();
-                idValue = Convert.ToInt32(cmdGetID.ExecuteScalar());
-                cmdGetID.Parameters.Clear();
-                intChecked.Add(idValue);
-                conGetID.Close();
-            }
-
-
-            return intChecked;
-        }
-        else
-        {
-            List<int> returnList = new List<int>();
-            return returnList;
-        }
-    }
+   
 
     private void setTakenCourses()
     {
@@ -460,14 +331,16 @@ public partial class AddRemoveCourse : System.Web.UI.Page
             {
                
                     ((CheckBox)c).BackColor = System.Drawing.Color.Red;
-                
+                ((CheckBox)c).Text = "Complete";
+
 
             }//end if
             else
             {
                
                     ((CheckBox)c).BackColor = System.Drawing.Color.Green;
-                
+                ((CheckBox)c).Text = "";
+
             }
         }//end foreach
 
@@ -480,160 +353,48 @@ public partial class AddRemoveCourse : System.Web.UI.Page
 
 
     protected void his101DropBox_SelectedIndexChanged(object sender, EventArgs e)
-    {/*
-        List<String> strCoursesTakenRAW = new List<String>();
-        strCoursesTakenRAW = student.getTakenCourses();
-
-        String curVal = his101DropBox.SelectedValue.ToString();
-
-        if (strCoursesTakenRAW.Contains(curVal))
-        {
-            his101.BackColor = System.Drawing.Color.Red;
-        }
-        else
-        {
-            his101.BackColor = System.Drawing.Color.Green;
-        }
-        */
+    {
         dropBoxAltered();
-
     }
-
-
-
-
-
 
 
     protected void ns101DropBox_SelectedIndexChanged(object sender, EventArgs e)
-    {/*
-        List<String> strCoursesTakenRAW = new List<String>();
-        strCoursesTakenRAW = student.getTakenCourses();
-
-        String curVal = ns101DropBox.SelectedValue.ToString();
-
-        if (strCoursesTakenRAW.Contains(curVal))
-        {
-            ns101.BackColor = System.Drawing.Color.Red;
-        }
-        else
-        {
-            ns101.BackColor = System.Drawing.Color.Green;
-        }*/
+    {
         dropBoxAltered();
-
     }
 
     protected void ns102DropBox_SelectedIndexChanged(object sender, EventArgs e)
-    {/*
-        List<String> strCoursesTakenRAW = new List<String>();
-        strCoursesTakenRAW = student.getTakenCourses();
-
-        String curVal = ns102DropBox.SelectedValue.ToString();
-
-        if (strCoursesTakenRAW.Contains(curVal))
-        {
-            ns102.BackColor = System.Drawing.Color.Red;
-        }
-        else
-        {
-            ns102.BackColor = System.Drawing.Color.Green;
-        }*/
+    {
         dropBoxAltered();
 
     }
 
     protected void art101DropBox_SelectedIndexChanged(object sender, EventArgs e)
-    {/*
-        List<String> strCoursesTakenRAW = new List<String>();
-        strCoursesTakenRAW = student.getTakenCourses();
-
-        String curVal = art101DropBox.SelectedValue.ToString();
-
-        if (strCoursesTakenRAW.Contains(curVal))
-        {
-            art101.BackColor = System.Drawing.Color.Red;
-        }
-        else
-        {
-            art101.BackColor = System.Drawing.Color.Green;
-        }*/
+    {
         dropBoxAltered();
 
     }
 
     protected void hum101DropBox_SelectedIndexChanged(object sender, EventArgs e)
-    {/*
-        List<String> strCoursesTakenRAW = new List<String>();
-        strCoursesTakenRAW = student.getTakenCourses();
-
-        String curVal = hum101DropBox.SelectedValue.ToString();
-
-        if (strCoursesTakenRAW.Contains(curVal))
-        {
-            hum101.BackColor = System.Drawing.Color.Red;
-        }
-        else
-        {
-            hum101.BackColor = System.Drawing.Color.Green;
-        }*/
+    {
         dropBoxAltered();
 
     }
 
     protected void for101DropBox_SelectedIndexChanged(object sender, EventArgs e)
-    {/*
-        List<String> strCoursesTakenRAW = new List<String>();
-        strCoursesTakenRAW = student.getTakenCourses();
-
-        String curVal = for101DropBox.SelectedValue.ToString();
-
-        if (strCoursesTakenRAW.Contains(curVal))
-        {
-            for101.BackColor = System.Drawing.Color.Red;
-        }
-        else
-        {
-            for101.BackColor = System.Drawing.Color.Green;
-        }*/
+    {
         dropBoxAltered();
 
     }
 
     protected void soc101DropBox_SelectedIndexChanged(object sender, EventArgs e)
-    {/*
-        List<String> strCoursesTakenRAW = new List<String>();
-        strCoursesTakenRAW = student.getTakenCourses();
-
-        String curVal = soc101DropBox.SelectedValue.ToString();
-
-        if (strCoursesTakenRAW.Contains(curVal))
-        {
-            soc101.BackColor = System.Drawing.Color.Red;
-        }
-        else
-        {
-            soc101.BackColor = System.Drawing.Color.Green;
-        }*/
+    {
         dropBoxAltered();
 
     }
 
     protected void soc102DropBox_SelectedIndexChanged(object sender, EventArgs e)
-    {/*
-        List<String> strCoursesTakenRAW = new List<String>();
-        strCoursesTakenRAW = student.getTakenCourses();
-
-        String curVal = soc102DropBox.SelectedValue.ToString();
-
-        if (strCoursesTakenRAW.Contains(curVal))
-        {
-            soc102.BackColor = System.Drawing.Color.Red;
-        }
-        else
-        {
-            soc102.BackColor = System.Drawing.Color.Green;
-        }*/
+    {
         dropBoxAltered();
 
     }
@@ -641,21 +402,7 @@ public partial class AddRemoveCourse : System.Web.UI.Page
     protected void ns103DropBox_SelectedIndexChanged(object sender, EventArgs e)
     {
         dropBoxAltered();
-        /*
-        List<String> strCoursesTakenRAW = new List<String>();
-        strCoursesTakenRAW = student.getTakenCourses();
-
-        String curVal = ns103DropBox.SelectedValue.ToString();
-
-        if (strCoursesTakenRAW.Contains(curVal))
-        {
-            ns103.BackColor = System.Drawing.Color.Red;
-        }
-        else
-        {
-            ns103.BackColor = System.Drawing.Color.Green;
-        }
-        */
+       
     }
 
     private void dropBoxAltered()
@@ -673,31 +420,56 @@ public partial class AddRemoveCourse : System.Web.UI.Page
                 {
                     case "ns101DropBox":
                         ns101.BackColor = System.Drawing.Color.Red;
+                        ns101.Text = "Complete";
                         break;
                     case "ns102DropBox":
-                        ns102.BackColor = System.Drawing.Color.Red; break;
+                        ns102.BackColor = System.Drawing.Color.Red;
+                        ns102.Text = "Complete";
+                        break;
                     case "ns103DropBox":
-                        ns103.BackColor = System.Drawing.Color.Red; break;
+                        ns103.BackColor = System.Drawing.Color.Red;
+                        ns103.Text = "Complete";
+                        break;
                     case "art101DropBox":
-                        art101.BackColor = System.Drawing.Color.Red; break;
+                        art101.BackColor = System.Drawing.Color.Red;
+                        art101.Text = "Complete";
+                        break;
                     case "his101DropBox":
-                        his101.BackColor = System.Drawing.Color.Red; break;
+                        his101.BackColor = System.Drawing.Color.Red;
+                        his101.Text = "Complete";
+                        break;
                     case "hum101DropBox":
-                        hum101.BackColor = System.Drawing.Color.Red; break;
+                        hum101.BackColor = System.Drawing.Color.Red;
+                        hum101.Text = "Complete";
+                        break;
                     case "for101DropBox":
-                        for101.BackColor = System.Drawing.Color.Red; break;
+                        for101.BackColor = System.Drawing.Color.Red;
+                        for101.Text = "Complete";
+                        break;
                     case "soc101DropBox":
-                        soc101.BackColor = System.Drawing.Color.Red; break;
+                        soc101.BackColor = System.Drawing.Color.Red;
+                        soc101.Text = "Complete";
+                        break;
                     case "soc102DropBox":
-                        soc102.BackColor = System.Drawing.Color.Red; break;
+                        soc102.BackColor = System.Drawing.Color.Red;
+                        soc102.Text = "Complete";
+                        break;
                     case "e1DropBox":
-                        e1.BackColor = System.Drawing.Color.Red; break;
+                        e1.BackColor = System.Drawing.Color.Red;
+                        e1.Text = "Complete";
+                        break;
                     case "e2DropBox":
-                        e2.BackColor = System.Drawing.Color.Red; break;
+                        e2.BackColor = System.Drawing.Color.Red;
+                        e2.Text = "Complete";
+                        break;
                     case "e3DropBox":
-                        e3.BackColor = System.Drawing.Color.Red; break;
+                        e3.BackColor = System.Drawing.Color.Red;
+                        e3.Text = "Complete";
+                        break;
                     case "e4DropBox":
-                        e4.BackColor = System.Drawing.Color.Red; break;
+                        e4.BackColor = System.Drawing.Color.Red;
+                        e4.Text = "Complete";
+                        break;
 
                 }
 
@@ -705,6 +477,8 @@ public partial class AddRemoveCourse : System.Web.UI.Page
             }//end if
             else
             {
+
+
                 switch (d.ID)
                 {
                     case "ns101DropBox":

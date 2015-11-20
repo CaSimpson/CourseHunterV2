@@ -31,6 +31,13 @@
             </div>
         </div>
 
+    <div class="col-md-2">
+            <div class="panel panel-info">
+                <div class="panel-heading">Remaining Courses</div>
+                <div class="panel-body"><asp:ListBox ID="remainingListBox" runat="server"></asp:ListBox></div>
+            </div>
+        </div>
+
 
     <div class="col-md-2">
             <div class="panel panel-info">
@@ -51,7 +58,7 @@
                 </div>
             </div>
         </div>
-
+  
 
 
     </asp:Content>

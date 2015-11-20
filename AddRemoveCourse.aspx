@@ -16,16 +16,18 @@
 </asp:Content>
 
 <asp:Content runat="server" ID="appBody" ContentPlaceHolderID="MainContent">
-    <h3>We suggest the following:</h3>
+    <div class="panel-heading">Select all Courses and Click Add or Remove</div>
 
 
     <asp:Panel runat="server" ID="addPanel">
 
-
-        <div class="table-responsive">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+       
+            <div class="panel-body">
             <table class="table">
-                <tr>
-                    <td>Requirement Area</td>
+                <tr class="text-primary" style="background-color: #333333; font-size: large; border: thin solid #999999">
+                   <td>Requirement Area</td>
                     <td>Sub Area / Topic</td>
                     <td># credit hours</td>
                     <td>Courses</td>
@@ -34,35 +36,46 @@
                 </tr>
             
             <tr>
-                <td>I. Communication</td>
-                <td>English</td>
-                <td>6</td>
+                <td rowspan="3">I. Communication</td>
+                <td rowspan="2">English</td>
+                <td>3</td>
                 <td>
 
-                    <asp:Label runat="server" Text="ENGL U102"></asp:Label>
+                    <asp:Label runat="server" Text="ENGL U101"></asp:Label>
                 </td>
                 <td>
                     <asp:CheckBox ID="ENGLU101" runat="server" /></td>
-                <td>
-                    <asp:CheckBox ID="ENGLU102" runat="server" /></td>
+                
+            </tr>
+            <tr>
+                
+                <td>3</td>
+                <td>ENGL U102</td>
+                <td><asp:CheckBox ID="ENGLU102" runat="server"  /></td>
             </tr>
             <tr>
                 <td>Speech</td>
                 <td>3</td>
-                <td>SPCH 201</td>
+                <td>SPCH U201</td>
                 <td><asp:CheckBox ID="SPCHU201" runat="server" /></td>
-            </tr>
-            <tr>
-                <td></td>
 
             </tr>
             <tr>
-                <td rowspan="3">II. MathematiCSCIU, Logic &amp; Natural Sciences</td>
-                <td>MathematiCSCIU</td>
+                <td rowspan="4">II. Mathematics, Logic &amp; Natural Sciences</td>
+                <td rowspan="2">Mathematics</td>
                 <td>4</td>
-                <td>Math U141, Math U142</td>
+                <td>Math U141</td>
                 <td>
-                    <asp:CheckBox ID="MATHU141" runat="server" /></td>
+                    <asp:CheckBox ID="MATHU141" runat="server" ToolTip="Red = Complete Green = Not Complete" /></td>
+                <td>
+                    </td>
+            </tr>
+                <tr>
+                
+                
+                <td>4</td>
+                <td>Math U142</td>
+               
                 <td>
                     <asp:CheckBox ID="MATHU142" runat="server" /></td>
             </tr>
@@ -163,16 +176,27 @@
             </tr>
 
             </table>
+                </div>
         </div>
+                
+            </div>
 
+
+
+
+
+        <div class="col-md-12">
+            <div class="panel panel-info">
+       
+            <div class="panel-body">
         <table class="table">
             <tbody class="mytable">
-                <tr style="border-style: solid; border-color: #333333; background-color: #C0C0C0; font-weight: bold; color: #333333">
+                <tr class="text-primary" style="background-color: #333333; font-size: large; border: thin solid #999999">
                     <td colspan="2">Core Major Requirements</td>
                     <td>33</td>
 
                 </tr>
-                <tr class="tableheader">
+                <tr class="text-primary" style="background-color: #333333; font-size: large; border: thin solid #999999">
                     <td></td>
                     <td>Credit Hours</td>
                     <td>Completed</td>
@@ -247,16 +271,30 @@
                 </tr>
 
             </tbody>
-        </table>
+        </table></div></div></div>
 
-        <table class="table" width="719" height="510" border="1" style="background-color: #333333; font-family: Leelawadee; border-style: solid; border-color: #CCCCCC; color: #C0C0C0">
+
+
+
+
+
+
+
+
+
+
+        <div class="col-md-12">
+            <div class="panel panel-info">
+       
+            <div class="panel-body">
+        <table class="table">
             <tbody>
-                <tr style="border-style: solid; border-color: #333333; background-color: #C0C0C0; font-weight: bold; color: #333333">
+                <tr class="text-primary" style="background-color: #333333; font-size: large; border: thin solid #999999">
                     <td colspan="2">General</td>
                     <td>9</td>
 
                 </tr>
-                <tr class="tableheader">
+                <tr class="text-primary" style="background-color: #333333; font-size: large; border: thin solid #999999">
                     <td></td>
                     <td>Credit Hours</td>
                     <td>Completed</td>
@@ -405,16 +443,28 @@
 
             </tbody>
         </table>
+</div></div></div>
 
 
-        <table class="table" width="719" height="510" border="1" style="background-color: #333333; font-family: Leelawadee; border-style: solid; border-color: #CCCCCC; color: #C0C0C0">
+
+
+
+
+
+        <div class="col-md-12">
+            <div class="panel panel-info">
+       
+            <div class="panel-body">
+
+
+        <table class="table">
             <tbody>
-                <tr style="border-style: solid; border-color: #333333; background-color: #C0C0C0; font-weight: bold; color: #333333">
+                <tr class="text-primary" style="background-color: #333333; font-size: large; border: thin solid #999999">
                     <td colspan="2">Supporting Courses</td>
                     <td colspan="2">13-14</td>
 
                 </tr>
-                <tr class="tableheader">
+                <tr class="text-primary" style="background-color: #333333; font-size: large; border: thin solid #999999">
                     <td></td>
                     <td>Credit Hours</td>
                     <td colspan="2">Completed</td>
@@ -492,9 +542,9 @@
 
             </tbody>
         </table>
+                </div></div></div>
 
-
-        <asp:Button ID="btnSubmit" runat="server" Text="Add" OnClick="btnSubmit_Click" BorderColor="#003300" BackColor="#333333" ForeColor="#999999" BorderStyle="Solid" CssClass="btn" Font-Size="Large" Style="margin: 10%;" />
+        <asp:Button ID="btnSubmit" runat="server" Text="Add" OnClick="btnSubmit_Click" BorderColor="#003300" BackColor="#333333" ForeColor="#999999" BorderStyle="Solid" CssClass="btn" Font-Size="Large" Style="margin: 10%;"/>
         <asp:Button ID="btnRemove" runat="server" Text="Remove" OnClick="btnRemove_Click" BackColor="#333333" BorderColor="#003300" BorderStyle="Solid" CssClass="btn" Font-Size="Large" ForeColor="#999999" />
     </asp:Panel>
 </asp:Content>

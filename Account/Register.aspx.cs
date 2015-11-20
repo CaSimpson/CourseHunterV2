@@ -20,7 +20,7 @@ public partial class Account_Register : Page
     /**********************************************************************
    *                   CREATE YOUR CONNECTION STRINGS BELOW               *
    **********************************************************************/
-    private static String reidsDB = WebConfigurationManager.ConnectionStrings["rmConnection"].ConnectionString;
+    private static String reidsDB = WebConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
 
     /**********************************************************************

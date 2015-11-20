@@ -14,24 +14,12 @@ using System.Web.Configuration;
 
 public partial class Progress : System.Web.UI.Page
 {
-    /**********************************************************************
-   *                   CREATE YOUR CONNECTION STRINGS BELOW               *
-   **********************************************************************/
-    private static String reidsDB = WebConfigurationManager.ConnectionStrings["rmConnection"].ConnectionString;
-
-
-    /**********************************************************************
-   * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
-   **********************************************************************/
-
-
-
-    //store connection string for my Database in a string 
-    String myDatabase = reidsDB;
+   
 
     List<int> completeCoursesInt = new List<int>();
     List<String> completeCourses = new List<String>();
     List<String> formattedList = new List<String>();
+    List<String> remainingCourses = new List<String>();
     String studentName;
     int totalCourses;
     int compCourses;
@@ -57,38 +45,48 @@ public partial class Progress : System.Web.UI.Page
             studentName = student.getName(); //\ returns student's name
             lblStudentName.Text = studentName; //\ sets student's name to label
             completeCourses = student.getTakenCourses(); //\ returns a list of completed courses
+            remainingCourses = student.getNeededCourses();
 
             //\ adds taken courses to listbox
             foreach (String s in completeCourses)
             {
                 completeListBox.Items.Add(s);
             }
+            //\ adds taken courses to listbox
+            foreach (String s in remainingCourses)
+            {
+                remainingListBox.Items.Add(s);
+            }
 
 
 
-            
 
             //************** This calculates percent of courses complete  ********************************************
+            /*
+                        //\ This calls store procedure to return a count for all courses
+                        SqlConnection conCountAll = new SqlConnection(reidsDB);
+                        SqlCommand cmdGetCountAll = new SqlCommand("countAll", conCountAll);
+                        cmdGetCountAll.CommandType = CommandType.StoredProcedure;
 
-            //\ This calls store procedure to return a count for all courses
-            SqlConnection conCountAll = new SqlConnection(reidsDB);
-            SqlCommand cmdGetCountAll = new SqlCommand("countAll", conCountAll);
-            cmdGetCountAll.CommandType = CommandType.StoredProcedure;
+                        conCountAll.Open();
+                        totalCourses = Convert.ToInt32(cmdGetCountAll.ExecuteScalar());
+                        conCountAll.Close();
 
-            conCountAll.Open();
-            totalCourses = Convert.ToInt32(cmdGetCountAll.ExecuteScalar());
-            conCountAll.Close();
+                        //\ This calls store procedure to return a count for complete courses
+                        SqlConnection conCountComplete = new SqlConnection(reidsDB);
 
-            //\ This calls store procedure to return a count for complete courses
-            SqlConnection conCountComplete = new SqlConnection(reidsDB);
+                        SqlCommand cmdGetCountComplete = new SqlCommand("countComplete", conCountComplete);
+                        cmdGetCountComplete.CommandType = CommandType.StoredProcedure;
+                        cmdGetCountComplete.Parameters.AddWithValue("@studentID", userId);
 
-            SqlCommand cmdGetCountComplete = new SqlCommand("countComplete", conCountComplete);
-            cmdGetCountComplete.CommandType = CommandType.StoredProcedure;
-            cmdGetCountComplete.Parameters.AddWithValue("@studentID", userId);
+                        conCountComplete.Open();
+                        compCourses = Convert.ToInt32(cmdGetCountComplete.ExecuteScalar());
+                        conCountComplete.Close();
+                */
 
-            conCountComplete.Open();
-            compCourses = Convert.ToInt32(cmdGetCountComplete.ExecuteScalar());
-            conCountComplete.Close();
+
+            compCourses = student.getCountComplete();
+            totalCourses = student.getCountAll();
 
             myProg = (compCourses * 100) / totalCourses;
 
@@ -112,7 +110,8 @@ public partial class Progress : System.Web.UI.Page
         }
         else
         {
-            // then user is not logged in   redirect maybe???
+            Response.Redirect("NotLoggedIn.aspx");
+            Server.Transfer("NotLoggedIn.aspx");
         }
 
     } // END PAGE LOAD
@@ -120,92 +119,5 @@ public partial class Progress : System.Web.UI.Page
 
 
 
-
-    // method will convert list of course_id to list of course_names
-    private List<String> getCourseName(List<int> intList)
-    {
-        List<String> convertedList = new List<String>();
-        String currentCourseName;
-
-        //\ gets course name for possible courses
-        SqlConnection conGetName = new SqlConnection(reidsDB);
-
-        SqlCommand cmdGetName = new SqlCommand("getCourseName", conGetName);
-        cmdGetName.CommandType = CommandType.StoredProcedure;
-
-        foreach (int c in completeCoursesInt)
-        {
-
-            cmdGetName.Parameters.AddWithValue("@courseID", c);
-            conGetName.Open();
-            currentCourseName = Convert.ToString(cmdGetName.ExecuteScalar());
-            convertedList.Add(currentCourseName);
-            cmdGetName.Parameters.Clear();
-            conGetName.Close();
-        }
-
-        return convertedList;
-    } // end getCourseName
-
-    //Method CURRENTLY EMPTY
-    public static int getProgress()
-    {
-        return 0;
-    }
-
-
-
 }
 
-
-
-/////////// CODE REPLACED BY STUDENT OBJECT
-/*
-            // ******************* This gets student's name from database and adds to lblStudentName *********************************
-
-            //\ gets student name from student id
-            SqlConnection con = new SqlConnection(reidsDB);
-            SqlCommand cmdGetName = new SqlCommand("getStudentName", con);
-            cmdGetName.CommandType = CommandType.StoredProcedure;
-            cmdGetName.Parameters.AddWithValue("@studentId", userId);
-
-            con.Open();
-            studentName = Convert.ToString(cmdGetName.ExecuteScalar());
-            con.Close();
-
-            lblStudentName.Text = studentName;
-            //*************** END set Student Name ******************************************************
-            */
-
-/*
-                    // ******************* This gets a list of all completed courses and adds to listbox *********************************
-
-                    //\ adds all courses_taken for user to completeCoursesInt array
-                    using (SqlConnection sqlconn = new SqlConnection(reidsDB))
-                    {
-                        SqlCommand cmd = new SqlCommand("getCourseTaken", sqlconn);
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@studentid", userId);
-                        sqlconn.Open();
-                        using (IDataReader dataReader = cmd.ExecuteReader())
-                        {
-                            while (dataReader.Read())
-                            {
-                                int item = Convert.ToInt32(dataReader["course_id"]);
-                                completeCoursesInt.Add(item);
-                            }
-                        }
-                        sqlconn.Close();
-                    }
-
-                    //\ called getCourseName Method, which converts course_id to course_name
-                    completeCourses = getCourseName(completeCoursesInt);
-
-                    //\ adds all complete courses to Compete Courses List Box
-                    foreach (String s in completeCourses)
-                    {
-                        completeListBox.Items.Add(s);
-                    }
-                    //*************** END get complete courses list ******************************************************
-
-            */

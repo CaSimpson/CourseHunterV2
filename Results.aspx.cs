@@ -16,22 +16,27 @@ public partial class Results : System.Web.UI.Page
     /**********************************************************************
    *                   CREATE YOUR CONNECTION STRINGS BELOW               *
    **********************************************************************/
-    private static String reidsDB = WebConfigurationManager.ConnectionStrings["coreydb"].ConnectionString;
+    private static String defaultDatabase = WebConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
 
     /**********************************************************************
    * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
    **********************************************************************/
-    String myDatabase = reidsDB;
+    String myDatabase = defaultDatabase;
 
-    int id = 2;
+
     List<int> takenList = new List<int>();
     List<int> allList = new List<int>();
     List<int> possibleList = new List<int>();
     List<int> needList = new List<int>();
+    List<String> strTakenList = new List<String>();
+    List<String> strAllList = new List<String>();
+    List<String> strPossibleList = new List<String>();
+    List<String> strNeedList = new List<String>();
     int[] recIntList = new int[5];
     String[] recList = new String[5];
     List<String> formattedList = new List<String>();
+    Student student;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -45,6 +50,15 @@ public partial class Results : System.Web.UI.Page
             String userName = HttpContext.Current.User.Identity.Name;
             String userId = Membership.GetUser(userName).ProviderUserKey.ToString();
 
+            student = new Student(userId);
+
+            strTakenList = student.getTakenCourses();
+            takenList = student.getCourseName(strTakenList);
+            strAllList = student.getAllCourses();
+            allList = student.getCourseName(strAllList);
+
+
+            /*
             //\ adds all courses_taken for user to takeList
             using (SqlConnection sqlconn = new SqlConnection(myDatabase))
             {
@@ -62,7 +76,7 @@ public partial class Results : System.Web.UI.Page
                 }
                 sqlconn.Close();
             }
-
+            */
             /*
             using (SqlConnection sqlconn = new SqlConnection("Data Source=c-lomain\\cssqlserver;Initial Catalog=courseHunter540;Integrated Security=True"))
             {
@@ -81,6 +95,8 @@ public partial class Results : System.Web.UI.Page
                 sqlconn.Close();
             }
             */
+
+            /*
             //\ adds all courses to allList
             using (SqlConnection sqlconn = new SqlConnection(myDatabase))
             {
@@ -97,7 +113,7 @@ public partial class Results : System.Web.UI.Page
                 }
                 sqlconn.Close();
             }
-
+            */
             //\ creates need list and Creates resultbuilder object
             needList = allList.Except(takenList).ToList();
             ResultsBuilder rs = new ResultsBuilder(needList, takenList);
@@ -267,6 +283,11 @@ public partial class Results : System.Web.UI.Page
             }
 
             */
+        }
+        else
+        {
+            Response.Redirect("NotLoggedIn.aspx");
+            Server.Transfer("NotLoggedIn.aspx");
         }
     }
 }

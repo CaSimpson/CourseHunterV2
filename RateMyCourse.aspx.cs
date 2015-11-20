@@ -20,7 +20,7 @@ public partial class RateMyCourse : System.Web.UI.Page
     /**********************************************************************
     *                   CREATE YOUR CONNECTION STRINGS BELOW               *
     **********************************************************************/
-    private static String reidsDB = WebConfigurationManager.ConnectionStrings["rmConnection"].ConnectionString;
+    private static String defaultDatabase = WebConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
 
     /**********************************************************************
@@ -30,14 +30,17 @@ public partial class RateMyCourse : System.Web.UI.Page
 
 
     //store connection string for my Database in a string 
-    String myDatabase = reidsDB;
+    String myDatabase = defaultDatabase;
     String userId;
     int currentRating = 0;
     List<int> allList = new List<int>();
     String item;
     List<String> formattedList = new List<String>();
+    List<String> allCourses = new List<String>();
     String strCurrentCourse;
     int currentCourse;
+    Student student;
+    Comment comment;
    
     
 
@@ -53,6 +56,10 @@ public partial class RateMyCourse : System.Web.UI.Page
             String currentUserName = HttpContext.Current.User.Identity.Name;
             userId = Membership.GetUser(currentUserName).ProviderUserKey.ToString();
 
+            student = new Student(userId);
+            comment = new Comment(userId);
+
+            /*
 
             //\ adds all courses to allList
             using (SqlConnection sqlconn = new SqlConnection(myDatabase))
@@ -71,7 +78,15 @@ public partial class RateMyCourse : System.Web.UI.Page
                 }
                 sqlconn.Close();
             }
+            */
+            allCourses = student.getAllCourses(); 
 
+            foreach(String s in allCourses)
+            {
+                courseDropBox.Items.Add(s);
+            }
+
+            /*
             String currentCourseName;
 
             //\ gets course name for all courses and adds to dropbox
@@ -90,11 +105,15 @@ public partial class RateMyCourse : System.Web.UI.Page
                 cmdGetName.Parameters.Clear();
                 conGetName.Close();
             }
-
+        */
 
             //\sets currentcourse to whats selected in dropbox on load
 
             strCurrentCourse = courseDropBox.SelectedValue;
+            currentCourse = student.getCourseName(strCurrentCourse);
+
+
+            /*
 
             SqlConnection conGetCid = new SqlConnection(myDatabase);
             SqlCommand cmdGetCid = new SqlCommand("getID", conGetCid);
@@ -108,7 +127,12 @@ public partial class RateMyCourse : System.Web.UI.Page
 
 
             checkComment();
-
+            */
+        }
+        else
+        {
+            Response.Redirect("NotLoggedIn.aspx");
+            Server.Transfer("NotLoggedIn.aspx");
         }
 
 
@@ -121,36 +145,27 @@ public partial class RateMyCourse : System.Web.UI.Page
 
     protected void btnSubmit_Click(object sender, EventArgs e)
     {
-        try
-        {
-
+        
 
             currentRating = Rating1.CurrentRating;
 
+
             System.Diagnostics.Debug.WriteLine("course id = " + currentCourse.ToString());
+            
+            bool success = comment.addComment(txtName.Text, currentRating, txtComment.Text, currentCourse);
+
+          
 
 
-            //string connection = System.Configuration.ConfigurationManager.ConnectionStrings["con"].ToString();
-            SqlConnection con = new SqlConnection(myDatabase);
-            SqlCommand cmdAddComment = new SqlCommand("addComment", con);
-            SqlDataAdapter da = new SqlDataAdapter(cmdAddComment);
-            cmdAddComment.CommandType = CommandType.StoredProcedure;
-            cmdAddComment.Parameters.AddWithValue("@userid", userId);
-            cmdAddComment.Parameters.AddWithValue("@name", txtName.Text);
-            cmdAddComment.Parameters.AddWithValue("@rating", currentRating);
-            cmdAddComment.Parameters.AddWithValue("@comment", txtComment.Text);
-            cmdAddComment.Parameters.AddWithValue("@courseid", currentCourse);
-
-            con.Open();
-            da.SelectCommand.ExecuteNonQuery();
-            con.Close();
-            lblmessage.Text = "Comment posted successfully.";
-            BindComment();
-        }
-        catch
-        {
-            lblmessage.Text = "sorry Error while posting comment.";
-        }
+            if (success == true)
+            {
+                lblmessage.Text = "Comment posted successfully.";
+                BindComment();
+            }
+        else { lblmessage.Text = "sorry Error while posting comment."; }
+        
+            
+        
         clearLabels();
 
     }

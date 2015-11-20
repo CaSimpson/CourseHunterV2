@@ -15,12 +15,12 @@ public class Student
     /**********************************************************************
   *                   CREATE YOUR CONNECTION STRINGS BELOW               *
   **********************************************************************/
-    private static String reidsDB = WebConfigurationManager.ConnectionStrings["coreydb"].ConnectionString;
+    private static String defaultDatabase = WebConfigurationManager.ConnectionStrings["defaultconnection"].ConnectionString;
 
     /**********************************************************************
     * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
     **********************************************************************/
-    private static String myDatabase = reidsDB;
+    private static String myDatabase = defaultDatabase;
     SqlConnection con = new SqlConnection(myDatabase);
 
 
@@ -159,6 +159,9 @@ public class Student
 
     }//\ get set courses
 
+    ///////////////////////////// END SET METHODS //////////////////////////////////////////////////
+
+        ////////////////////////// START GET METHODS ////////////////////////////////////////////////
 
 
     //\ private method that converts course_id to course_number
@@ -168,7 +171,7 @@ public class Student
         String currentCourseName;
 
         //\ gets course name for possible courses
-        SqlConnection conGetName = new SqlConnection(reidsDB);
+        SqlConnection conGetName = new SqlConnection(myDatabase);
 
         SqlCommand cmdGetName = new SqlCommand("getCourseName", conGetName);
         cmdGetName.CommandType = CommandType.StoredProcedure;
@@ -186,6 +189,106 @@ public class Student
 
         return convertedList;
     } // end getCourseName
+
+
+    //\ private method that converts course_number to course_id
+    public List<int> getCourseName(List<String> strList)
+    {
+        List<int> intChecked = new List<int>();
+
+        SqlConnection conGetID = new SqlConnection(myDatabase);
+        SqlCommand cmdGetID = new SqlCommand();
+
+        int idValue;
+
+        foreach (String s in strList)
+        {
+            cmdGetID.CommandText = "getID";
+            cmdGetID.CommandType = CommandType.StoredProcedure;
+            cmdGetID.Connection = conGetID;
+            cmdGetID.Parameters.AddWithValue("@courseNumber", s);
+            conGetID.Open();
+            idValue = Convert.ToInt32(cmdGetID.ExecuteScalar());
+            cmdGetID.Parameters.Clear();
+            intChecked.Add(idValue);
+            conGetID.Close();
+        }
+
+
+        return intChecked;
+    }
+
+    //\ OVERRIDE METHOD private method that converts course_number to course_id
+    public int getCourseName(String str)
+    {
+       
+
+        SqlConnection conGetID = new SqlConnection(myDatabase);
+        SqlCommand cmdGetID = new SqlCommand();
+
+        int idValue;
+
+        
+            cmdGetID.CommandText = "getID";
+            cmdGetID.CommandType = CommandType.StoredProcedure;
+            cmdGetID.Connection = conGetID;
+            cmdGetID.Parameters.AddWithValue("@courseNumber", str);
+            conGetID.Open();
+            idValue = Convert.ToInt32(cmdGetID.ExecuteScalar());
+            conGetID.Close();
+        
+
+
+        return idValue;
+    }
+
+
+    //returns count of all courses
+    public int getCountAll()
+    {
+        int totalCourses;
+
+        //\ This calls store procedure to return a count for all courses
+        SqlConnection conCountAll = new SqlConnection(myDatabase);
+        SqlCommand cmdGetCountAll = new SqlCommand("countAll", conCountAll);
+        cmdGetCountAll.CommandType = CommandType.StoredProcedure;
+
+        conCountAll.Open();
+        totalCourses = Convert.ToInt32(cmdGetCountAll.ExecuteScalar());
+        conCountAll.Close();
+
+        return totalCourses;
+
+    }
+
+    //\ returns count of complete courses
+    public int getCountComplete()
+    {
+        int compCourses;
+
+        //\ This calls store procedure to return a count for complete courses
+        SqlConnection conCountComplete = new SqlConnection(myDatabase);
+
+        SqlCommand cmdGetCountComplete = new SqlCommand("countComplete", conCountComplete);
+        cmdGetCountComplete.CommandType = CommandType.StoredProcedure;
+        cmdGetCountComplete.Parameters.AddWithValue("@studentID", userId);
+
+        conCountComplete.Open();
+        compCourses = Convert.ToInt32(cmdGetCountComplete.ExecuteScalar());
+        conCountComplete.Close();
+
+        return compCourses;
+    }
+
+
+
+
+
+
+
+
+
+
 
 
     //\ returns current user's name

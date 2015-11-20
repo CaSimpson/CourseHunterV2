@@ -18,7 +18,7 @@ public partial class profile : System.Web.UI.Page
     /**********************************************************************
    *                   CREATE YOUR CONNECTION STRINGS BELOW               *
    **********************************************************************/
-    private static String reidsDB = WebConfigurationManager.ConnectionStrings["rmConnection"].ConnectionString;
+    private static String reidsDB = WebConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
 
     /**********************************************************************
