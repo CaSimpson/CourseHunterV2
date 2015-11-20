@@ -12,25 +12,26 @@
         <tr>
             <td>Enter the Course number: </td>
             <td>
-                <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TextBox4" runat="server" ForeColor="Black" MaxLength="9" ToolTip="Should be in the format of all caps (e.g.  CSCI) then a space (_) followed by the three digit course number"></asp:TextBox>
             </td>
         </tr>
         <tr>
             <td>Enter the Course title: </td>
             <td>
-                <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TextBox5" runat="server" CausesValidation="True" ForeColor="Black" MaxLength="70"></asp:TextBox>
             </td>
         </tr>
         <tr>
             <td>Enter the number of credits for the Course: </td>
             <td>
-                <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TextBox6" runat="server" ForeColor="Black" MaxLength="1" ToolTip="Should be a single digit number (Usually between 1 and 3)"></asp:TextBox>
             </td>
         </tr>
 
         <tr>
             <td colspan="2">
                 <asp:Button ID="Button1" runat="server" Text="Save Course" OnClick="Button1_Click" CssClass="btn btn-success" />
+                <asp:CheckBox ID="CheckBox1" runat="server" Text="Is it an elective?" />
             </td>
         </tr>
     </table>
