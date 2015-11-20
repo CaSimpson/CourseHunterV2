@@ -12,34 +12,28 @@
 
 <asp:Content runat="server" ID="appBody" ContentPlaceHolderID="MainContent">
 
-    <p>
-    </p>
-    <p>
-        <br />
-        <br />
-        <asp:Label ID="reclbl" runat="server" Text="Label">Recommended Courses</asp:Label>
-       <%-- &nbsp&nbsp&nbsp&nbsp--%>
-       <asp:Label ID="poslbl" runat="server" Text="Label">All Possible Courses</asp:Label> 
-    </p>
-    <p>
-        <asp:Label ID="rec1" runat="server" Text="Label"></asp:Label>
-       <%-- &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp--%>
-        <asp:ListBox ID="allPosListBox" runat="server"></asp:ListBox><asp:ListBox ID="testList" runat="server"></asp:ListBox>
-    </p>
-    <p>
-        <asp:Label ID="rec2" runat="server" Text="Label1"></asp:Label>
-    </p>
-    <p>
-        <asp:Label ID="rec3" runat="server" Text="Label"></asp:Label>
-    </p>
-    <p>
-        <asp:Label ID="rec4" runat="server" Text="Label"></asp:Label>
-    </p>
-    <p>
-        <asp:Label ID="rec5" runat="server" Text="Label"></asp:Label>
-    </p>
-    <p>
-    </p>
+
+    <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading"><asp:Label ID="reclbl" runat="server" Text="Label">Recommended Courses</asp:Label></div>
+                <div class="panel-body"><ul>
+          <li><asp:Label ID="rec1" runat="server" Text="Label"></asp:Label></li>
+          <li><asp:Label ID="rec2" runat="server" Text="Label1"></asp:Label></li>
+          <li><asp:Label ID="rec3" runat="server" Text="Label"></asp:Label></li>
+          <li><asp:Label ID="rec4" runat="server" Text="Label"></asp:Label></li>
+          <li><asp:Label ID="rec5" runat="server" Text="Label"></asp:Label></li>
+      </ul></div>
+            </div>
+        </div>
+
+
+    <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading"><asp:Label ID="poslbl" runat="server" Text="Label">All Possible Courses</asp:Label></div>
+                <div class="panel-body"><asp:ListBox ID="allPosListBox" runat="server"></asp:ListBox></div>
+            </div>
+        </div>
+   
+
     </asp:Content>
     
