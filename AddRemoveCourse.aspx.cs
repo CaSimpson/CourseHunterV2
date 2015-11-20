@@ -28,16 +28,15 @@ public partial class AddRemoveCourse : System.Web.UI.Page
     public static ResultsBuilder rb;
 
     /**********************************************************************
-   *                   CREATE YOUR CONNECTION STRINGS BELOW               *
-   **********************************************************************/
-    private static String coreysDB = WebConfigurationManager.ConnectionStrings["coreydb"].ConnectionString;
-
+  *                   CREATE YOUR CONNECTION STRINGS BELOW               *
+  **********************************************************************/
+    private static String reidsDB = WebConfigurationManager.ConnectionStrings["rmConnection"].ConnectionString;
 
 
     /**********************************************************************
-    * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
-    **********************************************************************/
-    String myDatabase = coreysDB;
+   * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
+   **********************************************************************/
+    String myDatabase = reidsDB;
 
 
     protected void Page_Load(object sender, EventArgs e)

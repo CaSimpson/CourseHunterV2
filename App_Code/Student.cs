@@ -15,12 +15,12 @@ public class Student
     /**********************************************************************
   *                   CREATE YOUR CONNECTION STRINGS BELOW               *
   **********************************************************************/
-    private static String coreysDB = WebConfigurationManager.ConnectionStrings["coreydb"].ConnectionString;
+    private static String reidsDB = WebConfigurationManager.ConnectionStrings["coreydb"].ConnectionString;
 
     /**********************************************************************
     * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
     **********************************************************************/
-    private static String myDatabase = coreysDB;
+    private static String myDatabase = reidsDB;
     SqlConnection con = new SqlConnection(myDatabase);
 
 
@@ -168,7 +168,7 @@ public class Student
         String currentCourseName;
 
         //\ gets course name for possible courses
-        SqlConnection conGetName = new SqlConnection(coreysDB);
+        SqlConnection conGetName = new SqlConnection(reidsDB);
 
         SqlCommand cmdGetName = new SqlCommand("getCourseName", conGetName);
         cmdGetName.CommandType = CommandType.StoredProcedure;
