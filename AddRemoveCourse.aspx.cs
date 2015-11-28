@@ -29,7 +29,7 @@ public partial class AddRemoveCourse : System.Web.UI.Page
     {
 
 
-
+        //\ checks if current user is registered
         if (HttpContext.Current.User.Identity.IsAuthenticated)
         {
 
@@ -126,12 +126,18 @@ public partial class AddRemoveCourse : System.Web.UI.Page
             soc102DropBox.Items.Add("SOCY U101");
             soc102DropBox.Items.Add("WGST U101");
 
-            Course c = new Course();
-            List<int> intElectives = new List<int>();
+            Course c = new Course();                    //\ creates course object
+
+            //\ these lists hold string and int lists for electives
+            List<int> intElectives = new List<int>();   
             List<String> strElectives = new List<String>();
+
+            //\ this gets value for lists
             intElectives = c.getElectives();
             strElectives = student.getCourseName(intElectives);
 
+
+            //\ this adds the list of electives to the listboxes in ui
             foreach (String s in strElectives)
             {
                 e1DropBox.Items.Add(s);
@@ -141,12 +147,13 @@ public partial class AddRemoveCourse : System.Web.UI.Page
             }
 
 
-
+            //\ sets courses as complete or incomplete
             setTakenCourses();
 
 
 
         }
+        //\ if user not logged in ~ show notLoggedIn page
         else
         {
             Response.Redirect("NotLoggedIn.aspx");
@@ -156,8 +163,11 @@ public partial class AddRemoveCourse : System.Web.UI.Page
     }
 
 
+    /********************************************************************************************************************
+   **************************************************************************************  BUTTONS    ******************
+   ********************************************************************************************************************/
 
-    //\ add button
+    //\ submit button
     protected void btnSubmit_Click(object sender, EventArgs e)
     {
         
@@ -181,7 +191,7 @@ public partial class AddRemoveCourse : System.Web.UI.Page
 
 
 
-    //\ Remove selected courses
+    //\ Remove Button
 
     protected void btnRemove_Click(object sender, EventArgs e)
     {
@@ -195,9 +205,10 @@ public partial class AddRemoveCourse : System.Web.UI.Page
 
             //\ call removeCourseTaken from student object
             student.removeCoursesTaken(removeInt);
+
+        //\ redirect user to progress page
             Response.Redirect("Progress.aspx");
-            Server.Transfer("Progress.aspx");
-        
+            Server.Transfer("Progress.aspx");  
     }
 
 
@@ -279,8 +290,6 @@ public partial class AddRemoveCourse : System.Web.UI.Page
                 returnList.Add(formattedID);
             }
         }
-
-
         return returnList;
     }
 
@@ -290,28 +299,26 @@ public partial class AddRemoveCourse : System.Web.UI.Page
 
 
    
-
+    //\ this methods 
     private void setTakenCourses()
     {
-        // List<int> intAllCourses = new List<int>();
-        //intAllCourses = student.getAllCourses();
-        //List<String> strAllCourses = new List<String>();
-        // strAllCourses = student.getAllCourses();
 
+        //\ gets lists of courses taken
         List<String> strCoursesTakenRAW = new List<String>();
         strCoursesTakenRAW = student.getTakenCourses();
         List<String> strCoursesTaken = new List<String>();
 
+        //\ formats the items that are in list boxes
         foreach (String s in strCoursesTakenRAW)
         {
-
             String formattedID = s;
             formattedID = formattedID.Remove(4, 1);
             
                 strCoursesTaken.Add(formattedID);
         }
 
-
+        //\ this looks for checkboxes and gets the id of each. Then it checks
+        //\ if course is in the taken list and labels as complete or incomplete
         foreach (WebControl c in addPanel.Controls.OfType<CheckBox>())
         {
             String tempID;
@@ -326,7 +333,7 @@ public partial class AddRemoveCourse : System.Web.UI.Page
               
             
 
-
+            //\ if/else adds or removes "complete" status from labels
             if (strCoursesTaken.Contains(c.ID) || strCoursesTakenRAW.Contains(tempID))
             {
                
@@ -351,7 +358,7 @@ public partial class AddRemoveCourse : System.Web.UI.Page
 
 
 
-
+    //\ These update the page when the user alters a drop box
     protected void his101DropBox_SelectedIndexChanged(object sender, EventArgs e)
     {
         dropBoxAltered();
@@ -404,7 +411,32 @@ public partial class AddRemoveCourse : System.Web.UI.Page
         dropBoxAltered();
        
     }
+    protected void e1DropBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        dropBoxAltered();
 
+    }
+
+    protected void e2DropBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        dropBoxAltered();
+    }
+
+    protected void e3DropBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        dropBoxAltered();
+
+    }
+
+    protected void e4DropBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        dropBoxAltered();
+
+    }
+
+
+    //\ if a dropbox is altered it checks if the current value of the dropbox is a complete course
+    //\ and sets as complete or incomplete 
     private void dropBoxAltered()
     {
         List<String> strCoursesTakenRAW = new List<String>();
@@ -517,30 +549,43 @@ public partial class AddRemoveCourse : System.Web.UI.Page
 
 
 
-    protected void e1DropBox_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        dropBoxAltered();
-
-    }
-
-    protected void e2DropBox_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        dropBoxAltered();
-    }
-
-    protected void e3DropBox_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        dropBoxAltered();
-
-    }
-
-    protected void e4DropBox_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        dropBoxAltered();
-
-    }
+ 
 
 
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ ▄████▄   ▒█████   ██▀███  ▓█████ ▓██   ██▓     ██████  ██▓ ███▄ ▄███▓ ██▓███    ██████  ▒█████   ███▄    █ 
+▒██▀ ▀█  ▒██▒  ██▒▓██ ▒ ██▒▓█   ▀  ▒██  ██▒   ▒██    ▒ ▓██▒▓██▒▀█▀ ██▒▓██░  ██▒▒██    ▒ ▒██▒  ██▒ ██ ▀█   █ 
+▒▓█    ▄ ▒██░  ██▒▓██ ░▄█ ▒▒███     ▒██ ██░   ░ ▓██▄   ▒██▒▓██    ▓██░▓██░ ██▓▒░ ▓██▄   ▒██░  ██▒▓██  ▀█ ██▒
+▒▓▓▄ ▄██▒▒██   ██░▒██▀▀█▄  ▒▓█  ▄   ░ ▐██▓░     ▒   ██▒░██░▒██    ▒██ ▒██▄█▓▒ ▒  ▒   ██▒▒██   ██░▓██▒  ▐▌██▒
+▒ ▓███▀ ░░ ████▓▒░░██▓ ▒██▒░▒████▒  ░ ██▒▓░   ▒██████▒▒░██░▒██▒   ░██▒▒██▒ ░  ░▒██████▒▒░ ████▓▒░▒██░   ▓██░
+░ ░▒ ▒  ░░ ▒░▒░▒░ ░ ▒▓ ░▒▓░░░ ▒░ ░   ██▒▒▒    ▒ ▒▓▒ ▒ ░░▓  ░ ▒░   ░  ░▒▓▒░ ░  ░▒ ▒▓▒ ▒ ░░ ▒░▒░▒░ ░ ▒░   ▒ ▒ 
+  ░  ▒     ░ ▒ ▒░   ░▒ ░ ▒░ ░ ░  ░ ▓██ ░▒░    ░ ░▒  ░ ░ ▒ ░░  ░      ░░▒ ░     ░ ░▒  ░ ░  ░ ▒ ▒░ ░ ░░   ░ ▒░
+░        ░ ░ ░ ▒    ░░   ░    ░    ▒ ▒ ░░     ░  ░  ░   ▒ ░░      ░   ░░       ░  ░  ░  ░ ░ ░ ▒     ░   ░ ░ 
+░ ░          ░ ░     ░        ░  ░ ░ ░              ░   ░         ░                  ░      ░ ░           ░ 
+░ 
+*/

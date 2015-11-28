@@ -15,7 +15,7 @@ using System.Web.Configuration;
 public partial class Progress : System.Web.UI.Page
 {
    
-
+    //\ creates lists that will hold course and user related values
     List<int> completeCoursesInt = new List<int>();
     List<String> completeCourses = new List<String>();
     List<String> formattedList = new List<String>();
@@ -25,10 +25,11 @@ public partial class Progress : System.Web.UI.Page
     int compCourses;
 
     public int myProg;
-    int id = 2;
+
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        //\ authenticates user
         if (HttpContext.Current.User.Identity.IsAuthenticated)
         {
 
@@ -59,39 +60,14 @@ public partial class Progress : System.Web.UI.Page
             }
 
 
-
-
-            //************** This calculates percent of courses complete  ********************************************
-            /*
-                        //\ This calls store procedure to return a count for all courses
-                        SqlConnection conCountAll = new SqlConnection(reidsDB);
-                        SqlCommand cmdGetCountAll = new SqlCommand("countAll", conCountAll);
-                        cmdGetCountAll.CommandType = CommandType.StoredProcedure;
-
-                        conCountAll.Open();
-                        totalCourses = Convert.ToInt32(cmdGetCountAll.ExecuteScalar());
-                        conCountAll.Close();
-
-                        //\ This calls store procedure to return a count for complete courses
-                        SqlConnection conCountComplete = new SqlConnection(reidsDB);
-
-                        SqlCommand cmdGetCountComplete = new SqlCommand("countComplete", conCountComplete);
-                        cmdGetCountComplete.CommandType = CommandType.StoredProcedure;
-                        cmdGetCountComplete.Parameters.AddWithValue("@studentID", userId);
-
-                        conCountComplete.Open();
-                        compCourses = Convert.ToInt32(cmdGetCountComplete.ExecuteScalar());
-                        conCountComplete.Close();
-                */
-
-
+            //\ Calculates % of all courses complete
             compCourses = student.getCountComplete();
             totalCourses = student.getCountAll();
 
-            myProg = (compCourses * 100) / totalCourses;
+            myProg = (compCourses * 100) / totalCourses; //\ status bar updater
 
-            //************* END Calculate Percent Complete ***************************************************
-
+            
+            //\ sets labels
             lblCourseComplete.Text = compCourses.ToString();
             lblCourseRemaining.Text = (totalCourses - compCourses).ToString();
             int allCredits = 120;
@@ -99,10 +75,10 @@ public partial class Progress : System.Web.UI.Page
             
             foreach(String s in completeCourses)
             {
-                System.Diagnostics.Debug.Write("course = " + s);
+                //System.Diagnostics.Debug.Write("course = " + s);
                 Course course = new Course(s);
                 takenCredits += course.getCreditValue();
-                System.Diagnostics.Debug.Write("takenCredits = " + takenCredits.ToString());
+                //System.Diagnostics.Debug.Write("takenCredits = " + takenCredits.ToString());
             }
             lblCreditComplete.Text = takenCredits.ToString();
             lblCreditRemaining.Text = (allCredits - takenCredits).ToString();
@@ -121,3 +97,30 @@ public partial class Progress : System.Web.UI.Page
 
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ ▄████▄   ▒█████   ██▀███  ▓█████ ▓██   ██▓     ██████  ██▓ ███▄ ▄███▓ ██▓███    ██████  ▒█████   ███▄    █ 
+▒██▀ ▀█  ▒██▒  ██▒▓██ ▒ ██▒▓█   ▀  ▒██  ██▒   ▒██    ▒ ▓██▒▓██▒▀█▀ ██▒▓██░  ██▒▒██    ▒ ▒██▒  ██▒ ██ ▀█   █ 
+▒▓█    ▄ ▒██░  ██▒▓██ ░▄█ ▒▒███     ▒██ ██░   ░ ▓██▄   ▒██▒▓██    ▓██░▓██░ ██▓▒░ ▓██▄   ▒██░  ██▒▓██  ▀█ ██▒
+▒▓▓▄ ▄██▒▒██   ██░▒██▀▀█▄  ▒▓█  ▄   ░ ▐██▓░     ▒   ██▒░██░▒██    ▒██ ▒██▄█▓▒ ▒  ▒   ██▒▒██   ██░▓██▒  ▐▌██▒
+▒ ▓███▀ ░░ ████▓▒░░██▓ ▒██▒░▒████▒  ░ ██▒▓░   ▒██████▒▒░██░▒██▒   ░██▒▒██▒ ░  ░▒██████▒▒░ ████▓▒░▒██░   ▓██░
+░ ░▒ ▒  ░░ ▒░▒░▒░ ░ ▒▓ ░▒▓░░░ ▒░ ░   ██▒▒▒    ▒ ▒▓▒ ▒ ░░▓  ░ ▒░   ░  ░▒▓▒░ ░  ░▒ ▒▓▒ ▒ ░░ ▒░▒░▒░ ░ ▒░   ▒ ▒ 
+  ░  ▒     ░ ▒ ▒░   ░▒ ░ ▒░ ░ ░  ░ ▓██ ░▒░    ░ ░▒  ░ ░ ▒ ░░  ░      ░░▒ ░     ░ ░▒  ░ ░  ░ ▒ ▒░ ░ ░░   ░ ▒░
+░        ░ ░ ░ ▒    ░░   ░    ░    ▒ ▒ ░░     ░  ░  ░   ▒ ░░      ░   ░░       ░  ░  ░  ░ ░ ░ ▒     ░   ░ ░ 
+░ ░          ░ ░     ░        ░  ░ ░ ░              ░   ░         ░                  ░      ░ ░           ░ 
+░ 
+*/

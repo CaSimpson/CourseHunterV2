@@ -29,6 +29,12 @@ public class Comment
         userId = id;
     }
 
+
+    /*
+
+
+     */
+
     public bool addComment(String name, int rating, String comment, int courseid)
     {
 
@@ -60,9 +66,65 @@ public class Comment
     }
 
 
-    
+    public void removeComment(int currentCourse)
+    {
+        SqlConnection con = new SqlConnection(myDatabase);
+
+        using (SqlCommand cmdRemoveTaken = new SqlCommand("removeComment", con))
+        {
+            cmdRemoveTaken.CommandType = CommandType.StoredProcedure;
+            cmdRemoveTaken.Parameters.AddWithValue("@userid", userId);
+            cmdRemoveTaken.Parameters.AddWithValue("@courseid", currentCourse);
+            con.Open();
+            try
+            {
+                cmdRemoveTaken.ExecuteNonQuery();
+            }
+            catch (SqlException)
+            {
+
+            }
+        }
+        con.Close();
+    }
 
 
+
+
+
+    public DataTable bind(int currentCourse)
+    {
+        Boolean bindResult = false;
+
+        SqlConnection con = new SqlConnection(myDatabase);
+        SqlCommand cmdBindComment = new SqlCommand("bindComment", con);
+        cmdBindComment.CommandType = CommandType.StoredProcedure;
+        cmdBindComment.Parameters.AddWithValue("@courseid", currentCourse);
+        SqlDataAdapter da = new SqlDataAdapter(cmdBindComment);
+
+        DataTable dt = new DataTable();
+        da.Fill(dt);
+
+        
+
+        return dt;
+
+    }
+
+    public int check(int currentCourse)
+    {
+        SqlConnection con = new SqlConnection(myDatabase);
+        SqlCommand cmdCheckComment = new SqlCommand("checkComment", con);
+        cmdCheckComment.CommandType = CommandType.StoredProcedure;
+        cmdCheckComment.Parameters.AddWithValue("@userid", userId);
+        cmdCheckComment.Parameters.AddWithValue("@courseid", currentCourse);
+        con.Open();
+        int hasComment = Convert.ToInt32(cmdCheckComment.ExecuteScalar());
+        con.Close();
+
+        return hasComment;
+
+    }
 
 
 }

@@ -17,20 +17,7 @@ using System.Web.Configuration;
 
 public partial class RateMyCourse : System.Web.UI.Page
 {
-    /**********************************************************************
-    *                   CREATE YOUR CONNECTION STRINGS BELOW               *
-    **********************************************************************/
-    private static String defaultDatabase = WebConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-
-
-    /**********************************************************************
-   * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
-   **********************************************************************/
-
-
-
-    //store connection string for my Database in a string 
-    String myDatabase = defaultDatabase;
+    
     String userId;
     int currentRating = 0;
     List<int> allList = new List<int>();
@@ -50,8 +37,6 @@ public partial class RateMyCourse : System.Web.UI.Page
         if (HttpContext.Current.User.Identity.IsAuthenticated)
         {
            
-
-
             //\ gets userName and UserID
             String currentUserName = HttpContext.Current.User.Identity.Name;
             userId = Membership.GetUser(currentUserName).ProviderUserKey.ToString();
@@ -59,26 +44,7 @@ public partial class RateMyCourse : System.Web.UI.Page
             student = new Student(userId);
             comment = new Comment(userId);
 
-            /*
-
-            //\ adds all courses to allList
-            using (SqlConnection sqlconn = new SqlConnection(myDatabase))
-            {
-                SqlCommand cmd = new SqlCommand("getAllCourses", sqlconn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                sqlconn.Open();
-                using (IDataReader dataReader = cmd.ExecuteReader())
-                {
-                    while (dataReader.Read())
-                    {
-                        int item = Convert.ToInt32(dataReader["course_id"]);
-                        allList.Add(item);
-                        //System.Diagnostics.Debug.Print("course id = " + item);
-                    }
-                }
-                sqlconn.Close();
-            }
-            */
+           
             allCourses = student.getAllCourses(); 
 
             foreach(String s in allCourses)
@@ -86,48 +52,14 @@ public partial class RateMyCourse : System.Web.UI.Page
                 courseDropBox.Items.Add(s);
             }
 
-            /*
-            String currentCourseName;
-
-            //\ gets course name for all courses and adds to dropbox
-            SqlConnection conGetName = new SqlConnection(myDatabase);
-
-            SqlCommand cmdGetName = new SqlCommand("getCourseName", conGetName);
-            cmdGetName.CommandType = CommandType.StoredProcedure;
-
-            foreach (int c in allList)
-            {
-
-                cmdGetName.Parameters.AddWithValue("@courseID", c);
-                conGetName.Open();
-                currentCourseName = Convert.ToString(cmdGetName.ExecuteScalar());
-                courseDropBox.Items.Add(currentCourseName);
-                cmdGetName.Parameters.Clear();
-                conGetName.Close();
-            }
-        */
+            
 
             //\sets currentcourse to whats selected in dropbox on load
-
             strCurrentCourse = courseDropBox.SelectedValue;
             currentCourse = student.getCourseName(strCurrentCourse);
 
 
-            /*
-
-            SqlConnection conGetCid = new SqlConnection(myDatabase);
-            SqlCommand cmdGetCid = new SqlCommand("getID", conGetCid);
-            cmdGetCid.CommandType = CommandType.StoredProcedure;
-
-            cmdGetCid.Parameters.AddWithValue("@courseNumber", strCurrentCourse);
-            conGetCid.Open();
-            currentCourse = (int)cmdGetCid.ExecuteScalar();
-            conGetCid.Close();
-
-
-
-            checkComment();
-            */
+           
         }
         else
         {
@@ -146,23 +78,19 @@ public partial class RateMyCourse : System.Web.UI.Page
     protected void btnSubmit_Click(object sender, EventArgs e)
     {
         
-
+            //\ gets current rating
             currentRating = Rating1.CurrentRating;
-
-
-            System.Diagnostics.Debug.WriteLine("course id = " + currentCourse.ToString());
             
+            //\ adds comment, returns true if successful
             bool success = comment.addComment(txtName.Text, currentRating, txtComment.Text, currentCourse);
 
-          
-
-
+            //\ notify user
             if (success == true)
             {
                 lblmessage.Text = "Comment posted successfully.";
                 BindComment();
             }
-        else { lblmessage.Text = "sorry Error while posting comment."; }
+        else { lblmessage.Text = "Error: Comment not posted!"; }
         
             
         
@@ -175,19 +103,15 @@ public partial class RateMyCourse : System.Web.UI.Page
 
 
 
-
+    //\ this created datatable full of comments for current course
+    //\ ui uses this to display comments dynamically
     private void BindComment()
     {
-
-
-        SqlConnection con = new SqlConnection(myDatabase);
-        SqlCommand cmdBindComment = new SqlCommand("bindComment", con);
-        cmdBindComment.CommandType = CommandType.StoredProcedure;
-        cmdBindComment.Parameters.AddWithValue("@courseid", currentCourse);
-        SqlDataAdapter da = new SqlDataAdapter(cmdBindComment);
-
         DataTable dt = new DataTable();
-        da.Fill(dt);
+
+        dt = comment.bind(currentCourse);
+
+
         if (dt.Rows.Count > 0)
         {
             gdvUserComment.Visible = true;
@@ -204,21 +128,16 @@ public partial class RateMyCourse : System.Web.UI.Page
         }
         checkComment();
         
-    }
+    }//\ end bindcomment
 
 
 
-
+    //\ displays "remove" button when user has left a comment for current course
     private void checkComment()
     {
-        SqlConnection con = new SqlConnection(myDatabase);
-        SqlCommand cmdCheckComment = new SqlCommand("checkComment", con);
-        cmdCheckComment.CommandType = CommandType.StoredProcedure;
-        cmdCheckComment.Parameters.AddWithValue("@userid", userId);
-        cmdCheckComment.Parameters.AddWithValue("@courseid", currentCourse);
-        con.Open();
-        int hasComment = Convert.ToInt32(cmdCheckComment.ExecuteScalar());
-        con.Close();
+
+        int hasComment = comment.check(currentCourse);
+        
         if(hasComment > 0)
         {
             btnRemove.Visible = true;
@@ -231,7 +150,7 @@ public partial class RateMyCourse : System.Web.UI.Page
     }
 
 
-
+    //\ rebinds ui to new course if user changes drop box
     protected void courseDropBox_SelectedIndexChanged(object sender, EventArgs e)
     {
 
@@ -240,16 +159,9 @@ public partial class RateMyCourse : System.Web.UI.Page
 
         strCurrentCourse = courseDropBox.SelectedItem.Text;
 
-        SqlConnection conGetCid = new SqlConnection(myDatabase);
-        SqlCommand cmdGetCid = new SqlCommand("getID", conGetCid);
-        cmdGetCid.CommandType = CommandType.StoredProcedure;
-
-        cmdGetCid.Parameters.AddWithValue("@courseNumber", strCurrentCourse);
-        conGetCid.Open();
-        currentCourse = (int)cmdGetCid.ExecuteScalar();
-        conGetCid.Close();
-        //System.Diagnostics.Debug.WriteLine("course id = " + currentCourse.ToString());
-
+       
+        currentCourse = student.getCourseName(strCurrentCourse);
+        
         BindComment();
         clearLabels();
 
@@ -261,32 +173,16 @@ public partial class RateMyCourse : System.Web.UI.Page
 
 
 
-
+    //\ this uses magic to dispell evil comments
     protected void btnRemove_Click(object sender, EventArgs e)
     {
-        SqlConnection con = new SqlConnection(myDatabase);
-        
-            using (SqlCommand cmdRemoveTaken = new SqlCommand("removeComment", con))
-            {
-                cmdRemoveTaken.CommandType = CommandType.StoredProcedure;
-                cmdRemoveTaken.Parameters.AddWithValue("@userid", userId);
-                cmdRemoveTaken.Parameters.AddWithValue("@courseid", currentCourse);
-                con.Open();
-                try
-                {
-                    cmdRemoveTaken.ExecuteNonQuery();
-                }
-                catch (SqlException)
-                {
-
-                }
-            }
-            con.Close();
+        comment.removeComment(currentCourse);
         BindComment();
         clearLabels();
         
     }
 
+    //\ good old label reset
     private void clearLabels()
     {
         txtName.Text = "";
@@ -295,3 +191,29 @@ public partial class RateMyCourse : System.Web.UI.Page
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ ▄████▄   ▒█████   ██▀███  ▓█████ ▓██   ██▓     ██████  ██▓ ███▄ ▄███▓ ██▓███    ██████  ▒█████   ███▄    █ 
+▒██▀ ▀█  ▒██▒  ██▒▓██ ▒ ██▒▓█   ▀  ▒██  ██▒   ▒██    ▒ ▓██▒▓██▒▀█▀ ██▒▓██░  ██▒▒██    ▒ ▒██▒  ██▒ ██ ▀█   █ 
+▒▓█    ▄ ▒██░  ██▒▓██ ░▄█ ▒▒███     ▒██ ██░   ░ ▓██▄   ▒██▒▓██    ▓██░▓██░ ██▓▒░ ▓██▄   ▒██░  ██▒▓██  ▀█ ██▒
+▒▓▓▄ ▄██▒▒██   ██░▒██▀▀█▄  ▒▓█  ▄   ░ ▐██▓░     ▒   ██▒░██░▒██    ▒██ ▒██▄█▓▒ ▒  ▒   ██▒▒██   ██░▓██▒  ▐▌██▒
+▒ ▓███▀ ░░ ████▓▒░░██▓ ▒██▒░▒████▒  ░ ██▒▓░   ▒██████▒▒░██░▒██▒   ░██▒▒██▒ ░  ░▒██████▒▒░ ████▓▒░▒██░   ▓██░
+░ ░▒ ▒  ░░ ▒░▒░▒░ ░ ▒▓ ░▒▓░░░ ▒░ ░   ██▒▒▒    ▒ ▒▓▒ ▒ ░░▓  ░ ▒░   ░  ░▒▓▒░ ░  ░▒ ▒▓▒ ▒ ░░ ▒░▒░▒░ ░ ▒░   ▒ ▒ 
+  ░  ▒     ░ ▒ ▒░   ░▒ ░ ▒░ ░ ░  ░ ▓██ ░▒░    ░ ░▒  ░ ░ ▒ ░░  ░      ░░▒ ░     ░ ░▒  ░ ░  ░ ▒ ▒░ ░ ░░   ░ ▒░
+░        ░ ░ ░ ▒    ░░   ░    ░    ▒ ▒ ░░     ░  ░  ░   ▒ ░░      ░   ░░       ░  ░  ░  ░ ░ ░ ▒     ░   ░ ░ 
+░ ░          ░ ░     ░        ░  ░ ░ ░              ░   ░         ░                  ░      ░ ░           ░ 
+░ 
+*/
