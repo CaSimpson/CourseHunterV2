@@ -63,14 +63,21 @@ public partial class Progress : System.Web.UI.Page
             //\ Calculates % of all courses complete
             compCourses = student.getCountComplete();
             totalCourses = student.getCountAll();
+           // System.Diagnostics.Debug.Write("compCount = " + compCourses + "  all count = " + totalCourses);
 
-            myProg = (compCourses * 100) / totalCourses; //\ status bar updater
-
+            if (totalCourses < 1)
+            {
+                myProg = 0;
+            }
+            else
+            {
+                myProg = (compCourses * 100) / totalCourses; //\ status bar updater
+            }
             
             //\ sets labels
             lblCourseComplete.Text = compCourses.ToString();
             lblCourseRemaining.Text = (totalCourses - compCourses).ToString();
-            int allCredits = 120;
+            int allCredits = 108;
             int takenCredits = 0;
             
             foreach(String s in completeCourses)

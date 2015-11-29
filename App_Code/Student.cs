@@ -253,9 +253,17 @@ public class Student
         SqlCommand cmdGetCountAll = new SqlCommand("countAll", conCountAll);
         cmdGetCountAll.CommandType = CommandType.StoredProcedure;
 
+        SqlParameter returnParameter = cmdGetCountAll.Parameters.Add("@return", SqlDbType.Int);
+        returnParameter.Direction = ParameterDirection.ReturnValue;
+
         conCountAll.Open();
-        totalCourses = Convert.ToInt32(cmdGetCountAll.ExecuteScalar());
+        // totalCourses = Convert.ToInt32(cmdGetCountAll.ExecuteScalar());
+        cmdGetCountAll.ExecuteNonQuery();
         conCountAll.Close();
+
+        totalCourses = Convert.ToInt32(returnParameter.Value);
+
+        System.Diagnostics.Debug.Write("  all count = " + totalCourses);
 
         return totalCourses;
 
@@ -272,10 +280,17 @@ public class Student
         SqlCommand cmdGetCountComplete = new SqlCommand("countComplete", conCountComplete);
         cmdGetCountComplete.CommandType = CommandType.StoredProcedure;
         cmdGetCountComplete.Parameters.AddWithValue("@studentID", userId);
+        SqlParameter returnParameter = cmdGetCountComplete.Parameters.Add("@return", SqlDbType.Int);
+        returnParameter.Direction = ParameterDirection.ReturnValue;
 
         conCountComplete.Open();
-        compCourses = Convert.ToInt32(cmdGetCountComplete.ExecuteScalar());
+        //compCourses = Convert.ToInt32(cmdGetCountComplete.ExecuteScalar());
+        cmdGetCountComplete.ExecuteNonQuery();
         conCountComplete.Close();
+
+        compCourses = Convert.ToInt32(returnParameter.Value);
+
+        System.Diagnostics.Debug.Write("compCount = " + compCourses);
 
         return compCourses;
     }
@@ -294,6 +309,7 @@ public class Student
     //\ returns current user's name
     public String getName()
     {
+        System.Diagnostics.Debug.Write("name =  " + name);
         return name;
     }
 
