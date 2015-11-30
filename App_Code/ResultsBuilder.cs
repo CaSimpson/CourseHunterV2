@@ -112,6 +112,27 @@ public class ResultsBuilder
 
     public void findRecommended()
     {
+        List<int> CSAll = new List<int>();
+
+        SqlConnection allCSCon = new SqlConnection(myDatabase);
+        using (allCSCon)
+        {
+            SqlCommand cmd = new SqlCommand("getAllCourses", allCSCon);
+            cmd.CommandType = CommandType.StoredProcedure;
+            allCSCon.Open();
+            using (IDataReader dataReader = cmd.ExecuteReader())
+            {
+                while (dataReader.Read())
+                {
+                    int item = Convert.ToInt32(dataReader["course_id"]);
+                    CSAll.Add(item);
+                }
+            }
+            allCSCon.Close();
+        }//\ END USING
+
+
+
 
 
         List<int> electivesList = new List<int>();
@@ -136,11 +157,21 @@ public class ResultsBuilder
 
         nonElectives = possibleCourses.Except(electivesList).ToList();
 
+        List<int> importantCourses = new List<int>();
+
+        foreach(int c in possibleCourses)
+        {
+            if(CSAll.Contains(c))
+            {
+                importantCourses.Add(c);
+            }
+        }
+
 
         //\ makes an array of form [courseid][numOfPrereqs]
-        int[][] recommendedArray = new int[possibleCourses.Count()][];
+        int[][] recommendedArray = new int[importantCourses.Count()][];
         int iCounter = 0;
-        foreach (int p in possibleCourses)
+        foreach (int p in importantCourses)
         {
             int recCount = 0;
             for (int i = 0; i < prereqArray.Length; i++)
@@ -158,7 +189,7 @@ public class ResultsBuilder
 
         }
 
-        sortedRecArray = new int[possibleCourses.Count()][];
+        sortedRecArray = new int[importantCourses.Count()][];
         sortedRecArray = InsertionSort(recommendedArray);
 
 

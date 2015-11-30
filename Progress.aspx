@@ -12,11 +12,12 @@
                           var myProg;
                           myProg = <%=myProg%>;
                          jQuery(document).ready(function () {
-                             jQuery("#progressbar").progressbar({ value: myProg }).append("<div class='caption'>20%</div>");
+                             jQuery("#progressbar").progressbar({ value: myProg }).append("<div class='caption'>0%</div>");
                              jQuery("#progressbar").css({ 'background': 'url(images/white-40x100.png) #ffffff repeat-x 50% 50%;' });
                              jQuery("#pbar1 > div").css({ 'background': 'url(images/lime-1x100.png) #cccccc repeat-x 50% 50%;' });
                          });
                         </script>    
+
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
                     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
                     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script> 

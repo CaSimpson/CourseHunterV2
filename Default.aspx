@@ -22,17 +22,17 @@
             and creates a list of classes a student can choose from and register for that current semester.
                 </div>
                 <div class="list-group-item">
-                    <h4>Benefits this application</h4>
+                    <h4>Benefits of this application</h4>
                     The benefits of our application will make it easier for a both faculty(advisors specificly) 
             and students to see what classes are needed to continue toward a particular major.
              <mark>THIS SOFTWARE SHOULD ONLY BE A GUIDELINE.</mark> This software is just a tool to help. Please speak with
-            your advisor before makeing any final decisions. 
+            your advisor before making any final decisions. 
                 </div>
                 <div class="list-group-item">
                     <h4>Keep track of your progress</h4>
                     Very often students try to sign up for classes that require prerequisites that the student does not meet.  
             The software will inform the student and not show the student those classes. 
-             As a result the software will also help you avoid taking unnecessary classes and increase chance of graduating on-time.
+             As a result the software will also help you avoid taking unnecessary classes and increase the chance of graduating on-time.
                 </div>
             </div>
 
@@ -40,7 +40,7 @@
     
 
     <div class="col-md-6">
-        <img src="Images/Front_Catalog_Howle.png" alt="Course Catalog" class="img-rounded" style="width: 90%; height: 90%">
+        <img src="Images/catalog.jpg" alt="Course Catalog" class="img-rounded" style="width: 90%; height: 90%">
     </div>
         </div>
     </div>

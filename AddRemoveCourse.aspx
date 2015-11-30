@@ -5,7 +5,7 @@
         <div class="content-wrapper">
             <hgroup class="title">
                 <h1><%: Title %></h1>
-                <h2>Select all completed courses and hit submit.</h2>
+                <h2>Select all courses you would like to add or remove.</h2>
             </hgroup>
             <p>
 
@@ -16,7 +16,7 @@
 </asp:Content>
 
 <asp:Content runat="server" ID="appBody" ContentPlaceHolderID="MainContent">
-    <div class="panel-heading">Select all Courses and Click Add or Remove</div>
+    <div class="panel-heading">Then select Add or Remove</div>
 
 
     <asp:Panel runat="server" ID="addPanel">
@@ -29,7 +29,7 @@
                 <tr class="text-primary" style="background-color: #333333; font-size: large; border: thin solid #999999">
                    <td>Requirement Area</td>
                     <td>Sub Area / Topic</td>
-                    <td># credit hours</td>
+                    <td>Credit Hours</td>
                     <td>Courses</td>
                     <td>Completed</td>
 
@@ -107,7 +107,7 @@
                 <td>III. Information Technology</td>
                 <td>Information Technology</td>
                 <td>3</td>
-                <td>CSCIU1500</td>
+                <td>CSCI U150</td>
                 <td colspan="2">
                     <asp:CheckBox ID="CSCIU150" runat="server" /></td>
             </tr>
@@ -193,7 +193,7 @@
             <tbody class="mytable">
                 <tr class="text-primary" style="background-color: #333333; font-size: large; border: thin solid #999999">
                     <td colspan="2">Core Major Requirements</td>
-                    <td>33</td>
+                    <td>Credits Required: 33</td>
 
                 </tr>
                 <tr class="text-primary" style="background-color: #333333; font-size: large; border: thin solid #999999">
@@ -291,7 +291,7 @@
             <tbody>
                 <tr class="text-primary" style="background-color: #333333; font-size: large; border: thin solid #999999">
                     <td colspan="2">General</td>
-                    <td>9</td>
+                    <td>Credits Required: 9</td>
 
                 </tr>
                 <tr class="text-primary" style="background-color: #333333; font-size: large; border: thin solid #999999">
@@ -461,23 +461,26 @@
             <tbody>
                 <tr class="text-primary" style="background-color: #333333; font-size: large; border: thin solid #999999">
                     <td colspan="2">Supporting Courses</td>
-                    <td colspan="2">13-14</td>
+                    <td colspan="2">Credits Required: 13-14</td>
 
                 </tr>
                 <tr class="text-primary" style="background-color: #333333; font-size: large; border: thin solid #999999">
                     <td></td>
                     <td>Credit Hours</td>
+                    <td>Course</td>
                     <td colspan="2">Completed</td>
                 </tr>
                 <tr>
                     <td>MATHU174: Elements of Discrete Mathematics</td>
                     <td>3</td>
+                    <td>MATH U174</td>
                     <td colspan="2">
                         <asp:CheckBox ID="MATHU174" runat="server" /></td>
                 </tr>
                 <tr>
                     <td>MATHU315: Statistical Methods I</td>
                     <td>3</td>
+                    <td>MATH U315</td>
                     <td colspan="2">
                         <asp:CheckBox ID="MATHU315" runat="server" /></td>
                 </tr>

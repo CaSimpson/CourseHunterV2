@@ -48,10 +48,10 @@
 
         <div class="col-md-6">
             <div class="well">
-                <img class="img-circle center-block" src="Images/corey.jpg" alt="Generic placeholder image" width="140" height="140">
+                <img class="img-circle center-block" src="Images/coreypic.jpg" alt="Generic placeholder image" width="140" height="140">
                 <h2 class="text-center">Corey Simpson</h2>
                 <h4 class="text-center">Placeholder text: Bio</h4>
-                <p class="text-center"><a href="mailto:mewborne@email.uscupstate.edu">mewborne@email.uscupstate.edu</a></p>
+                <p class="text-center"><a href="mailto:mewborne@email.uscupstate.edu">csimpson@email.uscupstate.edu</a></p>
             </div>
         </div>
         <div class="hidden">

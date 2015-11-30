@@ -53,7 +53,7 @@ public partial class Results : System.Web.UI.Page
             student = new Student(userId);
 
             strTakenList = student.getTakenCourses();
-            takenList = student.getCourseName(strTakenList);
+            takenList = student.getTakenInt();
             strAllList = student.getAllCourses();
             allList = student.getCourseName(strAllList);
 
@@ -115,7 +115,7 @@ public partial class Results : System.Web.UI.Page
             }
             */
             //\ creates need list and Creates resultbuilder object
-            needList = allList.Except(takenList).ToList();
+            needList = student.getNeededInt();
             ResultsBuilder rs = new ResultsBuilder(needList, takenList);
             //\ finds possible courses and inits possible list
             rs.findPossible();

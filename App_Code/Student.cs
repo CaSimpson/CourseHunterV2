@@ -331,16 +331,28 @@ public class Student
         return coursesAll;
     }
 
+   
+
     //\ returns current user's courses needed to graduate
     public List<String> getNeededCourses()
     {
         return coursesNeeded;
     }
+    public List<int> getNeededInt()
+    {
+        return needList;
+    }
+
 
     //\ returns current user's list of courses completed
     public List<String> getTakenCourses()
     {
         return coursesTaken;
+    }
+
+    public List<int> getTakenInt()
+    {
+        return takenList;
     }
 
     /****************************************************************************************
