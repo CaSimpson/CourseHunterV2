@@ -45,7 +45,8 @@ public partial class RateMyCourse : System.Web.UI.Page
             comment = new Comment(userId);
 
            
-            allCourses = student.getAllCourses(); 
+            allCourses = student.getAllCourses();
+            allCourses.Sort();
 
             foreach(String s in allCourses)
             {

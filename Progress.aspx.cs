@@ -48,6 +48,11 @@ public partial class Progress : System.Web.UI.Page
             completeCourses = student.getTakenCourses(); //\ returns a list of completed courses
             remainingCourses = student.getNeededCourses();
 
+
+            completeCourses.Sort();
+            remainingCourses.Sort();
+
+
             //\ adds taken courses to listbox
             foreach (String s in completeCourses)
             {

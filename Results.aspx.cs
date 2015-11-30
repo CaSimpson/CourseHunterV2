@@ -175,15 +175,17 @@ public partial class Results : System.Web.UI.Page
             //rec4.Text = recIntList[3].ToString();
             // rec5.Text = recIntList[4].ToString();
 
-           // int alength = prereqList.Length;
+            // int alength = prereqList.Length;
 
-           // for (int i = 0; i < alength; i++)
-          //  {
-               
-         //       allPosListBox.Items.Add(prereqList[i][0].ToString());
-         //       testList.Items.Add(prereqList[i][1].ToString());
-         ////       
-         //   }
+            // for (int i = 0; i < alength; i++)
+            //  {
+
+            //       allPosListBox.Items.Add(prereqList[i][0].ToString());
+            //       testList.Items.Add(prereqList[i][1].ToString());
+            ////       
+            //   }
+
+            formattedList.Sort();
             
             foreach (String i in formattedList)
             {

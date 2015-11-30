@@ -94,7 +94,7 @@ public class Comment
 
     public DataTable bind(int currentCourse)
     {
-        Boolean bindResult = false;
+      
 
         SqlConnection con = new SqlConnection(myDatabase);
         SqlCommand cmdBindComment = new SqlCommand("bindComment", con);
