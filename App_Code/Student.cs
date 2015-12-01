@@ -41,7 +41,7 @@ public class Student
             setStudentName();
             setUserName();
             setStudentMajor();
-            setAboutMe();
+            //setAboutMe();
             setCourseLists();
 
 
@@ -86,6 +86,7 @@ public class Student
     }
 
     // sets current user's about me 
+    /*
     private void setAboutMe()
     {
         SqlCommand cmdAboutMe = new SqlCommand("getAboutMe", con);
@@ -95,7 +96,7 @@ public class Student
         con.Open();
         aboutMe = Convert.ToString(cmdAboutMe.ExecuteScalar());
         con.Close();
-    }
+    }*/
 
     // sets current user's userName
     private void setUserName()
