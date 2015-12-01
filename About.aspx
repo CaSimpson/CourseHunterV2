@@ -10,28 +10,8 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div class="row">
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">Getting Started</div>
-                <div class="panel-body">Use this area to provide additional information.</div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">Adding Classes</div>
-                <div class="panel-body">Use this area to provide additional information.</div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">Help</div>
-                <div class="panel-body">Use this area to provide additional information.</div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
+     
+        <div class="col-md-8">
             <div class="panel panel-default">
                     <div class="panel-heading panel-collapse">
                         About
@@ -41,6 +21,13 @@
                     </div>
                 </div>
         </div>
-        "
+         <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Give it a try</div>
+                <div class="panel-body">Register now and prepare for the future
+
+                </div>
+            </div>
+        </div>
     </div>
 </asp:Content>

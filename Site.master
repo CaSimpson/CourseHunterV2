@@ -4,7 +4,7 @@
 <html lang="en">
 <head id="Head1" runat="server">
     <meta charset="utf-8" />
-    <title><%: Page.Title %>- My ASP.NET Application</title>
+    <title><%: Page.Title %>- Course Hunter</title>
     <asp:PlaceHolder ID="PlaceHolder1" runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
@@ -53,8 +53,9 @@
                 <div id="navbar" class="navbar-collapse collapse" aria-expanded="false">
                     <ul class="nav navbar-nav">
                         <li><a runat="server" href="~/">Home</a></li>
-                        <li><a runat="server" href="~/About">About</a></li>
+                        <li><a runat="server" href ="http://publications.uscupstate.edu/Admissions/1415_Academic_Catalog/">Catalog</a></li>
                         <li><a runat="server" href="~/Contact">Contact</a></li>
+                        
                        <asp:LoginView runat="server" ViewStateMode="Disabled">
                            <LoggedInTemplate>
                                <li>
