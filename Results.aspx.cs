@@ -40,6 +40,13 @@ public partial class Results : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (!(HttpContext.Current.User.Identity.IsAuthenticated))
+        {
+
+            FormsAuthentication.SignOut();
+            Session.Clear();
+            Response.Redirect("~/Default");
+        }
 
         if (HttpContext.Current.User.Identity.IsAuthenticated)
         {

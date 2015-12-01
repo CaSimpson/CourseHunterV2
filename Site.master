@@ -61,24 +61,18 @@
                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
                                    <ul class="dropdown-menu">
                                        <li><a runat="server" href="~/Profile">Profile</a></li>
+                                        <li><a runat="server" href="~/inbox">Messages</a></li>
+                                        <li><a runat="server" href="~/searchUsers">Search Users</a></li>
                                        <li><a runat="server" href="~/AddRemoveCourse">Add/Remove Course</a></li>
                                        <li><a runat="server" href="~/Progress">Progress</a></li>
                                        <li><a runat="server" href="~/Results">Results</a></li>
-                                       <li><a runat="server" href="~/RateMyCourse">Rate My Couse</a></li>
+                                       <li><a runat="server" href="~/RateMyCourse">Rate My Course</a></li>
                                    </ul>
                                </li>
                            </LoggedInTemplate>
                        </asp:LoginView>
                     </ul>
-                    <div class="navbar-form navbar-right" role="search">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search" aria-label="">
-                            <span class="input-group-addon">
-                                <button class="glyphicon glyphicon-search"></button>
-                            </span>
-                        </div>
-
-                    </div>
+                    
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">
@@ -95,6 +89,15 @@
                                     <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" />
                                 </li>
                             </ul>
+                            <div class="navbar-form navbar-right" role="search">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search" aria-label="">
+                            <span class="input-group-addon">
+                                <button class="glyphicon glyphicon-search"></button>
+                            </span>
+                        </div>
+
+                    </div>
                         </LoggedInTemplate>
                     </asp:LoginView>
                 </div>

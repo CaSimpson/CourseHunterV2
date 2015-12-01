@@ -9,206 +9,179 @@ using System.Data;
 using Microsoft.AspNet.Membership;
 using Microsoft.AspNet.Membership.OpenAuth;
 using System.Web.Security;
+using System.Collections;
+using System.IO;
 using System.Web.Configuration;
-
-
 
 public partial class profile : System.Web.UI.Page
 {
-    /**********************************************************************
-   *                   CREATE YOUR CONNECTION STRINGS BELOW               *
-   **********************************************************************/
-    private static String reidsDB = WebConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-
-
-    /**********************************************************************
-   * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
-   **********************************************************************/
-
-
-
-    //store connection string for my Database in a string 
-    String myDatabase = reidsDB;
-    String userId;
-    String username;
+    protected String UserId;
+    String currentUserName;
     String studentName;
     String majorName;
     String AboutYourselve;
+    student22 currentStudent;
+
+    /**********************************************************************
+*                   CREATE YOUR CONNECTION STRINGS BELOW               *
+**********************************************************************/
+    private static String myDbConString = WebConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+    protected List<String> majorsList;
 
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        //if user is logged in
-        if (HttpContext.Current.User.Identity.IsAuthenticated)
+
+        if (!(HttpContext.Current.User.Identity.IsAuthenticated))
         {
-            //get the username 
-            username = HttpContext.Current.User.Identity.Name;
-            //get the userId from membership table 
-            userId = Membership.GetUser(username).ProviderUserKey.ToString();
+
+            FormsAuthentication.SignOut();
+            Session.Clear();
+            Response.Redirect("~/Default");
+        }
+        String currentUserName = HttpContext.Current.User.Identity.Name;
+        UserId = Membership.GetUser(currentUserName).ProviderUserKey.ToString();
 
 
-            //connect to the database
-            SqlConnection sqlConnection1 = new SqlConnection(myDatabase);
-
-            //getStudentName is the name of the stored procedure 
-            SqlCommand cmd1 = new SqlCommand("getStudentName", sqlConnection1);
-
-            //StoredProcedure is command type 
-            cmd1.CommandType = CommandType.StoredProcedure;
-
-            cmd1.Connection = sqlConnection1;
-
-            //StoredProcedure has param 
-            cmd1.Parameters.AddWithValue("@studentID", userId);
-
-            sqlConnection1.Open();
-
-            studentName = Convert.ToString(cmd1.ExecuteScalar());
-
-            sqlConnection1.Close();
-
-            //the lable studentName to be = to the name in student table
-            //studentName.Text = name;
-
-            //*************** END get Student Name ******************************************************
-
-            //boxEnterName.Text = ""; //this is where the user will enter their new name so we make it empty  //\ this is give name value of ""
-
-
-
-            //get all major names in the major table and add them to the drop down menu called majorsDropDown
-            using (SqlConnection sqlConnection2 = new SqlConnection(myDatabase))
-            {
-                SqlCommand cmd2 = new SqlCommand();
-                cmd2.CommandText = "getAllMajors";
-                cmd2.CommandType = CommandType.StoredProcedure;
-                cmd2.Connection = sqlConnection2;
-
-                sqlConnection2.Open();
-
-                SqlDataReader reader = cmd2.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    majorsDropDown.Items.Clear();
-                    majorsDropDown.Items.Insert(0, new ListItem("Select", ""));
-                    while (reader.Read())
-                    {
-                        String major = Convert.ToString(reader["major_name"]);
-                        majorsDropDown.Items.Add(major);
-                    }
-                }
-
-                else
-                {
-                    Console.WriteLine("No rows found.");
-                }
-                reader.Close();
-
-                sqlConnection2.Close();
-            }
-
-            //this is just a test
-            selValue.Text = majorsDropDown.SelectedValue;
-
-
-
-            using (SqlConnection sqlConnection = new SqlConnection(myDatabase))
-            {
-                SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = "getNameMajorUserNameText";
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@student_id", userId);
-
-                cmd.Connection = sqlConnection;
-
-                sqlConnection.Open();
-
-                using (IDataReader dataReader = cmd.ExecuteReader())
-                {
-                    while (dataReader.Read())
-                    {
-             //           String username;
-            //            String studentName;
-             //           String majorName;
-            //            String AboutYourselve;
-
-                        ///username = usernameLabel.Text = Convert.ToString(dataReader["UserName"]);
-                        studentName = studentNameLabel.Text = Convert.ToString(dataReader["name"]);
-                        majorName = majorNameLabel.Text = Convert.ToString(dataReader["major_name"]);
-                        AboutYourselve = boxAboutYourselve.Text = Convert.ToString(dataReader["text"]);
-
-
-
-                    }
-                }
-
-                sqlConnection.Close();
-            }
-
+        if (UserId == null)
+        {
+            Response.Redirect("~/Default");
         }
 
 
-       // Button1.Click += new EventHandler(this.Update_Click);
+        //if (!IsPostBack)   //if this is the first time the page is loading 
+        currentStudent = new student22(currentUserName);
+
+        Label2.Visible = false;
+
+        //  if (!IsPostBack) you actually want it to get data every time the page is loaded
+        //so comment the postback method instead
+
+
+        //get information about the currently logged in student
+        Image1.ImageUrl = "ImageHandler.ashx? UserId =" + UserId;
+        studentName = currentStudent.getActualName();
+        majorName = currentStudent.getMajor();
+        AboutYourselve = currentStudent.getAboutMe();
+
+
+            //set labels in front end
+            studentNameLabel.Text = studentName;
+            usernameLabel.Text = currentUserName;
+            majorNameLabel.Text = majorName;
+
+            if (!IsPostBack)   //if this is the first time the page is loading      
+            aboutMeBox.Text = AboutYourselve;
+
+           
+
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //get all major names in the major table and add them to the drop down menu called majorsDropDown
+            if (!IsPostBack)
+            {
+                majors majorsObject=  new majors();
+
+                majorsList = majorsObject.getMajorsList();
+
+                majorsDropDown.Items.Clear();
+                majorsDropDown.Items.Insert(0, new ListItem("Select Major", ""));
+
+                foreach (String theMajorName in majorsList)
+                {
+                    majorsDropDown.Items.Add(theMajorName);
+                }
+
+                
+
+        }//end of if (!IsPostBack)
+             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //Image.ImageUrl= currentStudent.getProfilePic();
+        
     }
+
+    private void upload2()
+    {
+        if (FileUpload1.HasFile)
+        {
+            //finding size of file
+            int length = FileUpload1.PostedFile.ContentLength;
+            //creating binary variable of above length
+            byte[] imgbyte = new byte[length];
+            //saving image in memory
+            HttpPostedFile img = FileUpload1.PostedFile;
+            //loading image into binary variable
+            img.InputStream.Read(imgbyte, 0, length);
+            string imgname = "";
+
+            SqlConnection con = new SqlConnection(myDbConString);
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "updatePic";
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@UserId", SqlDbType.UniqueIdentifier).Value = UserId;
+            cmd.Parameters.Add("@ImageName", SqlDbType.VarChar, 100).Value = imgname;
+            cmd.Parameters.Add("@ImageData", SqlDbType.Image).Value = imgbyte;
+
+            cmd.Connection = con;
+            int count = 0;
+            try
+            {
+                con.Open();
+                //execute the stored procedure 
+                count = cmd.ExecuteNonQuery();
+                con.Close();
+            }
+            catch (SqlException)
+            {
+                Console.WriteLine("Can not open connection ! ");
+                con.Close();
+            }
+            
+           
+            Label2.Visible = true;
+            Label2.Text = "Image uploaded succcesfully";
+            if (count == 1)
+            {
+                Image1.ImageUrl = "ImageHandler.ashx? UserId =" + UserId;
+            }
+        }
+    }
+
 
 
     public void Update_Click(object sender, EventArgs e)
     {
+        upload2();
 
-        String newUsername = "hello";
-        String newName = "hello";
-        String selectedMajor = "hello";
-        String aboutMe = "hello";
- 
+        String newName = actualNameBox.Text;
+        String newSelectedMajor = majorsDropDown.SelectedItem.Value;
+        String aboutMe = aboutMeBox.Text;
 
-        newUsername = boxEnterUsername.Text; 
-        if (newUsername.Equals(""))
-            newUsername = username;
+        currentStudent.setStudentAttributes(newName, newSelectedMajor, aboutMe);    
 
-        newName = txtName.Text;
-        System.Diagnostics.Debug.WriteLine("newName = " + newName);
-        if (newName.Equals(""))
-            newName = studentName;
+        studentNameLabel.Text = currentStudent.getActualName();
 
-        selectedMajor = majorsDropDown.SelectedValue.ToString();
-        if (selectedMajor.Equals(""))
-            selectedMajor = "Computer Science"; //\  If major box is empty we need to get current major, if they leave this blank sqlexception becuase procedure requires @major_name value
+        majorNameLabel.Text = currentStudent.getMajor();
 
-        aboutMe = boxAboutYourselve.Text;
-        
+        aboutMeBox.Text = currentStudent.getAboutMe();
 
-        using (SqlConnection sqlConnection4 = new SqlConnection(myDatabase))
-        {
-            SqlCommand cmd4 = new SqlCommand();
-            cmd4.CommandText = "updateStudentInfo";
-            cmd4.CommandType = CommandType.StoredProcedure;
 
-            cmd4.Parameters.AddWithValue("@student_id", userId);
-            cmd4.Parameters.AddWithValue("@UserName", newUsername);
-            cmd4.Parameters.AddWithValue("@name", newName);
-            cmd4.Parameters.AddWithValue("@major_name", selectedMajor);
-            cmd4.Parameters.AddWithValue("@text", aboutMe);
-            System.Diagnostics.Debug.WriteLine("studentID = " + userId);
+        //reset boxes and dropdown menu
+        actualNameBox.Text= string.Empty;
+        majorsDropDown.ClearSelection();
 
-            cmd4.Connection = sqlConnection4;
 
-            sqlConnection4.Open();
-            try
-            {
-                //execute the stored procedure 
-
-                cmd4.ExecuteNonQuery();
-                System.Diagnostics.Debug.WriteLine("query executed" + newName);
-            }
-           catch (SqlException)
-            {
-
-            }
-            sqlConnection4.Close();
-        }
-
+        //Response.Redirect(Request.RawUrl);
 
     }
+
+    public void addUser_Click(object sender, EventArgs e)
+    {
+        
+        Console.WriteLine("No rows found.");
+    }
+
 
 }

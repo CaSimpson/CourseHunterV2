@@ -29,6 +29,13 @@ public partial class Progress : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (!(HttpContext.Current.User.Identity.IsAuthenticated))
+        {
+
+            FormsAuthentication.SignOut();
+            Session.Clear();
+            Response.Redirect("~/Default");
+        }
         //\ authenticates user
         if (HttpContext.Current.User.Identity.IsAuthenticated)
         {

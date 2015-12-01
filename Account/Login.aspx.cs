@@ -12,10 +12,13 @@ public partial class Account_Login : Page
         RegisterHyperLink.NavigateUrl = "Register";
         OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
 
+
         var returnUrl = HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"]);
         if (!String.IsNullOrEmpty(returnUrl))
         {
             RegisterHyperLink.NavigateUrl += "?ReturnUrl=" + returnUrl;
         }
+
+        
     }
 }
