@@ -42,7 +42,7 @@
                 <img class="img-circle center-block" src="Images/trey.jpg" alt="Generic placeholder image" width="140" height="140">
                 <h2 class="text-center">Trey Howle</h2>
                 <h4 class="text-center">Placeholder text: Bio</h4>
-                <p class="text-center"><a href="mailto:howleg@email.uscupstate.edu">mewborne@email.uscupstate.edu</a></p>
+                <p class="text-center"><a href="mailto:howleg@email.uscupstate.edu">howleg@email.uscupstate.edu</a></p>
             </div>
         </div>
 
