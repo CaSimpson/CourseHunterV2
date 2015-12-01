@@ -3,7 +3,7 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 
-    <link href="../Content/bootstrap.css" rel="stylesheet" />
+    <%--<link href="../Content/bootstrap.css" rel="stylesheet" />--%>
 
     <hgroup class="title">
         <h1><%: Title %>.</h1>
