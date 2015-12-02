@@ -108,7 +108,8 @@ public partial class ReadMail : System.Web.UI.Page
             student22 thisStudent = new student22(senderID, 0);
 
             HtmlTableRow row = new HtmlTableRow();
-            row.Attributes["class"] = "panel";
+
+            row.Attributes["class"] = "panel panel-success";
 
             //////////////// cell1  userNameLabel   ///////////////////////////////////////////////
             HtmlTableCell cell1 = new HtmlTableCell();
@@ -136,7 +137,8 @@ public partial class ReadMail : System.Web.UI.Page
             //////////////// cell3  msgTextbox   ///////////////////////////////////////////////
             HtmlTableCell cell3 = new HtmlTableCell();
             var msgTextbox = new TextBox();
-            msgTextbox.Width = 417;
+            //msgTextbox.Width = 417;
+            msgTextbox.Attributes["width"] = "100%";
             msgTextbox.TextMode= MultiLine;
             msgTextbox.ReadOnly = true;
             msgTextbox.Text = body;
@@ -185,13 +187,9 @@ public partial class ReadMail : System.Web.UI.Page
         }
         //myTable.Attributes.Add("Class", "clsTradeInCart");
         conversationLogPlaceHolder.Controls.Add(myTable);
-
-        int countItems = messageList.Count;
-        int height = countItems * 53;
-        if (height < 800)
-            PanelConversation.Height = countItems * 64;
-        else
-            PanelConversation.Height = 800;
+        //PanelConversation.Attributes["class"] = "well";
+        PanelConversation.Height = 400;
+        PanelConversation.Attributes["width"] = "auto";
     }
 
     protected void Send_Click(object sender, EventArgs e)

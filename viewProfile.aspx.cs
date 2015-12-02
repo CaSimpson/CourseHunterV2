@@ -28,6 +28,8 @@ public partial class viewProfile : System.Web.UI.Page
     String majorName;
     String AboutYourselve;
 
+    public static String name = "";
+
     private static String myDbConString = WebConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -47,7 +49,7 @@ public partial class viewProfile : System.Web.UI.Page
         }
 
         //recieve a username from the seachUsers page 
-        string name = "";
+         name = "";
         if (Session["name"] != null)
         {
             name = Session["name"].ToString();
@@ -164,6 +166,7 @@ public partial class viewProfile : System.Web.UI.Page
         if (!(String.IsNullOrEmpty(messageBox.Text)))
             msgHandler.SendMessage(currentlyLoggedUserID, visitedUserId, "", Server.HtmlEncode(messageBox.Text));
         messageBox.Text = string.Empty;
+        Response.Redirect(Request.RawUrl);
     }
 
 }
