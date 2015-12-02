@@ -13,7 +13,7 @@
                 <div class="input-group">
                     <asp:TextBox ID="searchBox" runat="server" Width="100%"></asp:TextBox>
                     <asp:Label ID="userFoundLabel" runat="server" Text="is user founnd" Font-Size="Large" BackColor="#99FF66"></asp:Label>
-                    <asp:Button ID="btn_OneUser" class="btn btn-default" Text="Search" OnClick="search_Click" runat="server"></asp:Button>
+                    <asp:Button ID="btn_OneUser" class="btn btn-primary" Text="Search" OnClick="search_Click" runat="server"></asp:Button>
                     <asp:Button ID="btn_allUSers" class="btn btn-default" Text="All users" OnClick="allUSers_Click" runat="server"></asp:Button>
                 </div>
             </div>

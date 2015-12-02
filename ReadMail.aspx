@@ -10,7 +10,7 @@
         <asp:TextBox ID="messageBox" runat="server" CssClass="table" Columns="10" Rows="4" TextMode="MultiLine"></asp:TextBox>
          <br />
         <!--a button to send a message to the user whos profile was selected -->
-        <asp:Button ID="btnSend" Text="Reply" OnClick="Send_Click" runat="server"></asp:Button>
+        <asp:Button CssClass="btn btn-primary" ID="btnSend" Text="Reply" OnClick="Send_Click" runat="server"></asp:Button>
     </div>
 
 
