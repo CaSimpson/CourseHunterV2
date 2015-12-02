@@ -28,21 +28,21 @@
         <div class="col-md-2">
             <div class="panel panel-success">
                 <div class="panel-heading">Completed Courses</div>
-                <div class="panel-body"><asp:ListBox ID="completeListBox" runat="server"></asp:ListBox></div>
+                <div class="panel-body"><asp:ListBox width="100%" ID="completeListBox" runat="server"></asp:ListBox></div>
             </div>
         </div>
 
     <div class="col-md-2">
             <div class="panel panel-success">
                 <div class="panel-heading">Remaining Courses</div>
-                <div class="panel-body"><asp:ListBox ID="remainingListBox" runat="server"></asp:ListBox></div>
+                <div class="panel-body"><asp:ListBox Width="100%" ID="remainingListBox" runat="server"></asp:ListBox></div>
             </div>
         </div>
 
 
     <div class="col-md-2">
             <div class="panel panel-success">
-                <div class="panel-heading">Courses</div>
+                <div class="panel-heading text-center">Courses</div>
                 <div class="panel-body">
                     Completed: <asp:Label ID="lblCourseComplete" runat="server" Text=""></asp:Label>
                     Remaining: <asp:Label ID="lblCourseRemaining" runat="server" Text=""></asp:Label>
@@ -52,7 +52,7 @@
 
     <div class="col-md-2">
             <div class="panel panel-success">
-                <div class="panel-heading">Credits</div>
+                <div class="panel-heading text-center">Credits</div>
                 <div class="panel-body">
                     Completed: <asp:Label ID="lblCreditComplete" runat="server" Text=""></asp:Label>
                     Remaining: <asp:Label ID="lblCreditRemaining" runat="server" Text=""></asp:Label>
