@@ -38,7 +38,7 @@ public partial class profile : System.Web.UI.Page
 
             FormsAuthentication.SignOut();
             Session.Clear();
-            Response.Redirect("~/Default");
+            Response.Redirect("~/Default.aspx");
         }
         String currentUserName = HttpContext.Current.User.Identity.Name;
         UserId = Membership.GetUser(currentUserName).ProviderUserKey.ToString();

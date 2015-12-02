@@ -26,6 +26,15 @@ public class FriendDB
         return table = myProc.executeReader();
     }
 
+    public DataTable getFriendsList(string user_id)
+    {
+        storedProcedure myProc = new storedProcedure("getFriendsList");
+        myProc.addParam(new paramter("@user_id", user_id));
+        DataTable table = new DataTable();
+        return table = myProc.executeReader();
+    }
+
+
 
     public void addFriend(string user_id, string friend_id)
     {

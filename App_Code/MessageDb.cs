@@ -18,8 +18,15 @@ using System.Data.SqlClient;
             myProc.addParam(new paramter("@recieverId", userID));
 
            return table = myProc.executeReader();
-
         }
+
+    public DataTable getAmountOfUnreadMsg (string UserId)
+    {
+        DataTable table = new DataTable();
+        storedProcedure myProc = new storedProcedure("getAmountOfUnreadMsg");
+        myProc.addParam(new paramter("@UserId", UserId));
+        return table = myProc.executeReader();
+    }
 
     public DataTable getConversation(string recieverID, string senderID)
     {

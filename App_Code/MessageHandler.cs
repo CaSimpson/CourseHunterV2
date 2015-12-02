@@ -21,7 +21,15 @@ public class MessageHandler
             return messageDb.GetAllMessages(userID);
         }
 
-         public DataTable getConversation(string recieverID, string senderID)
+        public int getAmountOfUnreadMsg(string UserId)
+        {
+            DataTable table = messageDb.getAmountOfUnreadMsg(UserId);
+            int count = 0;
+            count= table.Rows.Count;
+             return count;
+        }
+
+        public DataTable getConversation(string recieverID, string senderID)
         {
             return messageDb.getConversation(recieverID, senderID);
         }

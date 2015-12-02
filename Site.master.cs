@@ -85,9 +85,7 @@ public partial class SiteMaster : MasterPage
         //Response.Redirect("~/Default.aspx");
         try
         {
-            var input = Request["NavbarSearchTextBox"];
             
-            Response.Redirect(input);
         }
         catch (Exception)
         {
