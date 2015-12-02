@@ -88,12 +88,7 @@ public partial class ReadMail : System.Web.UI.Page
             Console.WriteLine("No rows found.");
         }
 
-        int countItems = messageList.Count;
-        int height = countItems * 53;
-        if (height < 800)
-            PanelConversation.Height = countItems * 64;
-        else
-            PanelConversation.Height = 800;
+
         createTable();
 
     }//end of class ReadMail
@@ -190,23 +185,29 @@ public partial class ReadMail : System.Web.UI.Page
         }
         //myTable.Attributes.Add("Class", "clsTradeInCart");
         conversationLogPlaceHolder.Controls.Add(myTable);
+
+        int countItems = messageList.Count;
+        int height = countItems * 53;
+        if (height < 800)
+            PanelConversation.Height = countItems * 64;
+        else
+            PanelConversation.Height = 800;
     }
 
-    public void Send_Click(object sender, EventArgs e)
+    protected void Send_Click(object sender, EventArgs e)
     {
-        
-        if (!(String.IsNullOrEmpty(messageBox.Text)))
+        String message = Server.HtmlEncode(messageBox.Text);
+
+        if (!(String.IsNullOrEmpty(message)))
         {
             MessageHandler msgHandler = new MessageHandler();
             msgHandler.SendMessage(recieverID, senderID, "", Server.HtmlEncode(messageBox.Text));
             messageBox.Text = string.Empty;
+            Response.Redirect(Request.RawUrl);
+
         }
-        
+
     }
 
-    public void extra_Click(object sender, EventArgs e)
-    {
-   
-    }
 
 }

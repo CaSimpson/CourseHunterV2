@@ -114,9 +114,10 @@
                 <div class="well"></div>
                 <asp:ContentPlaceHolder runat="server" ID="FeaturedContent" />
                 <asp:ContentPlaceHolder runat="server" ID="MainContent" />
+                <div class="well" style="background-color: white; border-color: white"></div>
             </div>
         </div>
-        <footer class="navbar navbar-default navbar-fixed-bottom">
+        <footer class="navbar-default navbar-fixed-bottom">
             <div class="container">
                 <asp:TextBox ID="AdminPassword" runat="server" BackColor="white" BorderStyle="None" MaxLength="9" Width="16px"></asp:TextBox>
                 - Course Hunter
