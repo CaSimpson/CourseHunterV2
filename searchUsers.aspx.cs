@@ -71,11 +71,15 @@ public partial class searchUsers : System.Web.UI.Page
     private void createTable()
     {
         HtmlTable myTable = new HtmlTable();
+        myTable.Attributes["class"] = "container";
         foreach (var student in studentList)
          {
             HtmlTableRow row = new HtmlTableRow();
+            row.Attributes["class"] = "panel panel-success";
 
             HtmlTableCell cell1 = new HtmlTableCell();
+             cell1.Attributes["class"] = "label label-danger";
+
             var userNameLabel = new Label();
             userNameLabel.Text = student.getUsername();
             cell1.Controls.Add(userNameLabel);
@@ -84,6 +88,7 @@ public partial class searchUsers : System.Web.UI.Page
 
             HtmlTableCell cell2 = new HtmlTableCell();
             Image img = new Image();
+             img.Attributes["class"] = "thumbnail";
             img.Height = 150;
             img.Width = 150;
             img.AlternateText = "No image on file";
