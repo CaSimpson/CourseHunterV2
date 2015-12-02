@@ -13,8 +13,8 @@ public partial class Admin_privleges_AddCourse : System.Web.UI.Page
     /**********************************************************************
    * REPLACE THIS STRING WITH CONNECTIONSTRING FROM YOUR LOCAL DATABASE  *
    **********************************************************************/
-    //string johnDB = "Data Source=.sqlexpress;Initial Catalog=courseHunter540NEW;Integrated Security=True;Connect Timeout=15;Encrypt=False;Packet Size=4096";
-    private static String johnDB = WebConfigurationManager.ConnectionStrings["EvansDB"].ConnectionString;
+   // string johnDB = "Data Source=USER-VAIOSQLEXPRESS;Initial Catalog=courseHunter540NEW;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+    private static String johnDB = WebConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
     protected void Page_Load(object sender, EventArgs e)
     {
