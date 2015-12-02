@@ -103,14 +103,7 @@
                                     <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" />
                                 </li>
                             </ul>
-                            <div class="nav navbar-form navbar-right" role="search">
-                                <div class=" input-group">
-                                    <input id="NavbarSearchTextBox" runat="server" class="form-control" placeholder="Search" aria-label="true" />
-                                    <span class="input-group-addon">
-                                        <asp:LinkButton ID="ButtonSearch" runat="server" OnClick="ButtonSearch_Click"><span aria-hidden="true" class="glyphicon glyphicon-search"></span></asp:LinkButton>
-                                    </span>
-                                </div>
-                            </div>
+                            
                         </LoggedInTemplate>
                     </asp:LoginView>
                 </div>
