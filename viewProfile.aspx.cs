@@ -90,7 +90,7 @@ public partial class viewProfile : System.Web.UI.Page
 
 
         //make the h3 tag change dynamically when the page is loaded to reflect change in username
-        messageh3.InnerText = "send a message to " + visitedUserName;
+        messageh3.InnerText = "Send a message to: " + visitedUserName;
 
         //dynamically change the width if 
         int charRows = 0;

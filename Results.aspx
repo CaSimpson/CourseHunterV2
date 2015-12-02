@@ -13,7 +13,7 @@
 <asp:Content runat="server" ID="appBody" ContentPlaceHolderID="MainContent">
 
 
-    <div class="col-md-4">
+    <div class="col-md-6" id="panel1">
             <div class="panel panel-success">
                 <div class="panel-heading"><asp:Label ID="reclbl" runat="server" Text="Label">Recommended Courses</asp:Label></div>
                 <div class="panel-body"><ul>
@@ -27,10 +27,10 @@
         </div>
 
 
-    <div class="col-md-4">
+    <div class="col-md-6" >
             <div class="panel panel-success">
                 <div class="panel-heading"><asp:Label ID="poslbl" runat="server" Text="Label">All Possible Courses</asp:Label></div>
-                <div class="panel-body"><asp:ListBox ID="allPosListBox" runat="server"></asp:ListBox></div>
+                <div class="panel-body"><asp:ListBox ID="allPosListBox" runat="server" Width="100%"></asp:ListBox></div>
             </div>
         </div>
    
