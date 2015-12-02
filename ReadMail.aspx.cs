@@ -137,8 +137,7 @@ public partial class ReadMail : System.Web.UI.Page
             //////////////// cell3  msgTextbox   ///////////////////////////////////////////////
             HtmlTableCell cell3 = new HtmlTableCell();
             var msgTextbox = new TextBox();
-            //msgTextbox.Width = 417;
-            msgTextbox.Attributes["width"] = "100%";
+            msgTextbox.Width = 417;
             msgTextbox.TextMode= MultiLine;
             msgTextbox.ReadOnly = true;
             msgTextbox.Text = body;
