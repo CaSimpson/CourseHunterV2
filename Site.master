@@ -74,7 +74,7 @@
                                         <li class="divider">  </li>
                                         <li><a runat="server" href="~/RateMyCourse.aspx">Rate My Course</a></li>
                                         <li><a runat="server" href="~/searchUsers.aspx">Search Users</a></li>
-                                        <li><a runat="server" href="~/inbox.aspx">Messages</a></li>
+                                        <li><a id="MessageLink" runat="server" href="~/inbox">Messages <span class="badge"><%=messageCount%></span></a></li>
                                         <li><a runat="server" href="~/friends.aspx">Friends</a></li>
                                         
                                         

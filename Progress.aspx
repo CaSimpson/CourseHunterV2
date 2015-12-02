@@ -25,37 +25,37 @@
 
 
    
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div class="panel panel-success">
                 <div class="panel-heading">Completed Courses</div>
-                <div class="panel-body"><asp:ListBox ID="completeListBox" runat="server"></asp:ListBox></div>
+                <div class="panel-body"><asp:ListBox ID="completeListBox" runat="server" Width="100%"></asp:ListBox></div>
             </div>
         </div>
 
-    <div class="col-md-2">
+    <div class="col-md-3">
             <div class="panel panel-success">
                 <div class="panel-heading">Remaining Courses</div>
-                <div class="panel-body"><asp:ListBox ID="remainingListBox" runat="server"></asp:ListBox></div>
+                <div class="panel-body"><asp:ListBox ID="remainingListBox" runat="server" Width="100%" ></asp:ListBox></div>
             </div>
         </div>
 
 
-    <div class="col-md-2">
+    <div class="col-md-3">
             <div class="panel panel-success">
                 <div class="panel-heading">Courses</div>
                 <div class="panel-body">
-                    Completed: <asp:Label ID="lblCourseComplete" runat="server" Text=""></asp:Label>
-                    Remaining: <asp:Label ID="lblCourseRemaining" runat="server" Text=""></asp:Label>
+                    <h4>Completed: <asp:Label ID="lblCourseComplete" runat="server" Text=""></asp:Label></h4>
+                    <h4>Remaining: <asp:Label ID="lblCourseRemaining" runat="server" Text=""></asp:Label></h4>
                 </div>
             </div>
         </div>
 
-    <div class="col-md-2">
+    <div class="col-md-3">
             <div class="panel panel-success">
                 <div class="panel-heading">Credits</div>
                 <div class="panel-body">
-                    Completed: <asp:Label ID="lblCreditComplete" runat="server" Text=""></asp:Label>
-                    Remaining: <asp:Label ID="lblCreditRemaining" runat="server" Text=""></asp:Label>
+                    <h4>Completed: <asp:Label ID="lblCreditComplete" runat="server" Text=""></asp:Label></h4>
+                    <h4>Remaining: <asp:Label ID="lblCreditRemaining" runat="server" Text=""></asp:Label></h4>
                 </div>
             </div>
         </div>

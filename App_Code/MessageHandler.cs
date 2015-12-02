@@ -1,6 +1,16 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data.SqlClient;
 using System.Data;
-using System.Configuration;
+using Microsoft.AspNet.Membership;
+using Microsoft.AspNet.Membership.OpenAuth;
+using System.Web.Security;
+using System.Collections;
+using System.Web.UI.HtmlControls;
 
 //MessageHandler connects to the messageDb object which makes the connnection to the database and returns the datatables and datasets
 //of the data in the database when the methods in messageDb are called.
@@ -10,11 +20,16 @@ single record in the Message table in the database for a specific usee*/
 public class MessageHandler
     {
         MessageDb messageDb = null;
+    String currentlyLoggedUserID;
+    String currentlyLoggedUserName;
 
-        public MessageHandler()
+
+    public MessageHandler()
         {
             messageDb = new MessageDb();
-        }
+        currentlyLoggedUserName = HttpContext.Current.User.Identity.Name;
+        currentlyLoggedUserID = Membership.GetUser(currentlyLoggedUserName).ProviderUserKey.ToString();
+    }
 
         public DataTable GetAllMessages(string userID)
         {
@@ -58,7 +73,8 @@ public class MessageHandler
             msg.Subject = table.Rows[0]["subject"].ToString();
             msg.Body = table.Rows[0]["body"].ToString();
 
-            //Before returning lets mark this message as read
+        //Before returning lets mark this message as read
+        if ((msg.RecieverId.Equals(currentlyLoggedUserID)))
             messageDb.MarkMessageRead(messageId);
 
             //returns shallow copy of messsage

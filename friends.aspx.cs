@@ -70,12 +70,14 @@ public partial class friends : System.Web.UI.Page
     private void createTable()
     {
         HtmlTable myTable = new HtmlTable();
+        myTable.Attributes["class"] = "table table-hover";
         foreach (var student in ListOFFreinds)
         {
             HtmlTableRow row = new HtmlTableRow();
 
             HtmlTableCell cell1 = new HtmlTableCell();
             var userNameLabel = new Label();
+            userNameLabel.Attributes["class"] = "align-right";
             userNameLabel.Text = student.getUsername();
             cell1.Controls.Add(userNameLabel);
             //cell1.InnerText = student.getUsername();
@@ -95,6 +97,7 @@ public partial class friends : System.Web.UI.Page
             HtmlTableCell cell3 = new HtmlTableCell();
             //create button
             Button btn = new Button();
+            btn.Attributes["class"] = "btn btn-primary";
             btn.Text = "view User Profile";
             btn.ID = student.getUsername();
             //event hadler for button

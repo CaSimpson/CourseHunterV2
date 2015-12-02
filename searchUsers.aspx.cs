@@ -44,7 +44,8 @@ public partial class searchUsers : System.Web.UI.Page
         }
 
         studentList = new List<student22>();
-        seachAllUSers.Visible = false;
+        if (!IsPostBack)
+            seachAllUSers.Visible = false;
         userFoundLabel.Visible = false;
         usernameInSearchBox = searchBox.Text;
         

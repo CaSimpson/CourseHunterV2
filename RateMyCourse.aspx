@@ -108,18 +108,12 @@
             <tr>
                 <td></td>
                 <td align="left" colspan="1" style="padding: 20px">
-                    <asp:Button ID="btnSubmit" runat="server" Text="Submit"
+                    <asp:Button CssClass="btn btn-primary" ID="btnSubmit" runat="server" Text="Submit"
                         OnClick="btnSubmit_Click" />
-                    <asp:Button ID="btnRemove" runat="server" Text="Remove Comment" Visible="false" OnClick="btnRemove_Click" CausesValidation="false" autopostback="true" />
-
-
+                    <asp:Button CssClass="btn btn-danger" ID="btnRemove" runat="server" Text="Remove Comment" Visible="false" OnClick="btnRemove_Click" CausesValidation="false" autopostback="true" />
                 </td>
             </tr>
             <tr>
-
-
-
-
                 <td align="left" colspan="2" style="padding: 20px">
 
                     <asp:GridView ID="gdvUserComment" runat="server" AutoGenerateColumns="False"

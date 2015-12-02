@@ -13,8 +13,13 @@ public partial class SiteMaster : MasterPage
     private const string AntiXsrfUserNameKey = "__AntiXsrfUserName";
     private string _antiXsrfTokenValue;
 
+    protected int messageCount = 0;
+    MessageHandler msgHld;
+    protected String UserId = "";
+
     protected void Page_Init(object sender, EventArgs e)
     {
+
         // The code below helps to protect against XSRF attacks
         var requestCookie = Request.Cookies[AntiXsrfTokenKey];
         Guid requestCookieGuidValue;
@@ -66,6 +71,13 @@ public partial class SiteMaster : MasterPage
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if ((HttpContext.Current.User.Identity.IsAuthenticated))
+        {
+            msgHld = new MessageHandler();
+            String currentUserName = HttpContext.Current.User.Identity.Name;
+            UserId = Membership.GetUser(currentUserName).ProviderUserKey.ToString();
+            messageCount = msgHld.getAmountOfUnreadMsg(UserId);
+        }
 
     }
 
@@ -79,6 +91,8 @@ public partial class SiteMaster : MasterPage
         }
 
     }
+
+
 
     protected void ButtonSearch_Click(object sender, EventArgs e)
     {
