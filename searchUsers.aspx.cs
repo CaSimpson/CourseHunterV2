@@ -88,9 +88,9 @@ public partial class searchUsers : System.Web.UI.Page
 
             HtmlTableCell cell2 = new HtmlTableCell();
             Image img = new Image();
-             img.Attributes["class"] = "thumbnail";
-            img.Height = 150;
-            img.Width = 150;
+             img.Attributes["class"] = "media-object";
+            img.Height = 100;
+            img.Width = 100;
             img.AlternateText = "No image on file";
             img.ImageUrl = "ImageHandler.ashx?UserId=" + student.getStudent_id();
             //add the btn to cell3

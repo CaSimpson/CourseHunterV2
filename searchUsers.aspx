@@ -3,10 +3,6 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 
 
-
-
-
-
     <div class="container">
 
         <div class="panel panel-heading">
