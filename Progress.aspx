@@ -26,14 +26,14 @@
 
    
         <div class="col-md-2">
-            <div class="panel panel-info">
+            <div class="panel panel-success">
                 <div class="panel-heading">Completed Courses</div>
                 <div class="panel-body"><asp:ListBox ID="completeListBox" runat="server"></asp:ListBox></div>
             </div>
         </div>
 
     <div class="col-md-2">
-            <div class="panel panel-info">
+            <div class="panel panel-success">
                 <div class="panel-heading">Remaining Courses</div>
                 <div class="panel-body"><asp:ListBox ID="remainingListBox" runat="server"></asp:ListBox></div>
             </div>
@@ -41,7 +41,7 @@
 
 
     <div class="col-md-2">
-            <div class="panel panel-info">
+            <div class="panel panel-success">
                 <div class="panel-heading">Courses</div>
                 <div class="panel-body">
                     Completed: <asp:Label ID="lblCourseComplete" runat="server" Text=""></asp:Label>
@@ -51,7 +51,7 @@
         </div>
 
     <div class="col-md-2">
-            <div class="panel panel-info">
+            <div class="panel panel-success">
                 <div class="panel-heading">Credits</div>
                 <div class="panel-body">
                     Completed: <asp:Label ID="lblCreditComplete" runat="server" Text=""></asp:Label>

@@ -3,7 +3,7 @@
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">    
         <div class="jumbotron">
             <h1><%: Title %>.</h1>
-            <h2>If you are having toruble with our site please feel free to contact any of the developers.</p>
+            <h2>If you are having trouble with our site please feel free to contact any of the developers.</h2>
             <p>You can see the contact information and bio for each developer below.</p>
         </div>
 </asp:Content>
