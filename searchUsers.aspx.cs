@@ -19,6 +19,12 @@ public partial class searchUsers : System.Web.UI.Page
     protected List<student22> studentList;
     protected static string tempUserID="";
 
+    private static bool areFriends;
+    friendHandler friendHld;
+
+    String currentlyLoggedUserID;
+    String currentlyLoggedUserName;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!(HttpContext.Current.User.Identity.IsAuthenticated))
@@ -26,6 +32,14 @@ public partial class searchUsers : System.Web.UI.Page
 
             FormsAuthentication.SignOut();
             Session.Clear();
+            Response.Redirect("~/Default");
+        }
+
+        currentlyLoggedUserName = HttpContext.Current.User.Identity.Name;
+        currentlyLoggedUserID = Membership.GetUser(currentlyLoggedUserName).ProviderUserKey.ToString();
+
+        if (currentlyLoggedUserID == null)
+        {
             Response.Redirect("~/Default");
         }
 
@@ -53,10 +67,22 @@ public partial class searchUsers : System.Web.UI.Page
             Console.WriteLine("No rows found.");
         }
 
+        friendHld = new friendHandler();
+        //check to see if they are friends or not
+
         createTable();
 
 
     }//end of searchUsers class
+
+
+
+    private bool areTheyFriends(String visitedUserId)
+    {
+        areFriends = friendHld.checkIfFriend(currentlyLoggedUserID, visitedUserId);
+
+        return areFriends;
+    }
 
     void btn_Click(object sender, EventArgs e)
     {
@@ -68,10 +94,28 @@ public partial class searchUsers : System.Web.UI.Page
         Response.Redirect("viewProfile.aspx");
     }
 
+    void btnAddFriend_Click(object sender, EventArgs e)
+    {
+
+        string friendId = ((sender) as Button).ID;
+        bool aretheyfriends = areTheyFriends(friendId);
+        if (aretheyfriends)
+        {
+            friendHld.removeFriend(currentlyLoggedUserID, friendId);
+            ((sender) as Button).Text = "Add Friend";
+        }
+        else
+        {
+            friendHld.addFriend(currentlyLoggedUserID, friendId);
+            ((sender) as Button).Text = "Unfriend";
+        }
+
+    }
+
     private void createTable()
     {
         HtmlTable myTable = new HtmlTable();
-        myTable.Attributes["table class"] = "table";
+        myTable.Attributes["class"] = "table";
         foreach (var student in studentList)
          {
             HtmlTableRow row = new HtmlTableRow();
@@ -101,6 +145,7 @@ public partial class searchUsers : System.Web.UI.Page
             HtmlTableCell cell3 = new HtmlTableCell();
             //create button
             Button btn = new Button();
+             btn.Attributes["class"] = "btn btn-success";
             btn.Text = "view User Profile";
             btn.ID= student.getUsername(); 
             //event hadler for button
@@ -109,6 +154,27 @@ public partial class searchUsers : System.Web.UI.Page
             cell3.Controls.Add(btn);
             //add cell3 to the row
             row.Controls.Add(cell3);
+
+            HtmlTableCell cell4 = new HtmlTableCell();
+            //create button
+            Button btnAddFriend = new Button();
+            btnAddFriend.Attributes["class"] = "btn btn-primary";
+            bool aretheyfriends = areTheyFriends( student.getStudent_id());
+            if (aretheyfriends)
+            {
+                btnAddFriend.Text = "Unfriend";
+            }
+            else
+            {
+                btnAddFriend.Text = "Add Friend";
+            }
+            btnAddFriend.ID = student.getStudent_id();
+            //event hadler for button
+            btnAddFriend.Click += new EventHandler(btnAddFriend_Click);
+            //add the btn to cell3
+            cell4.Controls.Add(btnAddFriend);
+            //add cell3 to the row
+            row.Controls.Add(cell4);
 
             //add all rows to table
             myTable.Controls.Add(row);

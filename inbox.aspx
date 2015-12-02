@@ -7,7 +7,7 @@
 
         <asp:Label ID="DoYouHaveMessages" runat="server" Text="" Font-Size="Large" BackColor="#99FF66" Visible="False"></asp:Label>
 
-        <table id="tableInInbox" class="table">
+        <table id="tableInInbox" class="table table-hover">
             <asp:Repeater ID="Repeater1" runat="server">
                 <HeaderTemplate>
                     <tr class="success">

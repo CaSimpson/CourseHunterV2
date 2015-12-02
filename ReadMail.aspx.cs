@@ -33,7 +33,7 @@ public partial class ReadMail : System.Web.UI.Page
         }
 
         messageList = new List<Message>();
-         String currentlyLoggedUserName = HttpContext.Current.User.Identity.Name;
+        String currentlyLoggedUserName = HttpContext.Current.User.Identity.Name;
         currentlyLoggedUserID = Membership.GetUser(currentlyLoggedUserName).ProviderUserKey.ToString();
 
         if (currentlyLoggedUserID == null)
@@ -62,7 +62,7 @@ public partial class ReadMail : System.Web.UI.Page
         //give me a list of all messages where the SenderId=him and RecieverId=me or SenderId=me and RecieverId=him order by datentime ASC
 
         recieverID = msg.RecieverId;
-        senderID= msg.SenderId;
+        senderID = msg.SenderId;
 
         //get all conversations between the reciever(currentlyLoggedUserID) and the sender
         //the sender is gotten from the messageID that is gotten when ther clicks on the message in Inbox
@@ -71,16 +71,16 @@ public partial class ReadMail : System.Web.UI.Page
         {
             foreach (DataRow dr in dt.Rows)
             {
-                
+
                 int msgID = Convert.ToInt32(dr["MessageID"].ToString());
                 System.Diagnostics.Debug.WriteLine("MessageID is = " + msgID);
 
-                
+
                 Message msgTemp = msgHandler.GetMessageDetails(msgID);
                 System.Diagnostics.Debug.WriteLine("msgTemp is = " + msgTemp);
 
                 this.messageList.Add(msgTemp);
-                
+
             }
         }
         else
@@ -96,6 +96,7 @@ public partial class ReadMail : System.Web.UI.Page
     private void createTable()
     {
         HtmlTable myTable = new HtmlTable();
+        myTable.Attributes["class"] = "table";
         foreach (var msg in messageList)
         {
             String senderID = msg.SenderId;
@@ -109,11 +110,15 @@ public partial class ReadMail : System.Web.UI.Page
 
             HtmlTableRow row = new HtmlTableRow();
 
-            row.Attributes["class"] = "panel panel-success";
+            //row.Attributes["class"] = "table";
+            if (senderID.Equals(currentlyLoggedUserID))
+                row.Attributes["class"] = "alert alert-info";
+            else
+                row.Attributes["class"] = "alert alert-warning";
 
             //////////////// cell1  userNameLabel   ///////////////////////////////////////////////
             HtmlTableCell cell1 = new HtmlTableCell();
-            cell1.Attributes["class"] = "label label-default";
+            cell1.Attributes["class"] = "panel";
 
             var userNameLabel = new Label();
             userNameLabel.Text = thisStudent.getUsername();
@@ -127,6 +132,7 @@ public partial class ReadMail : System.Web.UI.Page
             Image img = new Image();
             img.Height = 60;
             img.Width = 60;
+            img.Attributes["class"] = "media-object";
             img.AlternateText = "No image on file";
             img.ImageUrl = "ImageHandler.ashx?UserId=" + thisStudent.getStudent_id();
             //add the btn to cell3
@@ -136,48 +142,32 @@ public partial class ReadMail : System.Web.UI.Page
 
             //////////////// cell3  msgTextbox   ///////////////////////////////////////////////
             HtmlTableCell cell3 = new HtmlTableCell();
-            var msgTextbox = new TextBox();
-            msgTextbox.Width = 417;
-            msgTextbox.TextMode= MultiLine;
-            msgTextbox.ReadOnly = true;
-            msgTextbox.Text = body;
+            var msgTextLabel = new Label();
+            msgTextLabel.Text = body;
+            //add the msgTextbox to cell3
+            //if (senderID.Equals(currentlyLoggedUserID))
+            //    cell3.Attributes["class"] = "alert alert-info";
+            //else
+            //    cell3.Attributes["class"] = "alert alert-warning";
+
+            cell3.Controls.Add(msgTextLabel);
+            //add cell3 to the row
+            row.Controls.Add(cell3);
 
 
             //////////////// cell4  dateTimeLabel   ///////////////////////////////////////////////
             HtmlTableCell cell4 = new HtmlTableCell();
-            //cell4.Attributes["class"] = "";
+            cell4.Attributes["class"] = "";
             var dateTimeLabel = new Label();
             dateTimeLabel.Text = datenTime;
             //add the userNameLabel to cell1
             cell4.Controls.Add(dateTimeLabel);
             //add cell1 to the row
+            
             row.Controls.Add(cell4);
 
-            //dynamically change the width of msgTextbox
-            int charRows = 0;
-            string tbCOntent;
-            int chars = 0;
-            tbCOntent = body;
-            msgTextbox.Columns = 60;
-            chars = tbCOntent.Length;
-            charRows = chars / msgTextbox.Columns;
-            int remaining = chars - charRows * msgTextbox.Columns;
-            if (remaining == 0)
-            {
-                msgTextbox.Rows = charRows;
-                msgTextbox.TextMode = TextBoxMode.MultiLine;
-            }
-            else
-            {
-                msgTextbox.Rows = charRows + 1;
-                msgTextbox.TextMode = TextBoxMode.MultiLine;
-            }
 
 
-            //add the msgTextbox to cell3
-            cell3.Controls.Add(msgTextbox);
-            //add cell3 to the row
-            row.Controls.Add(cell3);
 
             //add all rows to table
             myTable.Controls.Add(row);
