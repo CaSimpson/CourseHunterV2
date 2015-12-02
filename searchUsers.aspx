@@ -5,7 +5,12 @@
 
     
      <div class="allUSers" id="seachAllUSers" runat="server">
+         <div class="container-fluid">
         <asp:PlaceHolder ID="PlaceHolder1" runat="server"></asp:PlaceHolder>
+<<<<<<< HEAD
+=======
+ </div>
+>>>>>>> origin/master
      </div>
 
 

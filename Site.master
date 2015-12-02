@@ -15,11 +15,18 @@
     <link href="Content/bootstrap.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+   <%-- <script>
+        document.getElementById('ButtonSearch').onclick = function () {
+            var searchText = document.getElementById('NavbarSearchTextBox').value;
+        }
+    </script>--%>
 </head>
 <body>
     <form id="Form1" runat="server">
         <asp:ScriptManager ID="ScriptManager1" runat="server">
             <Scripts>
+
+
                 <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=272931&clcid=0x409 --%>
                 <%--Framework scripts--%>
                 <asp:ScriptReference Name="MsAjaxBundle" />
@@ -50,7 +57,7 @@
                         <img src="../Images/CH_Logo_Howle.png" height="35" width="250">
                     </a>
                 </div>
-                <div id="navbar" class="navbar-collapse collapse" >
+                <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a runat="server" href="~/">Home</a></li>
                         <li><a runat="server" href="http://publications.uscupstate.edu/Admissions/1415_Academic_Catalog/">Catalog</a></li>
@@ -91,9 +98,9 @@
                             </ul>
                             <div class="nav navbar-form navbar-right" role="search">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search" aria-label="">
+                                    <input id="NavbarSearchTextBox" runat="server" class="form-control" placeholder="Search" aria-label="true" />
                                     <span class="input-group-addon">
-                                        <button class="glyphicon glyphicon-search"></button>
+                                        <asp:LinkButton ID="ButtonSearch" runat="server" OnClick="ButtonSearch_Click"><span aria-hidden="true" class="glyphicon glyphicon-search"></span></asp:LinkButton>
                                     </span>
                                 </div>
 
@@ -110,10 +117,9 @@
                 <asp:ContentPlaceHolder runat="server" ID="MainContent" />
             </div>
         </div>
-        <footer class="footer">
+        <footer class="navbar navbar-default navbar-fixed-bottom">
             <div class="container">
-                <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=272931&clcid=0x409 --%>
-                <asp:TextBox ID="AdminPassword" runat="server" BackColor="White" BorderStyle="None" MaxLength="9" Width="16px"></asp:TextBox>
+                <asp:TextBox ID="AdminPassword" runat="server" BackColor="white" BorderStyle="None" MaxLength="9" Width="16px"></asp:TextBox>
                 - Course Hunter
                 <asp:Button ID="Button1" runat="server" BackColor="White" BorderStyle="None" Font-Size="Small" Height="18px" OnClick="Button1_Click" Text="V2" Width="26px" />
             </div>

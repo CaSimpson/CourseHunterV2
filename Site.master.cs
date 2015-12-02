@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Channels;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
@@ -55,8 +56,8 @@ public partial class SiteMaster : MasterPage
         else
         {
             // Validate the Anti-XSRF token
-            if ((string)ViewState[AntiXsrfTokenKey] != _antiXsrfTokenValue
-                || (string)ViewState[AntiXsrfUserNameKey] != (Context.User.Identity.Name ?? String.Empty))
+            if ((string) ViewState[AntiXsrfTokenKey] != _antiXsrfTokenValue
+                || (string) ViewState[AntiXsrfUserNameKey] != (Context.User.Identity.Name ?? String.Empty))
             {
                 throw new InvalidOperationException("Validation of Anti-XSRF token failed.");
             }
@@ -65,17 +66,36 @@ public partial class SiteMaster : MasterPage
 
     protected void Page_Load(object sender, EventArgs e)
     {
-      
+
     }
 
 
 
     protected void Button1_Click(object sender, EventArgs e)
     {
-        if (AdminPassword.Text=="zookeeper")
+        if (AdminPassword.Text == "zookeeper")
         {
-            Button1.PostBackUrl = "~/About.aspx";
+            Button1.PostBackUrl = "~/Admin privleges/databaseChanges.aspx";
         }
 
     }
+
+    protected void ButtonSearch_Click(object sender, EventArgs e)
+    {
+        //Response.Redirect("~/Default.aspx");
+        try
+        {
+            var input = Request["NavbarSearchTextBox"];
+            
+            Response.Redirect(input);
+        }
+        catch (Exception)
+        {
+            
+           //Response.Redirect("~/");
+        }
+       
+
+    }
+
 }
