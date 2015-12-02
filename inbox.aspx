@@ -5,6 +5,8 @@
 <div ID="divInInbox">
     <h3>Inbox</h3>
 
+   <asp:Label ID="DoYouHaveMessages" runat="server" Text="" Font-Size="Large" BackColor="#99FF66" Visible="False"></asp:Label>
+
     <table ID="tableInInbox">       
         <asp:Repeater ID="Repeater1" runat="server">
             <HeaderTemplate>
@@ -31,7 +33,7 @@
         <td >
             <asp:HyperLink ID="hprSubject" runat="server"  NavigateUrl='<%#DataBinder.Eval(Container, "DataItem.MessageID", "ReadMail.aspx?id={0}")%>'><%#DataBinder.Eval(Container,"DataItem.body")%></asp:HyperLink>
         </td>
-        <td ">
+        <td >
             <asp:Label ID="lblDate" runat="server" Text='<%#DataBinder.Eval(Container,"DataItem.datentime")%>'></asp:Label>
         </td>
         <td>

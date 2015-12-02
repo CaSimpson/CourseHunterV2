@@ -33,21 +33,25 @@ public partial class inbox : System.Web.UI.Page
         {
             Response.Redirect("~/Default");
         }
-/*
-
-        if (temp == false)
-        {
-            FormsAuthentication.SignOut();
-            Roles.DeleteCookie();
-            Session.Clear();
-            Response.Redirect("~/Default");
-        }
-        */
 
         MessageHandler msghandler = new MessageHandler();
 
+        DataTable msgDataTable = msghandler.GetAllMessages(UserId);
+
+
+        if (msgDataTable.Rows.Count < 1)
+        {
+            DoYouHaveMessages.Visible = true;
+            DoYouHaveMessages.Text = "You have no messages";
+            Repeater1.Visible = false;
+        }
+        else
+        {
+            DoYouHaveMessages.Visible = false;
+            Repeater1.Visible = true;
+        }
         //GetAllMessages is FetchMessages in the database
-        Repeater1.DataSource = msghandler.GetAllMessages(UserId);
+        Repeater1.DataSource = msgDataTable;
         Repeater1.DataBind();
     }
 }

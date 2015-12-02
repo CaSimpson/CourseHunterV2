@@ -50,30 +50,29 @@
                         <img src="../Images/CH_Logo_Howle.png" height="35" width="250">
                     </a>
                 </div>
-                <div id="navbar" class="navbar-collapse collapse" aria-expanded="false">
+                <div id="navbar" class="navbar-collapse collapse" >
                     <ul class="nav navbar-nav">
                         <li><a runat="server" href="~/">Home</a></li>
-                        <li><a runat="server" href ="http://publications.uscupstate.edu/Admissions/1415_Academic_Catalog/">Catalog</a></li>
-                        <li><a runat="server" href="~/Contact">Contact</a></li>
-                        
-                       <asp:LoginView runat="server" ViewStateMode="Disabled">
-                           <LoggedInTemplate>
-                               <li>
-                                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
-                                   <ul class="dropdown-menu">
-                                       <li><a runat="server" href="~/Profile">Profile</a></li>
-                                        <li><a runat="server" href="~/inbox">Messages</a></li>
-                                        <li><a runat="server" href="~/searchUsers">Search Users</a></li>
-                                       <li><a runat="server" href="~/AddRemoveCourse">Add/Remove Course</a></li>
-                                       <li><a runat="server" href="~/Progress">Progress</a></li>
-                                       <li><a runat="server" href="~/Results">Results</a></li>
-                                       <li><a runat="server" href="~/RateMyCourse">Rate My Course</a></li>
-                                   </ul>
-                               </li>
-                           </LoggedInTemplate>
-                       </asp:LoginView>
+                        <li><a runat="server" href="http://publications.uscupstate.edu/Admissions/1415_Academic_Catalog/">Catalog</a></li>
+                        <li><a runat="server" href="~/Contact.aspx">Contact</a></li>
+                        <asp:LoginView runat="server" ViewStateMode="Disabled">
+                            <LoggedInTemplate>
+                                <li>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a runat="server" href="~/Profile.aspx">Profile</a></li>
+                                        <li><a runat="server" href="~/inbox.aspx">Messages</a></li>
+                                        <li><a runat="server" href="~/searchUsers.aspx">Search Users</a></li>
+                                        <li><a runat="server" href="~/AddRemoveCourse.aspx">Add/Remove Course</a></li>
+                                        <li><a runat="server" href="~/Progress.aspx">Progress</a></li>
+                                        <li><a runat="server" href="~/Results.aspx">Results</a></li>
+                                        <li><a runat="server" href="~/RateMyCourse.aspx">Rate My Course</a></li>
+                                    </ul>
+                                </li>
+                            </LoggedInTemplate>
+                        </asp:LoginView>
                     </ul>
-                    
+
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">
@@ -83,22 +82,22 @@
                         </AnonymousTemplate>
                         <LoggedInTemplate>
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello,
+                                <li><a runat="server" href="~/Account/Manage.aspx" title="Manage your account">Hello,
                                     <asp:LoginName ID="LoginName1" runat="server" CssClass="username" />
                                 </a></li>
                                 <li>
                                     <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" />
                                 </li>
                             </ul>
-                            <div class="navbar-form navbar-right" role="search">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search" aria-label="">
-                            <span class="input-group-addon">
-                                <button class="glyphicon glyphicon-search"></button>
-                            </span>
-                        </div>
+                            <div class="nav navbar-form navbar-right" role="search">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search" aria-label="">
+                                    <span class="input-group-addon">
+                                        <button class="glyphicon glyphicon-search"></button>
+                                    </span>
+                                </div>
 
-                    </div>
+                            </div>
                         </LoggedInTemplate>
                     </asp:LoginView>
                 </div>
@@ -116,7 +115,7 @@
                 <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=272931&clcid=0x409 --%>
                 <asp:TextBox ID="AdminPassword" runat="server" BackColor="White" BorderStyle="None" MaxLength="9" Width="16px"></asp:TextBox>
                 - Course Hunter
-                <asp:Button ID="Button1" runat="server" BackColor="White" BorderStyle="None" Font-Size="Small" Height="18px" OnClick="Button1_Click"  Text="V2" Width="26px" />
+                <asp:Button ID="Button1" runat="server" BackColor="White" BorderStyle="None" Font-Size="Small" Height="18px" OnClick="Button1_Click" Text="V2" Width="26px" />
             </div>
         </footer>
     </form>

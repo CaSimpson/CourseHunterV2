@@ -14,10 +14,13 @@ using System.Web.Configuration;
 
 public partial class viewProfile : System.Web.UI.Page
 {
+    private static bool areFriends;
+    friendHandler friendHld;
+
     String currentlyLoggedUserID;
     String currentlyLoggedUserName;
 
-    String visitedUserId;   
+    String visitedUserId;
     String visitedUserName;
     student22 visitedStudent;
 
@@ -50,11 +53,25 @@ public partial class viewProfile : System.Web.UI.Page
             name = Session["name"].ToString();
         }
         System.Diagnostics.Debug.WriteLine("userName is = " + name);
+
         visitedUserName = name;
 
 
         visitedStudent = new student22(visitedUserName);
         visitedUserId = visitedStudent.getStudent_id();
+
+        friendHld = new friendHandler();
+        //check to see if they are friends or not
+        areTheyFriends();
+
+        if (visitedUserId.Equals(currentlyLoggedUserID))
+        {
+            btnAddFriend.Visible = false;
+        }
+        else
+        {
+            btnAddFriend.Visible = true;
+        }
 
         Image1.ImageUrl = "ImageHandler.ashx? UserId =" + visitedUserId;
         //get information about the currently logged in student
@@ -94,12 +111,40 @@ public partial class viewProfile : System.Web.UI.Page
         }
     }
 
+    private bool areTheyFriends()
+    {
+        areFriends = friendHld.checkIfFriend(currentlyLoggedUserID, visitedUserId);
+        if (areFriends)
+        {
+            btnAddFriend.Text = "Unfriend";
+        }
+        else
+        {
+            btnAddFriend.Text = "Add Friend";
+        }
 
+        return areFriends;
+    }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+    public void addFriend_Click(object sender, EventArgs e)
+    {
+        areFriends = areTheyFriends();
+
+        if (areFriends)
+        {
+            friendHld.removeFriend(currentlyLoggedUserID, visitedUserId);
+        }
+        else
+        {
+            friendHld.addFriend(currentlyLoggedUserID, visitedUserId);
+        }
+
+        areTheyFriends();
+    }
     public void Message_Click(object sender, EventArgs e)
     {
         DivMessage.Visible = true;
@@ -114,11 +159,11 @@ public partial class viewProfile : System.Web.UI.Page
 
     public void Send_Click(object sender, EventArgs e)
     {
-        
+
         MessageHandler msgHandler = new MessageHandler();
         if (!(String.IsNullOrEmpty(messageBox.Text)))
-            msgHandler.SendMessage(currentlyLoggedUserID, visitedUserId,"", Server.HtmlEncode(messageBox.Text));
+            msgHandler.SendMessage(currentlyLoggedUserID, visitedUserId, "", Server.HtmlEncode(messageBox.Text));
         messageBox.Text = string.Empty;
     }
- 
+
 }
