@@ -71,14 +71,14 @@ public partial class searchUsers : System.Web.UI.Page
     private void createTable()
     {
         HtmlTable myTable = new HtmlTable();
-        myTable.Attributes["class"] = "container";
+        myTable.Attributes["class"] = "table";
         foreach (var student in studentList)
          {
             HtmlTableRow row = new HtmlTableRow();
             row.Attributes["class"] = "panel panel-success";
 
             HtmlTableCell cell1 = new HtmlTableCell();
-             cell1.Attributes["class"] = "label label-danger";
+             cell1.Attributes["class"] = "";
 
             var userNameLabel = new Label();
             userNameLabel.Text = student.getUsername();
