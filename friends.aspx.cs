@@ -22,6 +22,9 @@ public partial class friends : System.Web.UI.Page
     friendHandler friendHld;
 
 
+    String visitedUserId;
+    String visitedUserName;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!(HttpContext.Current.User.Identity.IsAuthenticated))
@@ -43,6 +46,13 @@ public partial class friends : System.Web.UI.Page
         ListOFFreinds = new List<student22>();
         this.friendIDList = new List<String>();
         friendHld = new friendHandler();
+
+        //visitedUserId
+        if (Session["id"] != null)
+        {
+            currentlyLoggedUserID = Session["id"].ToString();
+
+        }
 
 
         friendIDList = friendHld.getFriendsList(currentlyLoggedUserID);
@@ -74,6 +84,7 @@ public partial class friends : System.Web.UI.Page
         foreach (var student in ListOFFreinds)
         {
             HtmlTableRow row = new HtmlTableRow();
+
 
             HtmlTableCell cell1 = new HtmlTableCell();
             var userNameLabel = new Label();
@@ -109,7 +120,6 @@ public partial class friends : System.Web.UI.Page
 
             //add all rows to table
             myTable.Controls.Add(row);
-
 
         }
         friendsListHolder.Controls.Add(myTable);

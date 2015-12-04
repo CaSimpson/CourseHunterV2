@@ -40,6 +40,7 @@ public partial class viewProfile : System.Web.UI.Page
             Session.Clear();
             Response.Redirect("~/Default");
         }
+        //getting information about currently logged in user
         currentlyLoggedUserName = HttpContext.Current.User.Identity.Name;
         currentlyLoggedUserID = Membership.GetUser(currentlyLoggedUserName).ProviderUserKey.ToString();
 
@@ -48,15 +49,19 @@ public partial class viewProfile : System.Web.UI.Page
             Response.Redirect("~/Default");
         }
 
-        //recieve a username from the seachUsers page 
-         name = "";
+        //recieve a username from another page (from 
+        visitedUserName = "";
         if (Session["name"] != null)
         {
-            name = Session["name"].ToString();
+            visitedUserName = Session["name"].ToString();
         }
-        System.Diagnostics.Debug.WriteLine("userName is = " + name);
+        else
+            Response.Redirect("~/Default");
 
-        visitedUserName = name;
+        btnFriends.Text = visitedUserName + "'s friends";
+
+        //for debugging 
+        System.Diagnostics.Debug.WriteLine("userName is = " + visitedUserName);
 
 
         visitedStudent = new student22(visitedUserName);
@@ -75,7 +80,7 @@ public partial class viewProfile : System.Web.UI.Page
             btnAddFriend.Visible = true;
         }
 
-        Image1.ImageUrl = "ImageHandler.ashx? UserId =" + visitedUserId;
+        Image1.ImageUrl = "ImageHandler.ashx?UserId=" + visitedUserId;
         //get information about the currently logged in student
         studentName = visitedStudent.getActualName();
         majorName = visitedStudent.getMajor();
@@ -86,13 +91,16 @@ public partial class viewProfile : System.Web.UI.Page
         studentNameLabel.Text = studentName;
         usernameLabel.Text = visitedUserName;
         majorNameLabel.Text = majorName;
-        summaryLabelBox.Text = AboutYourselve;
+        //summaryLabelBox.Text = AboutYourselve;
+
+        summaryLabel.Text = AboutYourselve;
 
 
         //make the h3 tag change dynamically when the page is loaded to reflect change in username
         messageh3.InnerText = "Send a message to: " + visitedUserName;
 
         //dynamically change the width if 
+        /*
         int charRows = 0;
         string tbCOntent;
         int chars = 0;
@@ -111,6 +119,7 @@ public partial class viewProfile : System.Web.UI.Page
             summaryLabelBox.Rows = charRows + 1;
             summaryLabelBox.TextMode = TextBoxMode.MultiLine;
         }
+        */
     }
 
     private bool areTheyFriends()
@@ -168,5 +177,15 @@ public partial class viewProfile : System.Web.UI.Page
         messageBox.Text = string.Empty;
         Response.Redirect(Request.RawUrl);
     }
+
+    public void btnFriends_Click(object sender, EventArgs e)
+    {
+
+        Session["id"] = visitedStudent.getStudent_id();
+        Response.Redirect("friends.aspx");
+
+    }
+
+
 
 }
