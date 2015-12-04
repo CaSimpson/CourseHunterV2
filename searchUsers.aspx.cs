@@ -108,8 +108,6 @@ public partial class searchUsers : System.Web.UI.Page
         foreach (var student in studentList)
          {
 
-            if (!(student.getStudent_id().Equals(currentlyLoggedUserID)))
-            {
 
 
                 HtmlTableRow row = new HtmlTableRow();
@@ -151,6 +149,8 @@ public partial class searchUsers : System.Web.UI.Page
                 //add cell3 to the row
                 row.Controls.Add(cell3);
 
+            if (!(student.getStudent_id().Equals(currentlyLoggedUserID)))
+            {
                 HtmlTableCell cell4 = new HtmlTableCell();
                 //create button
                 Button btnAddFriend = new Button();
@@ -172,10 +172,11 @@ public partial class searchUsers : System.Web.UI.Page
                 //add cell3 to the row
                 row.Controls.Add(cell4);
 
+            }
                 //add all rows to table
                 myTable.Controls.Add(row);
 
-            }
+            
         }
         PlaceHolder1.Controls.Add(myTable);
     }
