@@ -18,11 +18,10 @@ using System.Web.Configuration;
 public class friendHandler
 {
     FriendDB friendDB = null;
-    private List<String> friendIDList;
+
 
     public friendHandler()
     {
-        this.friendIDList = new List<String>();
         friendDB = new FriendDB();
     }
 
@@ -61,14 +60,14 @@ public class friendHandler
     {
         
        DataTable friendsTable = friendDB.getFriendsList(user_id);
-
+        List<String> friendList = new List<string>();
 
         if (friendsTable.Rows.Count > 0)
         {
             foreach (DataRow dr in friendsTable.Rows)
             {
                 String friendID = dr["friend_id"].ToString();
-                this.friendIDList.Add(friendID);
+                friendList.Add(friendID);
             }
         }
 
@@ -77,23 +76,23 @@ public class friendHandler
             Console.WriteLine("No rows found.");
         }
 
-        return this.friendIDList;
+        return friendList;
 
     }
 
-    /*
+    
     public List<String> mutualFriends(string user_id, string visitedUser_Id)
     {
 
         DataTable friendsTable = friendDB.mutualFriends(user_id, visitedUser_Id);
-
+        List<String> mutualFriendList = new List<string>();
 
         if (friendsTable.Rows.Count > 0)
         {
             foreach (DataRow dr in friendsTable.Rows)
             {
                 String friendID = dr["friend_id"].ToString();
-                this.friendIDList.Add(friendID);
+                mutualFriendList.Add(friendID);
             }
         }
 
@@ -102,9 +101,16 @@ public class friendHandler
             Console.WriteLine("No rows found.");
         }
 
-        return this.friendIDList;
+        return mutualFriendList;
+
+    } 
+
+    public int getNumberOfMutualFriends(string user_id, string visitedUser_Id)
+    {
+        List<String> mutualFriendList= new List<string>();
+        return (mutualFriendList = mutualFriends( user_id,  visitedUser_Id)).Count;
 
     }
-    */
+
 
 }
