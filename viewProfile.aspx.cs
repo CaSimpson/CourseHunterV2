@@ -192,6 +192,14 @@ public partial class viewProfile : System.Web.UI.Page
 
     }
 
+    public void btnMutualFriends_Click(object sender, EventArgs e)
+    {
+
+        Session["mutualClick"] = visitedStudent.getStudent_id();
+        Response.Redirect("friends.aspx");
+
+    }
+
 
 
 }
